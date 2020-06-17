@@ -1,0 +1,467 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+    <div class='expir_tips_all' style="padding-left:4px;display:none;top:188px;background-color: #a6d3ee;position:absolute;z-index: 301;left: 36%;float:left; height: auto;width: 410px;">
+        <span class="cenclose" style="position:relative;float:right;top:3px; right: 6px;font-size: 16px;cursor: pointer;" >X</span> 
+        <div style="position: relative;top: 22px;left:3%;">
+        <b>请填写提醒消息:</b>&nbsp;   <span style="color: #f3141d;">(*不得超过50个汉字)</span>
+        <br/>
+        <span>
+        <textarea style="position: relative;top:10px;width:90%;height: 83px;background-color: #eff1f1;" id="message">您的设备账号即将到期，为不影响使用，请及时续费。</textarea>
+        
+        </span>
+        <br/><br/><br/>
+
+        </div>
+        <span  id="conbtn" style="position: relative;left:77%;top: 1px;bottom: 5px;">
+        <button class="btn btn-success" type="submit" id="tipConfire">广播提醒</button>
+        <!-- <button class="btn btn-default" type="button" id="cancel">取消</button> -->
+        </span>
+        <br/>&nbsp;
+    </div>
+        
+    <input type="hidden" value="{$opid}" id="opid">
+    <div class="fDiv" style="display:none;width: auto; position:absolute;z-index: 100;">
+        <div class="funcDiv" id="funcDiv" style="float:left; border: #2569a8 solid 1px;width: auto;height: auto; text-align:center;line-height:50px;background-color: #f9f9f9;box-shadow:-1px -1px 1px #79abce ; color: #0088cc;">
+            <span class="close" style="position:relative;float:right;top:0px; right: 6px;font-size: 10px;" >X</span> 
+            <span class="fstr" style="position:relative;left: 3px;right: 5px;" ></span>
+        </div>
+        <span class="triangle-right" style="
+            position:relative;
+            float:right;
+            top:1px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #50a8e6;
+            border-bottom: 6px solid transparent;  ">
+        </span>
+    </div>
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>设备列表</h5>
+                                <if condition="(($searchc neq '') OR ($searchgid neq '') OR ($searType neq '')) AND ($total gt 0) AND($LogUser eq 'TYT001') ">   <!-- AND($LogUser eq 'TYT001') -->
+                                <button type="button" class="btn btn-default" id="v_del" style="position: relative;top:2px;left: 10px;">批量删除</button>
+                                <button type="button" class="btn btn-default" id="v_xf" style="position: relative;top:2px;left: 10px;"><i class="glyphicon glyphicon-info-sign"></i>续费提醒</button>
+                                </if>
+                                <span class="space"></span>
+                                <span style="position: relative;top:2px;left: 10%;">
+                                <if condition='$searType eq 1'>
+                                <a href="__URL__/d_list/p/{$p}" class="btn noa btn-default"><i class="icon-arrow-left"></i> 返回设备列表</a>
+                                </if>
+                                </span>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table" id="tblist">
+                                        <thead>
+                                            <tr>
+                                                <if condition="(($searchc neq '') OR ($searchgid neq '') OR ($searchgname neq '')  OR ($searType neq '')  OR ($beginDate neq '') OR ($crbeginDate neq '')) AND ($total gt 0) AND ($LogUser eq 'TYT001')">
+                                                <th><input type="checkbox" name="sel_add" id="id_selall" value="" onclick="SelectAll()" /></th>
+                                                </if>
+                                                <th>ID</th>
+                                                <!--<th>{$L.state}</th>-->  
+                                                <th>名称</th>
+                                                <th>账号</th>
+                                                <!-- <th>用户密码</th> -->
+                                                <th>默认群组</th>
+                                                <th>默认群组ID</th>
+                                                <!--<th>{$L.Dgroup}</th>-->
+                                                <th>上级管理员</th>
+                                                <th>创建时间</th>
+                                                <th>有效时间</th>
+                                                <th>用户功能</th>
+                                                <if condition='$iLevel eq 3'>
+                                                <th>操作</th>
+                                                </if>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <if condition="(($searchc neq '') OR ($searchgid neq '') OR ($searchgname neq '') OR ($beginDate neq '') OR ($crbeginDate neq '')) AND($total gt 0)"> 
+                                            <volist name="arrList" id="v">
+                                            <tr>
+                                                <if condition="(($searchc neq '') OR ($searchgid neq '') OR ($searType neq '') ) AND ($total gt 0) AND ($LogUser eq 'TYT001') ">
+                                                <td><input type="checkbox" class="sel" name="sel" value="{$v.uid}"></td>
+                                                </if>
+                                                <td>{$v.uid}</td>
+                                                <!--{if $v.online > 0 }-->
+                                                <!--  <td style="color: green">{$L.onL}</td>
+                                                {else}
+                                                <td>{$L.offL}</td>
+                                                {/if}-->
+                                                <td>{$v.username}</td>
+                                                <td>{$v.account}</td>
+                                                <td>{$v.gname} </td>
+                                                <td>{$v.curgid}</td>
+                                                <!--  {if $v.gname eq ''}
+                                                <td>{$L.hbd}</td>
+                                                {else}
+                                                <td>{$v.gname}</td>
+                                                {/if}-->
+                                                <td><php> Names($v['manid']) </php></td> <!-- 调用公共函数传入参数 -->
+                                                <td><php> echo substr($v['createtime'],0,10)</php></td>
+                                                <td><php> echo substr($v['validtime'],0,10)</php></td>
+                                                <td>
+                                                    <input type="hidden" value="<?php echo diliptChecked($v['funccode']); ?>">
+                                                    <span style="cursor:pointer;">
+                                                        <if condition="$v.funccode neq 0 ">
+                                                            <a >展开</a>
+                                                        <else />
+                                                            未勾选
+                                                        </if>
+                                                    </span>
+                                                </td> 
+                                                <!-- <td><php> diliptChecked($v['funccode']);</php></td>  -->
+                                                <if condition='$iLevel eq 3'>
+                                                <td>
+                                                    <a href="javascript:void(0);" onclick="del('{$v[\'uid\']}')">删除 </a>
+                                                    <!--<a href="__URL__/edit_time/uid/{$v.uid}">修改时间</a>-->
+                                                </td>
+                                                </if>
+                                            </tr>
+                                            </volist>
+                                            <else />
+                                                <tr>
+                                                    <td colspan="14">无记录</td>
+                                                </tr>
+                                            </if>
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header">
+                                        <div class="dataTables_filter">
+                                            <form action="__URL__/d_list" name="formsearch" method="get" id="formsearch">
+                                                
+                                                <if condition="($LogUser eq 'TYT001')">
+                                                <input type="text" placeholder="群组名称" name="searchgname" value="{$searchgname}" id="searchgname" class="vs"/>
+                                                <input type="text" placeholder="群组ID" name="searchgid" value="{$searchgid}" id="searchgid" class="vs"/>
+                                                </if>
+                                                <input type="text" placeholder="ID / 名称 / 账号" name="searchc" value="{$searchc}" id="searchc" class="vs"/>
+                                                
+                                                <div class="input-append date vdate" id="" data-date="" data-date-format="yyyy-mm-dd">
+                                                    <input size="8" type="text" name="beginDate" id="beginDate" value="" placeholder="开始有效时间" readonly>
+                                                    <span class = "add-on"><i class="icon-calendar"></i></span>
+                                                </div>
+                                                <div class="input-append date vdate" id="" data-date="" data-date-format="yyyy-mm-dd">
+                                                    <input size="8" type="text" name="endDate" id="endDate" value="" placeholder="结束有效时间" readonly>
+                                                    <span class = "add-on"><i class="icon-calendar"></i></span>
+                                                </div>
+                                                <br/>
+                                                <div class="input-append date vdate" id="" data-date="" data-date-format="yyyy-mm-dd">
+                                                    <input size="8" type="text" name="crbeginDate" id="crbeginDate" value="" placeholder="开始创建时间" readonly>
+                                                    <span class = "add-on"><i class="icon-calendar"></i></span>
+                                                </div>
+                                                <div class="input-append date vdate" id="" data-date="" data-date-format="yyyy-mm-dd">
+                                                    <input size="8" type="text" name="crendDate" id="crendDate" value="" placeholder="结束创建时间" readonly>
+                                                    <span class = "add-on"><i class="icon-calendar"></i></span>
+                                                </div>
+                                                 
+                                                <button type="submit" class="btn btn-default" id="searcha" style="color:#333">搜索</button> 
+                                                <button type="button" class="btn btn-default" id="clear">清空</button> 
+                                            </form>
+                                        </div>
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <input type="hidden" id="psearchc" value="{$searchc}" />
+                                        <input type="hidden" id="psearchgid" value="{$searchgid}" />
+                                        <input type="hidden" id="psearchgname" value="{$searchgname}" />
+                                        <input type="hidden" id="pbeginDate" value="{$beginDate}" />
+                                        <input type="hidden" id="pendDate" value="{$endDate}" />
+                                        <input type="hidden" id="pcrbeginDate" value="{$crbeginDate}" />
+                                        <input type="hidden" id="pcrendDate" value="{$crendDate}" />
+                                        <input type="hidden" id="LogUser" value="{$LogUser}" />
+                                        
+                                        <if condition="$searType gt 0 ">
+                                        <div class="pages result  page"  style="position: relative; top: 76px; font:18px '\5B8B\4F53', san-serif;  float: right;">{$page}</div>
+                                        </if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script src="__PUBLIC__/js/bootstrap-datetimepicker.js"></script>
+        <script>
+        function SelectAll()
+        {
+            var target = document.getElementById("id_selall");
+            var input = document.getElementsByTagName("input");
+
+            for (var i = 0; i < input.length; i++)
+            {
+                if (input[i].id != "id_selall")
+                    input[i].checked = target.checked;
+            }
+        }
+
+        $(function () {
+            $("#v_del").click(function () {
+                var delNum = $(".sel:checked").length;
+                if (delNum < 1) {
+                    alert("未选择任何用户");
+                    $("#inSel,#accountNums").val("");
+                    return false;
+                }else{
+                    //alert(delNum);
+                    if (confirm("您已选中"+delNum+"个用户，确定要全部删除吗？")) {
+                        var chk_value = [];
+                        $(".sel:checked").each(function () {
+                            chk_value.push($(this).val());
+                        })
+                        window.location.href = "__URL__/device_delete/uid/" + chk_value+"/type/batch";
+                    }
+                }
+
+                
+                //alert(chk_value);
+                $("#inSel").val(chk_value);
+                $("#accountNums").val($(".sel:checked").length);
+                $(".rorder").css("display", "block");
+            })
+            //显示用户功能
+            $("#tblist").find("tr").each(function(e){
+                var tdArr = $(this).children();
+                //var a = tdArr.eq(9);
+                var LogUser = $("#LogUser").val(); 
+                if (LogUser == 'TYT001') {
+                    var a = tdArr.eq(9);
+                }else{
+                    var a = tdArr.eq(8);
+                }
+                var zb = a.offset();
+                a.click(function(){
+                    var funccodestr = $(this).find("input").val();
+                    // 取点击点的纵/横坐标
+                    var y = zb.top;
+                    var x = ($(window).width()-zb.left)-12;
+                    // console.log(x); 
+                    // console.log($(window).width()); 
+                    if (funccodestr != "") {
+                        var text = $(".fstr").text();
+                        if(text !=''){
+                            $(".fstr").empty();
+                            $(".fstr").append(funccodestr);
+                        }else{
+                            $(".fstr").append(funccodestr);
+                        }
+                        $(".fDiv").css({"top":y,"right":x});
+                        $(".fDiv").css({"display":"block"});
+                        $(".close").click(function () {
+                            $(".fDiv").css({"display":"none"});
+                            return false;
+                        });
+                    }else{                            
+                        $(".fDiv").css({"display":"none"});
+                        return false;
+                    }
+
+                 });
+            }); 
+            //跳转到指定第n页
+            $("#npage_qd").click(function() {
+                var pagenum = $("#npage_num").val();
+                var pagenum = Number(pagenum);
+                var showpn = $("#showpn").val();
+                var showpn = Number(showpn);
+                var psearchc = $("#psearchc").val();
+                var psearchgid = $("#psearchgid").val();
+                var psearchgname = $("#psearchgname").val();
+                var searchgname = $("#searchgname").val();
+                var pbeginDate = $("#pbeginDate").val();
+                var pendDate = $("#pendDate").val();
+                var pcrbeginDate = $("#pcrbeginDate").val();
+                var pcrendDate = $("#pcrendDate").val();
+                if (isNaN(pagenum)) {
+                    alert("请输入数字");
+                }
+                if (pagenum.length !==0) {
+                    if(pagenum > showpn){
+                        pagenum = showpn;
+                    }
+                    if(pagenum < 1){
+                        pagenum = 1;
+                    }
+                    if (psearchc != '') {
+                        window.location = "__URL__/d_list/searchc/"+psearchc+"/p/"+pagenum;
+                    }
+                    else if (psearchgid.length !== 0) {
+                        window.location = "__URL__/d_list/searchgid/"+psearchgid+"/p/"+pagenum;
+                    }
+                    else if (psearchgname != '') {
+                        window.location = "__URL__/d_list/searchgname/"+searchgname+"/p/"+pagenum;
+                    }
+                    else if (pbeginDate != '' && pendDate != '') {
+                        window.location = "__URL__/d_list/beginDate/"+pbeginDate+"/endDate/"+pendDate+"/p/"+pagenum;
+                    }
+                    else if (pcrbeginDate != '' && pcrendDate != '') {
+                        window.location = "__URL__/d_list/crbeginDate/"+pcrbeginDate+"/crendDate/"+pcrendDate+"/p/"+pagenum;
+                    }else{
+                        window.location = "__URL__/d_list/p/"+pagenum;
+                    }
+                    
+                }
+                
+            });
+        });
+
+        
+
+
+
+            function del(id) {
+                //alert(id);
+                if (confirm("确定要删除该用户吗？")) {
+                    window.location.href = "__URL__/device_delete/uid/" + id;
+                }
+            }
+
+            $(function () {
+                $('.date').datetimepicker({
+                    format: 'yyyy-mm-dd',
+                    todayBtn: true,
+                    minView: 'month',
+                    autoclose: true,
+                    todayHighlight: true,
+                    pickerPosition: 'top-left'
+                })
+                $("#clear").click(function () {
+                    $("#beginDate").val("");
+                    $("#endDate").val("");
+                    $("#crbeginDate").val("");
+                    $("#crendDate").val("");
+                    $("#searchc").val("");
+                    $("#searchgid").val("");
+                    $("#searchgname").val("");
+                })
+                $("#formsearch :submit").click(function () {
+                    //alert("11");
+                    //return false;
+                    var endDate = $("#endDate").val();
+                    var beginDate = $("#beginDate").val();
+                    var crbeginDate = $("#crbeginDate").val();
+                    var crendDate = $("#crendDate").val();
+                    
+                    //有效时间搜索
+                    var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+                    var d2 = new Date(endDate.replace(/\-/g, "\/"));
+                    if (beginDate != "" && endDate != "" && d1 > d2)
+                    {
+                        alert("开始时间不能大于结束时间！");
+                        return false;
+                    }
+                    //创建时间搜索
+                    var d3 = new Date(crbeginDate.replace(/\-/g, "\/"));
+                    var d4 = new Date(crendDate.replace(/\-/g, "\/"));
+                    
+                    if (crbeginDate != "" && crendDate != "" && d3 > d4)
+                    {
+                        alert("开始时间不能大于结束时间！");
+                        return false;
+                    }
+                    var Searchc = $.trim($("#searchc").val());
+                    var Searchgid = $.trim($("#searchgid").val());
+                    if (beginDate != "" && endDate == "") {
+                        alert("结束时间不能为空！");
+                        return false;
+                    }
+                    if (endDate != "" && beginDate == "") {
+                        alert("开始时间不能为空！");
+                        return false;
+                    }
+                    if (crbeginDate != "" && crendDate == "") {
+                        alert("结束时间不能为空！");
+                        return false;
+                    }
+                    if (crendDate != "" && crbeginDate == "") {
+                        alert("开始时间不能为空！");
+                        return false;
+                    }
+                    
+                    
+                    
+                    if (searchgname == "" && Searchc == "" && Searchgid == "" && beginDate == "" && endDate == "" && crbeginDate == "" && crendDate == "") {
+                        return false;
+                    }
+                });
+
+                
+            });
+            $(function () {
+            //提醒续费
+            $("#v_xf").click(function () {
+                var xfNum = $(".sel:checked").length;
+                if (xfNum < 1) {
+                    alert("未选择任何用户");
+                    return false;
+                }else{
+                    //alert(delNum);
+                    /*if (confirm("您已选中"+xfNum+"个用户，确定要全部提醒吗？")) {
+                        var chk_value = [];
+                        $(".sel:checked").each(function () {
+                            chk_value.push($(this).val());
+                        })
+
+                        alert(chk_value);
+                        console.log(chk_value);
+                        //window.location.href = "__URL__/device_delete/uid/" + chk_value+"/type/batch";
+                    }*/
+
+                     
+                        $(".expir_tips_all").css({"display":"block"});
+                        $("#tipConfire").click(function () {
+                            var uid_arr = [];
+                            $(".sel:checked").each(function () {
+                                uid_arr.push($(this).val());
+                            });
+                            var uidNum = uid_arr.length;
+                            if (confirm("您已选中"+uidNum+"个设备用户,确定全部提醒吗？")) { 
+                            var message = $("#message").val(); 
+                            var msglenth = message.length;
+                            if (msglenth < 1 || msglenth > 150) {
+                                alert("未填写广播消息或消息超过50个汉字！");
+                                return false;
+                            }
+                            var uidstr = uid_arr.join(',');  //将uid数组拼接成字符串
+                            //alert(uidstr);
+                            $.post("__URL__/device_vtips", {uid: uidstr,message:message}, function (data) {
+                                var obj = data; //alert(obj);
+                                if(obj == "3"){
+                                    alert("消息提醒已广播!");
+                                    return false;
+                                }else{
+                                    alert("未填写广播消息或消息超过50个汉字！");
+                                    return false;
+                                }
+                            },"json");
+
+                            }
+
+                        });
+                }
+
+                
+            });
+
+            $(".cenclose").click(function () {
+                $(".expir_tips_all").css("display", "none");
+                //关闭提示框状态 
+            });
+        });
+        </script>
+    </body>
+</html>

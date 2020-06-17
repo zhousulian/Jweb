@@ -1,0 +1,233 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+    <div id="content">
+        <include file="Public:nav_bar" />
+        <div id="content-header">
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon">
+                                <i class="icon-align-justify"></i>                                  
+                            </span>
+                            <h5>订单详情</h5>
+                        </div>
+                        <form id="form1" name="form1"  enctype="multipart/form-data" action="__URL__/booking_confire" method="POST">
+                            <table class="table table-bordered definewidth m10">
+                                <tr>
+                                    <td width="10%" class="tableleft">订单编号</td>
+                                    <td><input type="text" name="blid" readonly="true" id="blid" value="{$book['blid']}"/> </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" class="tableleft">订单类型</td>
+                                    <td><input type="text" name="bltype1" id="bltype" readonly="true"
+                                               value="<?php
+                               if ($book['bltype'] == 0)
+                                   echo '申请额度';
+                               ?> "/>
+                                        <input type="hidden" name="bltype" id="bltype" value="{$book['bltype']}"/>
+                                        <input type="hidden" name="blfkid" id="blfkid" value="{$book['blfkid']}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" class="tableleft">订单状态</td>
+                                    <td><input type="text" name="blst" readonly="true"
+                                               value="<?php
+                               switch ($book['blst'])
+                               {
+                                   case 0:
+                                       echo '等待上级管理员审核';
+                                       break;
+
+                                   case 1:
+                                       echo '已审核';
+                                       break;
+
+                                   case 110:
+                                       echo '审核未通过';
+                                       break;
+
+                                   default:
+                                       echo '其他状态';
+                                       break;
+                               }
+                               ?> "/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" class="tableleft">订单日期</td>
+                                    <td><input type="text" name="bldate" readonly="true" value="{$book['bldate']}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft">额度值</td>
+                                    <td>
+                                        <input type="text" id="blnum" name="blnum" value="{$book['blnum']}" readonly="true"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" name="backid" id="backid">返回订单列表</button>
+                                        <if condition="($opid eq $book['bladid']) AND ($book['blst'] neq 1)">
+                                            <button type="submit" class="btn btn-default" id="confire">通过该订单</button>
+                                        </if>
+                                        <input type="hidden" id="at" value="{$_GET['at']}">
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                        <!--<form id="form1" name="form1" enctype="multipart/form-data" action="" method="POST">
+                            <table class="table table-bordered m10" id="table">
+                                <tr>
+                                    <td width="10%" class="tableleft">订单编号</td>
+                                    <td>
+                                        <input type="hidden" id="urlp" value="{$_GET['p']}"/>
+                                        <input class="" type="text" name="blid" readonly="true" id="blid"  value="{$book.blid}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" class="tableleft">订单类型</td>
+                                    <td><input type="text" name="bltype1" id="bltype1" readonly="true"
+                                               value="<?php
+                                               if ($book['bltype'] == 0)
+                                                   echo '申请额度';
+                                               ?> "/>
+                                        <input type="hidden" name="bltype" id="bltype" value="{$book['bltype']}"/>
+                                        <input type="hidden" name="blfkid" id="blfkid" value="{$book['blfkid']}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" class="tableleft">订单状态</td>
+                                    <td><input type="text" name="blst" disabled
+
+                                        <if condition="($book['blst'] eq 0) ">
+                                               value="等待上级管理员审核"
+                                               <elseif  condition="$book['blst'] eq 1" />
+                                               value="审核已通过"
+                                               <elseif  condition="$book['blst'] eq 110" />
+                                               value="审核未通过"
+                                               <else />
+                                               value="其他状态"
+                                               </if>
+                                               /> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft">额度值</td>
+                                    <td>
+                                        <input type="text" id="blnum" name="blnum" value="{$book['blnum']}" readonly="true"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" class="tableleft">订单日期</td>
+                                    <td><input type="text" name="bldate" disabled
+                                               value="{$book.bldate}"/> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" name="backid" id="backid">返回订单列表</button>
+                                        <if condition="($opid eq $book['bladid']) AND ($book['blst'] neq 1)">
+                                            <button type="submit" class="btn btn-default" id="confire">通过该订单</button>
+                                        </if>
+                                        <input type="hidden" id="at" value="{$_GET['at']}">
+                                        <input type="hidden" id="iLevel" value="{$iLevel}">
+
+
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </form>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js"></script>
+    <script>
+        /*var sels = $('.col-xs-5 select option');
+        var len = sels.size();
+        var str = "共 &nbsp; <span style='color: #ff0c0c;font-weight: bold;'>"+len + "</span>&nbsp;&nbsp;个账号 ;";
+        if(len>0){
+            $("#rna_num").html(str);
+        }*/
+
+
+        /*$(function () {
+            //点击通过就用get提交到booking
+            var blid = $("#blid").val();
+            var bltype = $("#bltype").val();
+            var blnum = $("#blnum").val();
+            var bdnum = $("#bdnum").val();
+            //var blyuid = $("#blyuid").val();
+            var blfkid = $("#blfkid").val();
+
+
+            $('#confire').click(function (){
+                //alert("11");
+                var iLevel = $("#iLevel").val();
+                //alert(iLevel);
+                /!*if (len >200 && iLevel == 2){  //续费账号多余200个必须上级级别3的管理员通过
+                    alert("该订单续费的用户较多，请联系上级管理员进行确认通过!");
+                    return false;
+                }*!/
+                console.log(blid);
+                console.log(bltype);
+                console.log(blnum);
+                console.log(bdnum);
+                //console.log(blyuid);
+                //console.log();
+                $.post("__URL__/booking_confire", { name: "John", time: "2pm" },
+                    function(data) {
+                        alert("Data返回: " + data);
+                        return false;
+                });
+
+                /!*$.post("__URL__/booking_confire", {
+                    blid: "1",
+                    /!*bltype: bltype,
+                    blnum: blnum,
+                    bdnum: bdnum,
+                    blfkid: blfkid,*!/}, function (data) {
+                    //var obj = JSON.parse(data);
+                    console.log(data);
+                    return false;
+                    if (obj.status == 0) {
+                        alert(obj.msg);
+                    }else{
+                        alert(obj.msg);
+                        window.location.href="__URL__/booking_list";
+                    }
+
+                });*!/
+            });
+
+
+            var atype = $('#at').val();
+            $('#backid').click(function () {
+                window.location.href = "__URL__/booking_list/atype/"+atype;
+            });
+        })*/
+        </script>
+
+        <script>
+            $(function () {
+                var atype = $('#at').val();
+                $('#backid').click(function () {
+                    window.location.href = "__URL__/booking_list/atype/"+atype;
+                });
+            });
+        </script>
+    <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+    <script src="__PUBLIC__/js/unicorn.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,154 @@
+<include file="Public:meta" />
+<include file="Public:subheader" />
+        <div id="content">
+            <include file="Public:subnav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>群组成员详情</h5>
+                                <span style="position: relative;top:2px;">
+                                <a href="__URL__/group_add" class="btn nom"><i class="icon-plus-sign"></i>群组添加</a>
+                                <span class="space"></span>
+                                <if condition="($searchc neq '' ) OR ($glist neq '' )"> 
+                                <a href="__URL__/group_list/p/<?php if (!empty($_GET['urlp'])) {echo $_GET['urlp'];}else{echo 1;}?>" class="btn noa btn-default"><i class="icon-arrow-left"></i> 返回上层群组列表</a>
+                                </if>
+                                </span>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table" id="table" >
+                                        <thead>
+                                            <tr>
+                                                <th>群组ID</th>
+                                                <th>群组名称</th>
+                                                <th>用户ID</th>
+                                                <th>状态</th>
+                                                <th>用户名称</th>
+                                                <th>账号</th>
+                                                <th>用户密码</th>
+                                                <th>GPS</th>
+                                                <th>级别</th> 
+                                                <th>群组创建时间</th>   
+                                                <th>用户创建时间</th>
+                                                <th>用户有效时间</th>
+                                                <th>备注</th>
+                                                <th>操作</th>
+                                                <!-- <th>操作</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <if condition="$total gt 0 ">
+                                                <volist name="data" id="v">
+                                                <if condition="$v.account neq '' ">                                              
+                                                <tr>
+                                                    <td id="ugid">{$gid}</td>
+                                                    <td>{$glist.gname}</td>
+                                                    <td>{$v.uid}</td>
+                                                    <if condition="$v.online gt 0 ">
+                                                    <td style="color: green">在线</td>
+                                                    <else />
+                                                    <td>离线</td>
+                                                    </if>
+                                                    <td>{$v.username}</td>
+                                                    <td>{$v.account}</td>
+                                                    <td>{$v.password}</td>
+                                                    <td>{$v.gpscycle}</td>
+                                                    <td>{$v.level}</td>
+                                                    <td><php> echo substr($glist['createtime'],0,10)</php></td>
+                                                    <td><php> echo substr($v['createtime'],0,10)</php></td>
+                                                    <td><php> echo substr($v['validtime'],0,10)</php></td>
+                                                    <td>{$v.note}</td>
+                                                    <!-- <td><a href="__APP__/Admin/Subpart/device_edit/uid/{$v.uid}/gid/{$gid}&urlp={$_GET['urlp']}">修改</a></td> -->
+                                                    <td>
+                                                        <input type="hidden" id="paramuid"  name="urlp" value="{$_GET['p']}" />
+                                                        <input type="hidden" id="paramurlp"  name="urlp" value="{$_GET['urlp']}" />
+                                                        <a href="javascript:void(0);" onclick="updateloc({$v['uid']},{$gid},'gup')">修改</a>
+                                                        <!-- <a href="{:U('Index/device_edit',array('uid'=>$v['uid'],'p'=>$_GET['p']))}" >修改</a> -->
+                                                    </td>
+                                                </tr>
+                                                </if>
+                                                </volist>
+                                            <else />
+                                                <tr>
+                                                    <td colspan="11">无记录</td>
+                                                </tr>
+                                            </if>
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
+                                        <!-- <div class="dataTables_filter">
+                                            <form action="__URL__/device_list" name="formsearch" method="get" id="formsearch">
+                                                <input type="text" placeholder="名称或账号" name="searchc" id="searchc" value="{$searchc}">
+                                                <button class="btn btn-default" type="submit" id="searcha">搜索</button> 
+                                            </form>
+                                        </div> -->
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif; float: right;">{$page}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <!--<script src="js/unicorn.tables.js"></script>-->
+        <script>
+            function updateloc(uid,gid,gup,urlp){
+                var p = $("#paramuid").val();
+                if(p == ''){
+                    p = 1;
+                }
+                var url = $("#paramurlp").val();
+                window.location.href='__APP__/Admin/Subpart/device_edit/uid/'+uid +"/gp/"+gup+'/p/'+p+'/urlp/'+url;  //不能将两个值为数字的参数同时传递，gp的值以字符串传递
+            }
+            $(function () { 
+                $("#uedit").click(function() {
+                    
+                    var gid = $("#ugid").val();
+                    window.location = "__URL__/uMembers/uid/"+uid+"/gid"+gid;
+                    
+                });
+
+                //跳转到指定第n页
+                $("#npage_qd").click(function() {
+                    var pagenum = $("#npage_num").val();
+                    var showpn = $("#showpn").val();
+                    if (isNaN(pagenum)) {
+                        alert("请输入数字");
+                    }
+                    if (pagenum != '') {
+                        if(pagenum > showpn){
+                            pagenum = showpn;
+                        }
+                        if(pagenum < 1){
+                            pagenum = 1;
+                        }
+                        window.location = "__URL__/uMembers/p/"+pagenum;
+
+                    }
+                    
+                });
+
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                })
+            })
+        </script>
+    </body>
+</html>

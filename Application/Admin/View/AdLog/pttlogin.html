@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+        <title>智能对讲管理系统</title>
+        <link rel="stylesheet" href="__PUBLIC__/css/login-link-world.css">
+        <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		
+    </head>
+    <body>
+    <div class="img_d">
+        <div class="dlimg_1"></div>
+        <span class="z_font"><!--百顺达公网-->公网对讲管理系统</span>
+    </div>
+
+
+    <div class="form_d">
+        <form name="form1" id="form" method="post" action="__URL__/pttlogin" >
+        <table   id="form_t" > <!--border="1"-->
+            <tr class="tab_h">
+                <!--<td rowspan="5" width="40%" class="dlimg_1"></td>-->
+                <td>欢迎登录</td>
+            </tr>
+            <tr>
+                <td><span id="icon-user"></span><input type="text" name="name" id="username" value="" placeholder="用户名称" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td><span id="icon-pw"></span><input type="password" name="pass" id="pass" value="" placeholder="用户密码" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td><span class="yzm"><input type="text" name="vertify" id="vertify" style="width: 39.5%" placeholder="验证码" autocomplete="off">
+                    <img id="imgVerify" style=" " src="__URL__/vertify" onclick="fleshVerify();"/>
+                </span></td>
+            </tr>
+            <tr>
+                <td><span id="icon-sub"></span><input type="submit"  value="立即登录" onclick="return checkLogin()"></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+
+        <!--<div id="tyt_form_img">
+
+            &lt;!&ndash;<div id="logo_d">
+                <span class="dlpt_img">&lt;!&ndash;<img id="dlh_img" src="__PUBLIC__/img/icons/login/dlh_img.png" />&ndash;&gt;</span>
+                <span class="dlpt">&lt;!&ndash;智能管理平台&ndash;&gt;&lt;!&ndash;<img id="dlh_img" src="__PUBLIC__/img/icons/login/dlpt.png" />&ndash;&gt;</span>
+            </div>&ndash;&gt;
+
+            <div id="logo_d">
+                <span class="dlpt">智能对讲管理系统</span>
+            </div>
+
+            <div id="tyt_form">
+                <form name="form1" id="form" method="post" action="__URL__/pttlogin" >
+                    <p><p id="icon-user"></p><input type="text" name="name" id="username" value="" placeholder="用户名称" autocomplete="off"></p>
+                    <p><p id="icon-pw"></p><input type="password" name="pass" id="pass" value="" placeholder="用户密码" autocomplete="off"></p>
+                    <p class="yzm"><input type="text" name="vertify" id="vertify" style="width: 39.5%" placeholder="验证码" autocomplete="off">
+                        <img id="imgVerify" style=" border-radius: 4px; float: right;display: inline-block; cursor:pointer; width: 45%;height: 36px; position: relative;top: 20px;right: 3%;" src="__URL__/vertify" onclick="fleshVerify();"/>
+                    </p>
+                    <p><p id="icon-sub"></p><input type="submit"  value="立即登录" onclick="return checkLogin()"></p>
+                </form>
+
+            </div>
+        </div>-->
+    </body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
+<script>
+    //检测登录表单
+    function checkLogin(){
+        var username = $('#username').val();
+        var password = $('#pass').val();
+
+        var vertify = $('input[name="vertify"]').val();
+        if( username == '' || password ==''){
+           alert('用户名或密码不能为空');
+            return false;
+        }
+        if(vertify ==''){
+            alert('验证码不能为空');
+            return false ;
+        }
+        if(vertify.length !=4) {
+            alert('验证码错误');
+            //fleshVerify();
+            return false;
+        }
+    }
+
+    //点击刷新验证码
+    function fleshVerify(){
+        $('#imgVerify').attr('src','__URL__/vertify?a='+Math.floor(Math.random()*100));
+    }
+            
+</script>

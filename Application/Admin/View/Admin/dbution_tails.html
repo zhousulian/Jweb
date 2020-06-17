@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>智能公网对讲系统管理平台</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css" /> <!-- 分页样式 -->
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/uniform.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/select2.css" />		
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.main.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.grey.css" class="skin-color" />	
+        <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <style type="text/css">
+            .nav1{
+                position: absolute;
+                top:-3px;
+            }
+            #av,#av1{
+                width: 100%;
+            }
+            #num{
+                background-color: #657b87;
+            }
+            #av a:hover{
+                background: #657b87;
+            }
+            #av1 a:hover{
+                background: #657b87;
+            }
+            .progress-bar-warning {
+                background-color: #71C9ED;
+            }
+
+            /*#av a:hover{
+                background: #657b87;
+            }
+            #av1 a:hover{
+                background: #657b87;
+            }
+
+            #user-nav > ul > li > a{
+                background : #657b87 ;
+            }
+
+            #user-nav > ul > li > a:hover{
+                background: #657b87 ;
+            }*/
+            #nav_bar{
+                width: 100%;
+            }
+            ul ul li {
+                list-style-type: none;
+                width: 100%;
+            }
+            /*ul ul li  a{
+                height: 32px;
+            }*/
+
+            #sidebar > ul ul li a {
+                width: 100%;
+                height: 32px;
+            }
+
+
+
+        </style>
+    </head>
+<body >
+<div id="header">
+    <div id="logoimg" >
+        <span id="logo_right"> <img src="__PUBLIC__/img/bdhl.png"> </span>
+        <p id="zndj">|深圳百顺达科技有限公司</p>
+    </div>
+</div>
+<div style="background: #13a0cc;" id="user-nav" class="nav1 navbar navbar-inverse" >
+    <ul  class="nav1 nav btn-group" id="lgouts" >
+        <li  class="btn dropdown" id="menu-messages">
+            <a style=" "  href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
+                <i class="icon icon-user"></i>
+                <span  style="color : #f5f5f5 !important;" class="text">{$LogUser}</span> <span id="num" class="label ">2</span> <b class="caret"></b></a>
+            <ul  class="dropdown-menu">
+                <li id="av"><a class="sAdd" title="" href="__APP__/Admin/AdLog/logout">切换账号</a></li>
+                <li id="av1" ><a class="sInbox" title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav btn-group" id="lgout">
+        <li class="btn btn-inverse"><a title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+    </ul>
+</div>
+
+    <div id="content">
+        <div id="nav_bar" > <!--style="border: #0cd8d5 1px solid;"-->
+            <div style=""  id="sidebar" >
+                <a href="#" class="visible-phone"><i class="icon icon-home icon-dh"></i> <span class="font-dh" style="position: relative;left: 13px;font-size: 16px;">导航</span></a>
+                <if condition="($iLevel eq 5) ">  <!-- 级别为5时 -->
+                    <ul >
+                        <li id="yh" class="submenu"> <a href="javascript:;"><i class="icon icon-th-list"></i> <span>用户分配详情</span> <span class="label label-important">1</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <elseif condition="$iLevel eq 4"/>  <!-- 级别为4时 -->
+                    <ul>
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label label-important">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                                <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <elseif condition="$iLevel gt 1"/> <!-- 级别>1时 -->
+                    <ul>
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>管理员管理</span> <span class="label">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                                <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label">1</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label"><if condition="$iLevel eq 3 ">2 <else /> 1</if></span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Index/d_list">设备列表</a></li>
+                                <if condition="$iLevel eq 3 ">
+                                    <li><a href="__APP__/Admin/Index/d_linechart">设备使用详情</a></li>
+                                </if>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>订单管理</span>
+                                <span class="label">
+                    <if condition="$iLevel lt 3 ">2 <else /> 1</if>
+                    </span>
+                            </a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                                <if condition="$iLevel lt 3 ">
+                                    <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                                </if>
+                            </ul>
+                        </li>
+                        <!--<if condition="$iLevel eq 3 ">
+                            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>日志管理</span> <span class="label">2</span></a>
+                                <ul>
+                                    <li><a href="__APP__/Admin/Index/device_del_log">设备删除日志</a></li>
+                                    <li><a href="__APP__/Admin/Index/device_edit_log">设备修改日志</a></li>
+                                </ul>
+                            </li>
+                        </if>-->
+
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>系统参数</span> <span class="label">1</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/sset">参数设置</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label"><if condition="$iLevel eq 3 ">2<else/>1</if></span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                                <!--<if condition="$iLevel eq 3 ">
+                                    <li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>
+                                </if>-->
+                            </ul>
+                        </li>
+                    </ul>
+                    <elseif condition="($iLevel eq 1) OR ($iLevel eq 0)"/>
+                    <ul>
+                        <li class="submenu">
+                            <a href="#"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Index/device_list">设备列表</a></li>
+                                <li><a href="__APP__/Admin/Index/device_add">设备添加</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"> <i class="icon icon-th-list"></i>  <span>群组管理</span> <span class="label">3</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Group/group_list">群组列表</a></li>
+                                <li><a href="__APP__/Admin/Group/group_add">群组添加</a></li>
+                                <li><a href="__APP__/Admin/Group/group_subedit">嵌套组定义</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"> <i class="icon icon-th-list"></i>  <span>订单管理</span> <span class="label">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                                <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                            </ul>
+                        </li>
+                        <!--<if condition="($upLevel neq 0)">
+                            <li class="submenu">
+                                <a href="#"> <i class="icon icon-th-list"></i>  <span>管理员管理</span> <span class="label">2</span></a>
+                                <ul>
+                                    <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                                    <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                                </ul>
+                            </li>
+                        </if>-->
+                        <!--<li class="submenu">
+                            <a href="#"> <i class="icon icon-th-list"></i> <span>二级管理</span> <span class="label">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Subadmin/subad_list">二级管理列表</a></li>
+                                <li><a href="__APP__/Admin/Subadmin/subad_add">二级管理添加</a></li>
+                            </ul>
+                        </li>-->
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                                <!--<li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>-->
+                            </ul>
+                        </li>
+                    </ul>
+
+
+                </if>
+            </div>
+        </div>
+        <div id="content-header">
+            <div id="breadcrumb"></div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box list_Modular">
+                        <div class="widget-title">
+                            <span class="icon">
+                                <i class="icon-align-justify"></i>									
+                            </span>
+                            <h5>子账户分配详情</h5>
+                            <span style="position: relative;top: 8px;left: 20px;">
+                                <if condition="($NowLevel egt 1 ) AND ($NowLevel lt 4)">
+                                    已注册终端数:<php>usedNum($opid)</php>;  总额度:{$quota};  已使用额度:{$quotaed};  未使用额度:{$vquota};
+                                </if>
+                            </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <!--<if condition="($NowLevel eq 1) OR ($NowLevel eq 0)">
+                                <a href="__URL__/dbution_tails/opid/{$opid}/member/ad<?php if(!empty($_GET['sp'])) {echo '/sp/'.$_GET['sp'];}else{echo '/sp/1';} if(!empty($_GET['p'])) {echo '/yp/'.$_GET['p'];}else{echo '/yp/1';} ?>" >查看管理员</a>
+                            </if>-->
+                            <span class="return">
+                                <if condition="$searchc neq '' ">
+                                    <a href="__URL__/dbution_tails/opid/{$opid}/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i>返回上层</a>
+                                </if>
+                            </span>   
+                                
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel eq 3 ) AND ($searchc eq '')">
+                                    <span style="position: relative;float:right;right: 48%;top:1px;">
+                                    <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a>
+                                    </span>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel eq 3 ) AND ($searchc eq '')">
+                                    <span style="position: relative;float:right;right: 48%;top:1px;">
+                                    <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a>
+                                    </span>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel) AND ($_GET['member'] neq '' ) AND ($searchc eq '')">
+                                    <span style="position: relative;float:right;right: 48%;top:1px;">
+                                    <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a>
+                                    </span>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 ) AND ($searchc eq '') AND ($_GET['member'] eq '' )">
+                                    <span style="position: relative;float:right;right: 48%;top:1px;">
+                                    <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a>
+                                    </span>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 ) AND ($manid eq '') AND ($searchc eq '')">
+                                    <span style="position: relative;float:right;right: 48%;top:1px;">
+                                    <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a>
+                                    </span>
+                                </if>
+
+                                                                                                                                                                            
+                        </div>
+                        <div class="widget-content nopadding">
+                            <div class="dataTables_wrapper">
+                                <table class ="table table-bordered table-striped data-table">
+                                    <thead>
+                                    <tr>
+                                        <if condition="$NowLevel eq 5 ">
+                                            <th>管理员ID</th>
+                                            <th>管理员名称</th>
+                                            <th>管理员级别</th>
+                                            <th>创建时间</th>
+                                            <!-- <th>创建时间</th> -->
+                                            <th>使用详情</th>
+                                            <elseif condition="($NowLevel gt 1)"/>
+                                            <th>管理员ID</th>
+                                            <th>管理员名称</th>
+                                            <th>管理员级别</th>
+                                            <th>主账户</th>
+                                            <th>创建时间</th>
+                                            <th>使用详情</th>
+                                            <elseif condition="($NowLevel eq 1) AND ($member neq '')"/>
+                                            <th>管理员ID</th>
+                                            <th>管理员名称</th>
+                                            <th>管理员级别</th>
+                                            <th>主账户</th>
+                                            <th>创建时间</th>
+                                            <th>使用详情</th>
+                                            <else />
+                                            <th>设备ID</th>
+                                            <th>设备名称</th>
+                                            <th>创建时间</th>
+                                            <th>主账户</th>
+                                            <th>有效时间</th>
+                                        </if>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <if condition="$total gt 0 ">
+                                        <if condition="$NowLevel eq 5 ">
+                                            <volist name="list" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo['opid']}</td>
+                                                    <td><a href="__URL__/dbution_tails/opid/{$vo.opid}}<?php if(!empty($_GET['p'])) {echo '/sp/'.$_GET['p'];}else{echo '/sp/1';} ?>">{$vo.opname}</a></td>
+                                                    <td>{$vo.level}</td>
+                                                    <td>{$vo.password}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <!--<input type="text" value="0%">-->
+                                                    <td width="35%" >
+                                                        <php>
+                                                            $arr = getmaxData($vo['opid']);
+                                                            $quota = $arr['quota'];
+                                                            $quotaed = $arr['quotaed'];
+                                                            $vquota = $quota - $quotaed;
+                                                            $pt = ceil(( $quotaed / $quota ) * 100);
+                                                        </php>
+                                                        <ul class="unstyled">
+                                                            <li> <span class="icon24 icomoon-icon-arrow-up-2 green"></span>
+                                                                <div class="progress progress-striped ">
+                                                                    <div style="width:{$pt}%;" class="bar"></div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <br/>
+                                                        <div>
+                                                            <span style="float: left;">已使用额度 {$quotaed} </span>
+                                                            <span>未使用额度 {$vquota}</span>
+                                                            <span class="mfr">总额度 {$quota} </span>
+                                                        </div>
+                                                    </td>
+                                                    </td>
+                                                </tr>
+                                            </volist >
+
+                                            <elseif condition="$NowLevel neq 1"/>
+                                            <volist name="list" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo.opid}</td>
+                                                    <td><a href="__URL__/dbution_tails/opid/{$vo.opid}">{$vo.opname}</a></td>
+                                                    <td>{$vo.level}</td>
+                                                    <td>{$manName}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <td width="35%" >
+                                                        <php>
+                                                            $arr = getmaxData($vo['opid']);
+                                                            $quota = $arr['quota'];
+                                                            $quotaed = $arr['quotaed'];
+                                                            $vquota = $quota - $quotaed;
+                                                            $pt = ceil(( $quotaed / $quota ) * 100);
+                                                        </php>
+                                                        <ul class="unstyled">
+                                                            <li> <span class="icon24 icomoon-icon-arrow-up-2 green"></span>
+                                                                <div class="progress progress-striped ">
+                                                                    <div style="width:{$pt}%;" class="bar"></div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <br/>
+                                                        <div>
+                                                            <span style="float: left;">已使用额度 {$quotaed} </span>
+                                                            <span>未使用额度 {$vquota}</span>
+                                                            <span class="mfr">总额度 {$quota} </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </volist>
+                                            <elseif condition="($NowLevel eq 1)AND ($member neq '')"/>
+                                            <volist name="list" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo.opid}</td>
+                                                    <td><a href="__APP__/Admin/Index/device_list/opid/{$vo.opid}/link/ad">{$vo.opname}</a></td>
+                                                    <!-- <td><a href="__APP__/Admin/Index/device_list/opid/{$vo.opid}/link/ad<?php if(!empty($_GET['sp'])) {echo '/sp/'.$_GET['sp'];}else{echo '/sp/1';} if(!empty($_GET['p'])) {echo '/yp/'.$_GET['p'];}else{echo '/yp/1';}?>">{$vo.opname}</a></td> -->
+                                                    <td>{$vo.level}</td>
+                                                    <td>{$manName}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <td width="35%" >
+                                                        <php>
+                                                            $arr = getmaxData($vo['opid']);
+                                                            $quota = $arr['quota'];
+                                                            $quotaed = $arr['quotaed'];
+                                                            $vquota = $quota - $quotaed;
+                                                            $pt = ceil(( $quotaed / $quota ) * 100);
+                                                        </php>
+                                                        <ul class="unstyled">
+                                                            <li> <span class="icon24 icomoon-icon-arrow-up-2 green"></span>
+                                                                <div class="progress progress-striped ">
+                                                                    <div style="width:{$pt}%;" class="bar"></div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <br/>
+                                                        <div>
+                                                            <span style="float: left;">已使用额度 {$quotaed} </span>
+                                                            <span>未使用额度 {$vquota}</span>
+                                                            <span class="mfr">总额度 {$quota} </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </volist>
+
+                                            <else />
+                                            <volist name="list" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo.uid}</td>
+                                                    <td>{$vo.username}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <td>{$manName}</td>
+                                                    <td>{$vo.validtime}</td>
+                                                </tr>
+                                            </volist>
+
+                                        </if>
+
+                                        <else />
+                                        <td colspan="11">无记录</td>
+                                    </if>
+
+
+                                    </tbody>
+                                </table>
+                                <!--<table class="table table-bordered table-hover definewidth m10">
+                                    <thead>
+                                    <tr>
+                                        <if condition="($NowLevel gt 1 )" >
+                                            <th>管理员账号</th>
+                                            <th>管理员名称</th>
+                                            <th>管理员级别</th>
+                                            <th>主账户</th>
+                                            <th>创建时间</th>
+                                            <if condition="($iLevel gt 3 )" >
+                                                <th>外网IP地址</th>
+                                            </if>
+                                            <th>已注册账号数</th>
+                                            <th>额度使用详情</th>
+                                            <if condition="($iLevel eq 5 )" >
+                                                <th>操作</th>
+                                            </if>
+                                            <elseif condition="($NowLevel lt 2)" />
+                                            <th>设备ID</th>
+                                            <th>设备名</th>
+                                            <th >创建时间</th>
+                                            <th>主账户</th>
+                                            <if condition="($iLevel gt 3 )" >
+                                                <th>外网IP地址</th>
+                                            </if>
+                                            <th>到期时间</th>
+                                            <if condition="($NowLevel eq 0 )" >
+                                                <th>testflg</th>
+                                                <th>resetflg</th>
+                                                <th>操作</th>
+                                            </if>
+                                        </if>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <if condition="($NowLevel gt 1 )" >
+                                        <volist name ="list" id ="v">
+                                            <tr>
+                                                <td> {$v['opid']} </td>
+                                                <td><a href="__URL__/dbution_tails?subOpid={$v['opid']}"> {$v['opname']} </a></td>
+                                                <td> {$v['level']}  </td>
+                                                <td>
+                                                    <php>
+                                                        echo getAdName($v['manid']);
+                                                    </php>
+                                                </td>
+                                                <td> {$v['createtime']}</td>
+                                                <if condition="($iLevel gt 3 )" >
+                                                    <td>{$v['ipaddout']}</td>
+                                                </if>
+                                                <td><php>usedNum($v['opid'])</php></td>
+                                                <td>
+                                                    <php>
+                                                        $arr = getmaxData($v['opid']);
+                                                        $quota = $arr['quota'];
+                                                        $quotaed = $arr['quotaed'];
+                                                        $vquota = $quota - $quotaed;
+                                                        $pt = ceil(( $quotaed / $quota ) * 100);
+                                                    </php>
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:{$pt}%;">
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div>
+                                                        <span>已使用额度 {$quotaed} </span>
+                                                        <span>未使用额度 {$vquota}</span>
+                                                        <span class="mfr">总额度 {$quota} </span>
+                                                    </div>
+                                                </td>
+                                                <if condition="($iLevel eq 5 )" >
+                                                    <td><a href='__URL__/quotadown?opid={$v["opid"]}'>下发额度</a></td>
+                                                </if>
+
+                                            </tr>
+                                        </volist>
+                                        <elseif condition="$NowLevel lt 2 " />
+                                        <volist name = "list" id = "v">
+                                            <tr>
+                                                <td> {$v['uid']} </td>
+                                                <td> {$v['username']} </td>
+                                                <td> {$v['createtime']} </td>
+                                                <td>
+                                                    <php>
+                                                        echo getAdName($v['manid']);
+                                                    </php>
+                                                </td>
+                                                <if condition="($iLevel gt 3 )" >
+                                                    <td>{$v['ipaddout']}</td>
+                                                </if>
+                                                <php>
+                                                    $s = strtotime($v['validtime']);
+                                                    $vtime = substr($v['validtime'], 0, 10);
+                                                    $date = $s - strtotime(date("Y-m-d H:i:s"));
+                                                    $state = getState($v['uid']);
+                                                    $sqtime = 7*86400; //7天换算成秒
+                                                </php>
+
+                                                <if condition="($s neq '')">
+                                                    <if condition="($state eq 1)">
+                                                        <td style="color:red" >{$v['validtime']}(已被暂停)</td>
+                                                        <elseif condition="($date gt 0) AND ($date elt $sqtime) " />
+                                                        <td style="color:red" > {$v['validtime']}</td>
+                                                        <elseif condition="($date lt 0)"/>
+                                                        <td style="color:red" >{$v['validtime']}(已过期)</td>
+                                                        <else />
+                                                        <td>{$v['validtime']}</td>
+                                                    </if>
+
+                                                    <else />
+                                                    <td> {$v['validtime']} </td>
+                                                </if>
+                                                <if condition="($NowLevel eq 0 )" >
+                                                    <td> {$v['testflg']} </td>
+                                                    <td> {$v['resetflg']} </td>
+                                                    <td> <a href = "__URL__/device_edits?uid={$v['uid']}">恢复设定</a> </td>
+                                                </if>
+                                            </tr>
+                                        </volist>
+                                    </if>
+
+
+                                    </tbody>
+                                </table>-->
+                                <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header">
+                                    <div class="dataTables_filter">
+                                        <form action="__URL__/dbution_tails" name="formsearch" method="get" id="formsearch">
+                                            <input type="hidden" value="" name="opid">
+                                            <a href="javascript:;" id="searcha" onclick="ser();"> 搜索:</a> 
+                                            <input type="text" placeholder="名称或ID" name="searchc" id="searchc">
+                                        </form>
+                                    </div><br/><br/>
+                                <input type="hidden" id="showpn" value="{$showpn}" />
+                                <input type="hidden" id="psearchc" value="{$searchc}" />
+                                <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif; float: right;">{$page}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="" value="cn" id="s_lang">
+    <script src="__PUBLIC__/js/jquery.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+    <script src="__PUBLIC__/js/select2.min.js"></script>
+    <!--<script src="js/jquery.dataTables.min.js"></script>-->
+    <script src="__PUBLIC__/js/unicorn.js"></script>
+    <!--<script src="js/unicorn.tables.js"></script>-->
+    <script>
+        //跳转到指定第n页
+        $("#npage_qd").click(function() {
+            var pagenum = $("#npage_num").val();
+            var pagenum = Number(pagenum);
+            var showpn = $("#showpn").val();
+            var showpn = Number(showpn);
+
+            var psearchc = $("#searchc").val();
+            if (isNaN(pagenum)) {
+                alert("请输入数字");
+            }
+            if (pagenum.length !==0) {
+                if(pagenum >= showpn){
+                    pagenum = showpn;
+                }
+                if(pagenum < 1){
+                    pagenum = 1;
+                }
+                if (psearchc != '') {
+                    window.location = "__URL__/dbution_tails/searchc/"+psearchc+"/p/"+pagenum;
+                }else{
+                    window.location = "__URL__/dbution_tails/p/"+pagenum;
+                }
+            }
+            
+        });
+        function ser() {
+            var Searchc = document.formsearch.searchc;
+            if (Searchc.value != "") {
+                document.formsearch.submit();
+            }
+        }
+        
+    </script>
+</body>
+</html>

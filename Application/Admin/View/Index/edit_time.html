@@ -1,0 +1,80 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>									
+                                </span>
+                                <h5>有效时间修改</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form name="form1" id="form1" class="form-horizontal" method="post" action="__URL__/edit_time" >
+                                    <input type="hidden" name="uid" readonly="true" value="{$rowData.uid}" class="nw"/>
+                                    <div class="control-group">
+                                        <label class="control-label">用户账号</label>
+                                        <div class="controls">
+                                            <input type="text" name="account" readonly="true" value="{$rowData.account}" class="nw"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">创建时间</label>
+                                        <div class="controls">
+                                            <input type="text" name="createtime" readonly="true" value="{$rowData.createtime}" class="nw"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">有效时间</label>
+                                        <div class="controls input-append date" id="PaymentTime" data-date="" data-date-format="yyyy-mm-dd">
+                                            <input size="8" type="text" name="endDate" id="endDate" value="{$rowData.validtime}" placeholder="到期时间" style="height: 30px;"  readonly>
+                                            <span class = "add-on"><i class="icon-calendar"></i></span>
+                                        </div>*点击右侧小日历选择时间
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-default" type="button">保存</button>&nbsp;&nbsp;
+                                        <a href="__URL__/d_list/p/{$dp}" class="btn btn-default">返回列表</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>			
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.validate.js"></script>
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script src="__PUBLIC__/js/unicorn.form_validation.js"></script>
+        <script src="__PUBLIC__/js/bootstrap-datetimepicker.js"></script>
+        <script>
+
+            $(function () {
+                var Validtime = $("#endDate").val();
+                $('.date').datetimepicker({
+                    format: 'yyyy-mm-dd hh:ii:ss',
+                    todayBtn: true,
+                    minView: 'month',
+                    autoclose: true,
+                    todayHighlight: true
+                });
+                $('#form1 :submit').click(function () {
+                    if ($("#endDate").val() == Validtime) {
+                        alert("有效时间未改变");
+                        return false;
+                    }
+                })
+            });
+        </script>
+    </body>
+</html>

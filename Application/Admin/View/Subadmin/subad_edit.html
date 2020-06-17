@@ -1,0 +1,319 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="myAlert" class="modal rorder" style="display: none">
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label">原密码</label>
+                    <div class="controls">
+                        <input type="password" name="opassword" id="opassword" value=""  placeholder="请输入原密码" class="nw"  autocomplete="off"/>
+                        <input type="hidden" name="ocheckpwd" id="ocheckpwd" value="" class="nw"/>
+                        <span id="opwmsg"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">新密码</label>
+                    <div class="controls">
+                        <input type="password" name="password" id="password" value="" placeholder="请输入新密码" class="nw" autocomplete="off"/>
+                        <input type="hidden" name="checkpwd" id="checkpwd" value=""  class="nw"/>
+                        <span id="pwmsg">*不能包含除了下划线“_”以外的特殊字符</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">确认新密码</label>
+                    <div class="controls">
+                        <input type="password" name="repassword" id="repassword" value="" placeholder="请确认新密码" class="nw" autocomplete="off" />
+                        <input type="hidden" name="recheckpwd" id="recheckpwd" value="" class="nw"/>
+                        <span id="repwmsg"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" id="confire">保存密码</button>
+                <button type="button" class="btn btn-default" id="cancel">取消</button>
+            </div>
+        </div>
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>二级管理修改</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form name="form1" class="form-horizontal" method="post" onsubmit="return CheckAdmin()" action="__URL__/subad_edit">
+                                    <div class="control-group">
+                                        <input type="hidden" class="nw" id="subopid"  name="subopid" id="subopid" value="{$row.opid}" />
+                                        <label class="control-label">二级管理名称</label>
+                                        <div class="controls">
+                                            <input type="text" id="subopname" name="subopname" value="{$row.opname}" class="nw" style="height: 30px;" />&nbsp;
+                                            <span id="subopname_res"></span>
+                                            <input type="hidden" class="nw" name="subopname_res" id="subname_q" value="" />
+                                        </div>
+                                        <!-- <input type="hidden" class="nw" name="level" value="10" readonly="true"/> -->
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">密码</label>
+                                        <div class="controls">
+                                            <input type="password" name="password" class="nw" value="wer798" readonly="true" style="height: 30px;"  autocomplete="off"/>
+                                            <span id="pwmsg"></span>
+                                            <button type="button" class="btn btn-default" id="u_pwd">修改密码</button>&nbsp;&nbsp;
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label"><br/>备注</label>
+                                        <div class="controls">
+                                            <textarea name="notes" cols="1" rows="4" value="" style="overflow:hidden; width: 19.3%;" >{$row.notes}</textarea>
+                                        </div>
+                                        <input type="hidden" name="p" class="nw" value="{$_GET['p']}" />
+                                        <input type="hidden" name="urlp" class="nw" value="{$_GET['urlp']}" />
+                                    </div>
+                                    <!-- <div class="control-group">
+                                        <label class="control-label">最大终端数量</label>
+                                        <div class="controls">
+                                            <input type="text" name="maxuser" class="nw" value="{$row.maxuser}" />
+                                        </div>
+                                    </div> -->
+                                    <div class="form-actions">
+                                        <input type="hidden" name="totalLeft" id="inSel" value="{$totalLeft}"/>
+                                        <button type="submit" class="btn btn-default" type="button">保存</button>&nbsp;&nbsp;
+                                        <a href="__URL__/subad_list/p/<?php if (!empty($_GET['p'])) {echo $_GET['p'];}else{echo 1;}?>" class="btn btn-default">返回列表</a>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>          
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.validate.js"></script>
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script src="__PUBLIC__/js/unicorn.form_validation.js"></script>
+        <script type="text/javascript">
+
+            var totalLeft = parseInt(document.form1.totalLeft.value);
+            function CheckAdmin()
+            {
+                var maxuser = document.form1.maxuser.value;
+                if (isNaN(maxuser)) {
+                    alert("最大终端数量只能填写数字!");
+                    return false;
+                }
+                var maxuser = parseInt(document.form1.maxuser.value);
+                if (maxuser > totalLeft || totalLeft == 0)
+                {
+                    alert("可分配账号数量不足，请联系系统管理员!!");
+                    return false;
+                }
+
+                if (document.form1.subopname.value.length == 0 )
+                {
+                    alert("请填写完整二级管理信息!");
+                    return false;
+                }
+                var len = document.form1.subopname.value.length;
+                //alert(len);
+                if ( len > 30 )
+                {
+                    alert("二级管理名称长度不正确!");
+                    return false;
+                }
+
+                var subopname_res = document.form1.subopname_res.value;
+                if (subopname_res == 4) {
+                    alert("二级管理名称已被使用，请重新填写!");
+                    return false;
+                }
+                if (subopname_res == 5) {
+                    alert("二级管理名称长度不能超过10个中文字符，30个英文字符!");
+                    return false;
+                }
+
+                return true;
+            }
+
+            $(function () {         
+                $('#subopname').bind('input propertychange', function () {
+                    var subopid = $('#subopid').val();
+                    var subopname = $('#subopname').val();
+                    $.post("__URL__/subopname_select", {subopname: subopname,subopid:subopid}, function (data) { 
+                        var obj = data; 
+                        //alert(obj);
+                        if (obj == 3) {
+                            $('#subopname_res').html('<span style="color: green">可以使用</span>'); 
+                            $('#subname_q').val("3");
+                            return true;
+                        }else if(obj == 4){
+                            $('#subopname_res').html("<span style='color:red;'>已被使用，请重新填写！</span>");
+                            $('#subname_q').val("4");
+                            return false;
+                        }else if(obj == 5){
+                            $('#subopname_res').html("<span style='color:red;'>长度不能超过10个中文字符，30个英文字符</span>");
+                            $('#subname_q').val("5");
+                            return false;
+                        }else{
+                            $('#subopname_res').html("");
+                            return false;
+                        }
+                        
+                    });
+                });
+
+                //修改密码
+                $(".modal").css("display", "none"); //默认不显示
+                $("#u_pwd").click(function () {
+                    $(".modal").css("display", "block");
+                })
+                $("#cancel").click(function () {
+                    $('#opwmsg').html("");
+                    $('#pwmsg').html(""); 
+                    $('#pwmsg').html("*不能包含除了下划线“_”以外的特殊字符"); 
+                    $('#repwmsg').html("");
+                    $('#opassword').val("");
+                    $('#password').val("");
+                    $('#repassword').val("");
+                    $(".modal").css("display", "none");
+                })
+
+                //密码校验      
+                $('#password').bind('input propertychange', function () {
+                    var pw = $('#password').val();
+                    $.post("__URL__/pregSubadPass", { password: pw}, function (data) {
+                        var obj = JSON.parse(data);   
+                        //var obj = data; 
+                        if(obj == 4){
+                            var str = '<span id="pwdtip" style="color: red">*至少包含数字、大小写字母或"_"其中的2种，长度为6-18位</span>';
+                            $('#pwmsg').html("");
+                            $('#pwmsg').html(str);
+                            $('#checkpwd').val("44");
+
+                        }else{
+                            var str = "";
+                            $('#pwmsg').html(str);
+                            $('#checkpwd').val("33");
+                        }
+                        
+                    });
+                });
+
+                $('#repassword').blur(function(){
+                    var repw = $('#repassword').val();
+                    $.post("__URL__/pregSubadPass", {repassword: repw}, function (data) {
+                        
+                        var obj = JSON.parse(data);   
+                        //var obj = data; 
+                        if(obj == 4){
+                            var str = '<span style="color: red">*两次密码输入不一致！</span>';
+                            $('#repwmsg').html(str);
+                            $('#recheckpwd').val("44");
+
+                        }else{
+                            var str = "";
+                            $('#repwmsg').html(str);
+                            $('#recheckpwd').val("33");
+                        }
+                        
+                    });
+                });
+
+                //获取原密码
+                $('#opassword').blur(function(){
+                    var opw = $('#opassword').val();
+                    var subopid = $('#subopid').val();
+                    var opid = $('#gopid').val();
+                    $.post("__URL__/subadPass", {opassword: opw,subopid:subopid,opid:opid,type:1}, function (data) {
+                        
+                        var obj = JSON.parse(data);   
+                        //var obj = data; 
+                        if(obj == 4){
+                            var str = '<span style="color: red">*原密码不正确！</span>';
+                            $('#opwmsg').html(str);
+                            $('#ocheckpwd').val("44");
+
+                        }else{
+                            var str = "";
+                            $('#opwmsg').html(str);
+                            $('#ocheckpwd').val("33");
+                        }
+                        
+                    });
+                });
+
+                //提交新密码
+                $("#confire").click(function () {  
+                    var opw = $('#opassword').val();
+                    var pw = $('#password').val();
+                    var repw = $('#repassword').val();
+                    var subopid = $('#subopid').val();
+                    var opid = $('#gopid').val();
+                    if (opw.length == 0) {
+                        alert("原密码不能为空！");
+                        return false;
+                    }
+                    if (pw.length == 0) {
+                        alert("新密码不能为空！");
+                        return false;
+                    }
+                    if (repw.length == 0) {
+                        alert("请确认新密码！");
+                        return false;
+                    }
+                    if ($("#ocheckpwd").val()=="44") {
+                        alert("原密码不正确!");
+                        return false;
+                    }
+                    if ($("#checkpwd").val()=="44") {
+                        alert("新密码格式不正确!");
+                        return false;
+                    }
+                    if ($("#recheckpwd").val()=="44") {
+                        alert("两次密码输入不一致!");
+                        return false;
+                    }
+                    
+                    
+                    $.post("__URL__/subadPass", {password: pw,repassword:repw,subopid:subopid,opid:opid,type:2}, function (data) {           
+                        var obj = JSON.parse(data);   
+                        //var obj = data; 
+                        if(obj == 4){
+                            var str = '<span style="color: red">*原密码不正确！</span>';
+                            $('#opwmsg').html(str);
+                            $('#ocheckpwd').val("44");
+                            return false;
+
+                        }
+                        else if(obj == 41){
+                            alert("修改失败！");
+                            $('#ocheckpwd').val("44");
+                            return false;
+                        }
+                        else{
+                            $('#ocheckpwd').val("33");
+                            alert("修改成功！");
+                            $('#opassword').val("");
+                            $('#password').val("");
+                            $('#repassword').val("");
+                            $(".modal").css("display", "none");
+                            return false;
+                        }
+                        
+                    });
+                });
+
+            });
+
+        </script>
+    </body>
+</html>

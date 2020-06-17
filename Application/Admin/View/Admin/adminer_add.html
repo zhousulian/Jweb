@@ -1,0 +1,170 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>管理员添加</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form name="form1" class="form-horizontal" method="post" onsubmit="return CheckAdmin()" action="__URL__/adminer_add">
+                                    <div class="control-group">
+                                        <label class="control-label">管理员名称</label>
+                                        <div class="controls">
+                                            <input type="text" name="opname" value="" class="nw" autocomplete="off"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label">管理员级别</label>
+                                        <div class="controls">
+                                            <if condition="($iLevel eq 0) "> 
+                                                <input type="text" class="nw" name="level" value="0" readonly="true"/>
+                                            <else />
+                                                <input type="text" class="nw" name="level" value="{$iLevel-1}" readonly="true"/>
+                                            </if>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">管理员密码</label>
+                                        <div class="controls">
+                                            <input type="password" name="password" id="passwd"  class="nw" autocomplete="new-password" autocomplete="off"/>
+                                            <input type="hidden" name="checkpwd" id="checkpwd" value="44" class="nw"/>
+                                            <span id="pwmsg"></span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">确认密码</label>
+                                        <div class="controls">
+                                            <input type="password" name="repassword" class="nw" id="repasswd" autocomplete="new-password" autocomplete="off"/>
+                                            <input type="hidden" name="recheckpwd" id="recheckpwd" value="44" class="nw"/>
+                                            <span id="repwmsg"></span>
+                                        </div>
+                                    </div>
+                                    <!--<div class="control-group">
+                                        <label class="control-label">管理员备注</label>
+                                        <div class="controls">
+                                            <input type="text" name="notes" class="nw"/>
+                                        </div>
+                                    </div>-->
+                                    <!--<div class="control-group">
+                                        <label class="control-label">最大终端数量</label>
+                                        <div class="controls">
+                                            <input type="text" name="quota" class="nw"/>
+                                        </div>
+                                    </div>-->
+                                    <div class="form-actions">
+                                        <!--<input type="hidden" name="totalLeft" id="inSel" value="{$totalLeft}"/>-->
+                                        <button type="submit" class="btn btn-default" type="button">保存</button>&nbsp;&nbsp;
+                                        <if condition="$iLevel eq 4 ">  
+                                        <a href="__URL__/dbution_tails" class="btn btn-default">返回列表</a>
+                                        <else />
+                                        <a href="__URL__/adminer_list" class="btn btn-default">返回列表</a>
+                                        </if>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>          
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.validate.js"></script>
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script src="__PUBLIC__/js/unicorn.form_validation.js"></script>
+        <script type="text/javascript">
+        //密码校验       
+            $('#passwd').bind('input propertychange', function () {
+                var pw = $('#passwd').val();
+                $.post("__URL__/pregadPass", {password: pw}, function (data) { 
+                    var obj = JSON.parse(data);   
+                    //var obj = data; 
+                    if(obj == 4){
+                        var str = '<span style="color: red">*密码至少要包含大写/小写字母/数字或下划线的其中2种，长度为6-18位</span>';
+                        $('#pwmsg').html(str);
+                        $('#checkpwd').val("44");
+
+                    }else{
+                        var str = "";
+                        $('#pwmsg').html(str);
+                        $('#checkpwd').val("33");
+                    }
+                    
+                });
+            });
+
+            $('#repasswd').blur(function(){
+                var repw = $('#repasswd').val();
+                $.post("__URL__/pregadPass", {repassword: repw}, function (data) {
+                    
+                    var obj = JSON.parse(data);   
+                    //var obj = data; 
+                    if(obj == 4){
+                        var str = '<span style="color: red">*两次密码输入不一致！</span>';
+                        $('#repwmsg').html(str);
+                        $('#recheckpwd').val("44");
+
+                    }else{
+                        var str = "";
+                        $('#repwmsg').html(str);
+                        $('#recheckpwd').val("33");
+                    }
+                    
+                });
+            });
+
+
+            var totalLeft = parseInt(document.form1.totalLeft.value);
+            function CheckAdmin()
+            {
+                var maxuser = document.form1.maxuser.value;
+                if (isNaN(maxuser))
+                {
+                    alert("最大终端数量只能填写正整数!");
+                    return false;
+                }
+                var maxuser = parseInt(document.form1.maxuser.value);
+                if (maxuser > totalLeft || totalLeft == 0)
+                {
+                    alert("可分配账号数量不足，请联系系统管理员!!");
+                    return false;
+                }
+                
+
+                if (document.form1.opname.value.length == 0 ||
+                        document.form1.level.value.length == 0 ||
+                        document.form1.maxuser.value.length == 0 ||
+                        document.form1.password.value.length == 0 ||
+                    document.form1.repassword.value.length == 0)
+                {
+                    alert("请填写完整管理员信息!");
+                    return false;
+                }
+                if (document.form1.checkpwd.value == 44) {
+                    alert("密码格式不正确!");
+                    return false;
+                }
+                if (document.form1.recheckpwd.value == 44) {
+                    alert("两次密码输入不一致!");
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
+    </body>
+</html>

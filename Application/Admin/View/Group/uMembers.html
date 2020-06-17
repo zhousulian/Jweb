@@ -1,0 +1,277 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+<div class='expir_tips' style="padding-left:4px;display:none;top:188px;background-color: #a6d3ee;position:absolute;z-index: 301;left: 36%;float:left; height: auto;width: 410px;">
+    <span class="cenclose" style="position:relative;float:right;top:3px; right: 6px;font-size: 16px;cursor: pointer;" >X</span>
+    <input type="hidden" class="expir_num" value="{$exipircnt}">
+    <div style="position: relative;top: 22px;left:3%;">
+    <b>请填写提醒消息:</b>&nbsp;   <span style="color: #f3141d;">(*不得超过50个汉字)</span>
+    <span class="pages result  page pagev"  style="font:10px '\5B8B\4F53', san-serif;  float: right;position: relative;top:5px;">{$pagev}</span>
+    <br/>
+    <span>
+    <textarea style="position: relative;top:10px;width:90%;height: 83px;background-color: #eff1f1;" id="message">您的设备账号即将到期，为不影响使用，请及时续费。</textarea>
+
+    </span>
+    <br/><br/><br/>
+    <input type="hidden" name="vtipsSta"  id="vtipsSta" value="{$vtipsSta}" />
+    </div>
+    <span  id="conbtn" style="position: relative;left:77%;top: 1px;bottom: 5px;">
+    <button class="btn btn-success" type="submit" id="tipConfire">广播提醒</button>
+    <!-- <button class="btn btn-default" type="button" id="cancel">取消</button> -->
+    </span>
+    <br/>&nbsp;
+</div>
+
+<div id="content">
+    <include file="Public:nav_bar" />
+    <div id="content-header">
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <span class="icon">
+                            <i class="icon-align-justify"></i>
+                        </span>
+                        <h5>群组成员详情</h5>
+                        <span style="position: relative;top:2px;">
+                        <a href="__URL__/group_add" class="btn nom"><i class="icon-plus-sign"></i>群组添加</a>
+                        <if condition="$iLevel gt 1 ">
+                        <a href="__URL__/adminer_list/p/{$_GET['p']}" class="btn nom"><i class="icon-arrow-left"></i>返回上层管理员列表</a>
+                        </if>
+                        <span class="space"></span>
+                        <!-- <span class="noa">授权终端数: {$maxuser} </span>&nbsp;&nbsp;
+                        <span class="noa">已分配终端数: {$usednum} </span>&nbsp;&nbsp;
+                        <span class="noa">可分配终端数: {$validuser} </span>&nbsp;&nbsp;
+                        -->
+                        <button type="button" class="btn btn-default" id="v_xf" style="position: relative;left: 5px;"><!--<i class="glyphicon glyphicon-info-sign"></i>-->续费提醒</button>
+                        <if condition="($searchc neq '' ) OR ($glist neq '' )">
+                        <a href="__URL__/group_list/p/{$_GET['urlp']}" class="btn noa btn-default" style="position: relative;top:-1px;left: 16%;"><i class="icon-arrow-left"></i> 返回上层群组列表</a>
+                        </if>
+                        </span>
+
+                    </div>
+                    <div class="widget-content nopadding">
+                        <div class="dataTables_wrapper">
+                            <table class="table table-bordered data-table" id="table" >
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" name="sel_add" id="id_selall" value="" onclick="SelectAll()" /></th>
+                                        <th>群组ID</th>
+                                        <th>群组名称</th>
+                                        <th>用户ID</th>
+                                        <th>状态</th>
+                                        <th>用户名称</th>
+                                        <th>账号</th>
+                                        <th>GPS</th>
+                                        <th>级别</th>
+                                        <th>群组创建时间</th>
+                                        <th>用户创建时间</th>
+                                        <th>用户有效时间</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                        <!-- <th>操作</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <if condition="$total gt 0 ">
+                                        <volist name="uids" id="v">
+                                        <tr>
+                                            <td><input type="checkbox" class="sel" name="sel" value="{$v.uid}"></td>
+                                            <td id="ugid">{$gid}</td>
+                                            <td>{$glist.gname}</td>
+                                            <td>{$v.uid}</td>
+                                            <php>$usta = getStadata($v['uid']);</php>
+                                            <if condition="$usta.online gt 0 ">
+                                            <td style="color: green">在线</td>
+                                            <else />
+                                            <td>离线</td>
+                                            </if>
+                                            <php>$udata = getUmeber_udata($v['uid']);</php>
+                                            <td>{$udata['username']}</td>
+                                            <td>{$udata['account']}</td>
+                                            <td>{$udata['gpscycle']}</td>
+                                            <td>{$udata['level']}</td>
+                                            <td><php> echo substr($glist['createtime'],0,10)</php></td>
+                                            <td>{$udata['createtime']|substr=0,10}</td>
+                                            <td>{$udata['validtime']|substr=0,10}</td>
+                                            <!-- <td><php> echo substr($v['validtime'],0,10)</php></td> -->
+                                            <td>{$usta['note']}</td>
+                                            <!-- <td><a href="__APP__/Admin/Index/device_edit/uid/{$v.uid}/gid/{$gid}&p={$_GET['p']}&urlp={$_GET['urlp']}">修改</a></td> -->
+                                            <td>
+                                                <input type="hidden" id="paramuid"  name="urlp" value="{$_GET['p']}" />
+                                                <a href="javascript:void(0);" onclick="updateloc({$v['uid']},{$gid},'gp')">修改</a>
+                                                <!-- <a href="{:U('Index/device_edit',array('uid'=>$v['uid'],'p'=>$_GET['p']))}" >修改</a> -->
+                                            </td>
+                                        </tr>
+                                        </volist>
+                                    <else />
+                                        <tr>
+                                            <td colspan="11">无记录</td>
+                                        </tr>
+                                    </if>
+                                </tbody>
+                            </table>
+                            <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header">
+                                <!-- <div class="dataTables_filter">
+                                    <form action="__URL__/device_list" name="formsearch" method="get" id="formsearch">
+                                        <input type="text" placeholder="名称或账号" name="searchc" id="searchc" value="{$searchc}">
+                                        <button class="btn btn-default" type="submit" id="searcha">搜索</button>
+                                    </form>
+                                </div> -->
+                                <br/><br/>
+                                <input type="hidden" id="showpn" value="{$showpn}" />
+                                <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif; float: right;">{$page}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/jquery.uniform.js"></script>
+<script src="__PUBLIC__/js/select2.min.js"></script>
+<!--<script src="js/jquery.dataTables.min.js"></script>-->
+<script src="__PUBLIC__/js/unicorn.js"></script>
+<!--<script src="js/unicorn.tables.js"></script>-->
+<script>
+    function SelectAll(){
+         var target = document.getElementById("id_selall");
+           //var input = document.getElementsByTagName("input");
+        var checkbox = document.getElementsByClassName("sel");
+        //alert(input.length);
+        //var n = 0;
+        for (var i = 0; i < checkbox.length; i++)
+        {
+         checkbox[i].checked = target.checked;    //全不选 与全选
+             checkbox[i].onclick = function()    //当有一个或多个不选时显示全选框不选中
+            {
+             var n = 0;
+             for (var i = 0; i < checkbox.length; i++)
+                {
+                  if(!checkbox[i].checked){  //计算未选中的个数
+                      n++;
+                  }
+                }
+                if ( !this.checked )
+                {
+                 target.checked = false;
+                }
+                if(n <=0){
+                 target.checked = true;
+                }
+            }
+        }
+    }
+    function updateloc(uid,gid,gu){
+        var p = $("#paramuid").val();
+        window.location.href='__APP__/Admin/Index/device_edit/uid/'+uid +"/gu/"+gu+'/p/'+p;  //+'/gid/'+gid
+    }
+    $(function () {
+        //提醒续费
+        $("#v_xf").click(function () {
+            var xfNum = $(".sel:checked").length;
+            if (xfNum < 1) {
+                alert("未选择任何用户");
+                return false;
+            }else{
+                //alert(delNum);
+                /*if (confirm("您已选中"+xfNum+"个用户，确定要全部提醒吗？")) {
+                    var chk_value = [];
+                    $(".sel:checked").each(function () {
+                        chk_value.push($(this).val());
+                    })
+
+                    alert(chk_value);
+                    console.log(chk_value);
+                    //window.location.href = "__URL__/device_delete/uid/" + chk_value+"/type/batch";
+                }*/
+
+
+                    $(".expir_tips").css({"display":"block"});
+                    $("#tipConfire").click(function () {
+                        var uid_arr = [];
+                        $(".sel:checked").each(function () {
+                            uid_arr.push($(this).val());
+                        });
+                        var uidNum = uid_arr.length;
+                        if (confirm("您已选中"+uidNum+"个设备用户,确定全部提醒吗？")) {
+                        var message = $("#message").val();
+                        var msglenth = message.length;
+                        if (msglenth < 1 || msglenth > 150) {
+                            alert("未填写广播消息或消息超过50个汉字！");
+                            return false;
+                        }
+                        var uidstr = uid_arr.join(',');  //将uid数组拼接成字符串
+                        //alert(uidstr);
+                        $.post("__APP__/Admin/Index/device_vtips", {uid: uidstr,message:message}, function (data) {
+                            var obj = data; //alert(obj);
+                            if(obj == "3"){
+                                alert("消息提醒已广播!");
+                                return false;
+                            }else{
+                                alert("未填写广播消息或消息超过50个汉字！");
+                                return false;
+                            }
+                        },"json");
+
+                        }
+
+                    });
+            }
+
+
+        });
+
+        $(".cenclose").click(function () {
+            //$.session.set('cenvtips', 'sesVal');
+            //$("#vtipsSta").val("2");
+            //$(".rvtips").empty().append("到期提醒");
+            $(".expir_tips").css("display", "none");
+            //关闭提示框状态
+            /*$.post("__URL__/vtips_sessSta", {type: "1"}, function (data) {
+                var obj = data;
+                //alert(obj);
+            });*/
+        });
+
+
+
+        $("#uedit").click(function() {
+            var gid = $("#ugid").val();
+            window.location = "__URL__/uMembers/uid/"+uid+"/gid"+gid;
+
+        });
+
+        //跳转到指定第n页
+        $("#npage_qd").click(function() {
+            var pagenum = $("#npage_num").val();
+            var pagenum = Number(pagenum);
+            var showpn = $("#showpn").val();
+            var showpn = Number(showpn);
+            if (isNaN(pagenum)) {
+                alert("请输入数字");
+            }
+            if (pagenum.length !== 0) {
+                if(pagenum > showpn){
+                    pagenum = showpn;
+                }
+                if(pagenum < 1){
+                    pagenum = 1;
+                }
+                window.location = "__URL__/uMembers/p/"+pagenum;
+            }
+        });
+
+
+        $("#formsearch :submit").click(function () {
+            $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+        })
+    })
+</script>
+</body>
+</html>

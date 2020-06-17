@@ -1,0 +1,191 @@
+<include file="Public:meta" />
+<include file="Public:subheader" />
+    <div id="content">
+        <include file="Public:subnav_bar" />
+        <div id="content-header">
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon">
+                                <i class="icon-align-justify"></i>                                  
+                            </span>
+                            <h5>群组添加</h5>
+                        </div>
+                        <form id="form1" name="form1" enctype="multipart/form-data" action="__URL__/group_add" method="POST" onsubmit="return CheckGroup()">
+                            <table class="table table-bordered table-striped m10">
+                                <tr>
+                                    <td width="10%" class="tableleft">群组名称</td>
+                                    <td style="text-align:left;"><input type="text" name="gname"/>  *允许输入中文，但最大长度不能超过8个中文字符</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft" width="10%">组内成员</td>
+                                    <input type="hidden" name="gnote" id="gnote"/>  <!-- 群组备注 -->
+                                    <input type="hidden" name="selVal" id="inSel"/>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-5 col-md-5">
+                                            
+                                            <br/><br/>
+                                                <select name="listSel" id="multiselect_to_1" class="form-control" size="8" multiple="multiple" onclick="return showMessage()">
+                                                </select>       
+                                            </div>
+                                            <div class="col-xs-2 col-md-2 mtop">
+                                            <br/><br/><br/>
+                                                <button type="button" id="right_All_1" class="btn btn-block"><i class="glyphicon glyphicon-forward">&lt;&lt;</i></button>
+                                                <button type="button" id="right_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right">&lt;</i></button>
+                                                <button type="button" id="left_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left">&gt;</i></button>
+                                                <button type="button" id="left_All_1" class="btn btn-block"><i class="glyphicon glyphicon-backward">&gt;&gt;</i></button>
+                                            </div>
+                                            <div class="col-xs-5 col-md-5">
+                                                <input type="hidden" value="{$opid}" id="accopid">
+                                                <input id="accsearch" type="text" placeholder="输入账号或名称搜索" >
+                                                <input id="gidsearch" type="text" placeholder="输入群组ID搜索" >
+                                                <select name="listUser"  id="listGup" class="multiselect form-control" size="8" multiple="multiple" data-right="#multiselect_to_1" data-right-all="#right_All_1"
+                                                        data-right-selected="#right_Selected_1" data-left-all="#left_All_1" data-left-selected="#left_Selected_1" id="searchList">
+                                                    <volist name="userData" id="v">
+                                                    <option value="{$v.uid}">{$v.username}({$v.account})</option>
+                                                    </volist>
+                                                </select>
+                                                     
+                                                
+                                            </div>
+                                        </div><br/>
+                                        <span>*操作提示： a、按住Ctrl+单击多个条目+单击单箭头按钮：可同时移动选中信息 (放开Ctrl+转动鼠标滚轮或按住Ctrl+单击滚动条箭头可查找更多信息)；<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b、单击双箭头按钮：可移动列表全部信息；</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" class="tableleft">备注</td> 
+                                    <td><textarea name="gn" id="gn" cols="40" rows="4" value="" style="overflow:hidden;" ></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft"></td>
+                                    <td>
+                                        <button type="submit" class="btn" type="button">保存</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn" name="backid" id="backid">返回列表</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="" value="{$smarty.session.lang}" id="s_lang">
+    <!--Footer-part-->
+
+    <!--end-Footer-part-->
+    <script src="__PUBLIC__/js/jquery.min.js"></script>
+    <!--jquery左右选择插件-->
+    <script type="text/javascript" src="__PUBLIC__/js/multiselect.js"></script>
+    <script>
+        $(function() {
+
+            $('#backid').click(function() {
+                window.location.href = "__URL__/group_list";
+            });
+
+        });
+        jQuery(document).ready(function($) {
+            $('.multiselect').multiselect();
+        });
+    </script>
+    <script type="text/javascript">
+
+        function CheckGroup()
+        {
+            if (document.form1.gname.value.length == 0)
+            {
+                alert("请输入群组名称!");
+                return false;
+            }
+
+            if (document.form1.gname.value.length > 8)
+            {
+                alert("群组名称最大长度为8个字符!");
+                return false;
+            }
+            //将备注信息通过隐藏域发送至后台
+            var gn = document.getElementById("gn").value;
+            var gnote = document.getElementById("gnote").value = gn;
+            //把选中的设备存这
+            var obj = document.getElementById("multiselect_to_1");
+            var length = obj.options.length;
+            var selVal = "";
+            for (var i = 0; i < length; i++)
+            {
+                selVal += obj.options[i].value + '|';
+            }
+            document.getElementById("inSel").value = selVal;
+            return true;
+        }
+
+    </script>
+    <script type="text/javascript">
+        $(function () {         
+            $('#accsearch').bind('input propertychange', function () {
+                var accopid = $('#accopid').val();
+                var accName = $('#accsearch').val();
+                $.post("__URL__/accSearch", { Account: accName, Opid: accopid }, function (data) {
+                    var str = '';
+                    //var obj = JSON.parse(data);   
+                    var obj = data; 
+                    //alert(obj);
+                    for (var i in obj) {
+                        str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "(" + obj[i].account + ")" + "</option>";
+                    }
+                    $("#listGup").empty().append(str);
+                    // 删除左边有的
+                    var leftO = $("#multiselect_to_1 option").map(function () {
+                        return $(this).val();
+                    }).get().join(",");
+                    //保存到数组arr
+                    arr = leftO.split(',');
+                    for (var i in arr) {
+                        $("#listGup option[value='" + arr[i] + "']").remove();
+                    }
+                });
+            });
+        });
+
+        $(function () {
+
+            $('#gidsearch').bind('input propertychange', function () {
+                var opid = $('#accopid').val();
+                var gid = $('#gidsearch').val();
+                $.post("__URL__/gidmemberSearch", { gid: gid, opid: opid }, function (data) {
+                    var str = '';
+                    //var obj = JSON.parse(data);
+                    var obj = data;
+                    //console.log(obj);
+                    for (var i in obj) {
+                    //for(var i=0;i<obj.length;i++){
+                        str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "&nbsp;(" + obj[i].account + ")</option>";
+                    }
+                    $("#listGup").empty().append(str);
+                    // 删除左边有的
+                    var leftO = $("#multiselect_to_1 option").map(function () {
+                        return $(this).val();
+                    }).get().join(",");
+                    //保存到数组arr
+                    arr = leftO.split(',');
+                    for (var i in arr) {
+                        $("#listGup option[value='" + arr[i] + "']").remove();
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+    <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+    <script src="__PUBLIC__/js/unicorn.js"></script>
+</body>
+</html>
+

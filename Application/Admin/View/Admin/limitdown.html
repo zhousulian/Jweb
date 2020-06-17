@@ -1,0 +1,110 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>									
+                                </span>
+                                <h5>下发额度</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form name="form1" class="form-horizontal" method="post" onsubmit="return CheckAdmin()" action="__URL__/limitdown" >
+                                    <div class="control-group">
+                                        <label class="control-label">管理员ID</label>
+                                        <div class="controls">
+                                            <input type="text" name="opid" readonly="true" value="{$row['opid']}" class="nw"/> *此项不允许修改
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">管理员名称</label>
+                                        <div class="controls">
+                                            <input type="text" name="opname" value="{$row['opname']}" class="nw"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label">可下发额度</label>
+                                        <div class="controls">
+                                            
+                                            <input type="text" name="validuser" disabled value="{$vquota}" id="validuser" class="nw"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">下发额度值</label>
+                                        <div class="controls">
+                                            <input type="text" name="quota" value=""  id="blnum" class="nw"/>
+                                        </div>
+                                    </div>
+                                    <!--<div class="control-group">
+                                        <label class="control-label"><br/>备注</label>
+                                        <div class="controls">
+                                            <textarea type="text" name="notes" value="" class="nw" style="height: 80px;"></textarea>                               
+                                        </div>
+                                    </div>-->
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-default" type="button">保存</button>&nbsp;&nbsp;
+                                        <a href="__URL__/adminer_list" class="btn btn-default">返回列表</a>
+                                    </div>
+                                </form>
+                                
+                                <input type="hidden" name="vmaxuser" value="{$totalLeft}"  id="vmaxuser" class="nw"/> 
+                            </div>
+                        </div>			
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.validate.js"></script>
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script src="__PUBLIC__/js/unicorn.form_validation.js"></script>
+        <script type="text/javascript">
+            function CheckAdmin()
+            {
+                var vmaxuser = document.getElementById("validuser").value;
+                var blnum = document.getElementById("blnum").value;
+                var vmaxuser = parseInt(vmaxuser);
+                
+                //var maxuser = parseInt(document.form1.maxuser.value);
+                if (isNaN(blnum))
+                {
+                   alert("下发额度值必须为正整数！");
+                   return false;
+                }
+                var blnum = parseInt(blnum);
+                if (blnum > vmaxuser)
+                {
+                   alert("你当前额度值不够下发额度,请联系上级管理员！");
+                   return false;
+                }
+
+                if (document.form1.opname.value.length == 0 ||
+                        document.form1.blnum.value.length == 0 )
+                {
+                    alert("请填写完整管理员信息！");
+                    return false;
+                }
+                    return true;
+                
+            }
+            $(function () {
+                $('#backid').click(function () {
+                    window.location.href = "__URL__/adminer_list";
+                });
+
+            });
+        </script>
+    </body>
+</html>

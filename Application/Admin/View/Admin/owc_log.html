@@ -1,0 +1,228 @@
+
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span> 
+                                <h5>设备信息操作表</h5>
+                                <if condition="($searchc neq '')">
+                                <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a> 
+                                </if>
+                                <if condition="($_GET['link'] neq '') OR ($_GET['member'] neq '') OR ($subdev neq '') OR (($iLevel elt 1) AND ($_GET['member'] neq ''))"> 
+                                    <span style="position: relative;float:right;right: 8%;top:2px;">
+                                    <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a>   
+                                    </span>
+                                </if>
+                            </div>
+                            
+
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+
+                                    <table class="table table-bordered data-table" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <if condition="($iLevel eq 3)">
+                                                <th>管理员名称</th>
+                                                </if>
+                                                <th>MEID</th>
+                                                <th>原账号</th>
+                                                <th>新账号</th>
+                                                <th>原经销商密码</th>
+                                                <th>新经销商密码</th>
+                                                <th>修改原因</th>
+                                                <th>修改时间 </th>
+                                                <!-- <th>操作</th> -->
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="tblist">
+                                            <if condition="$total eq 0 ">
+                                                <tr>
+                                                    <td colspan="15">无记录</td>
+                                                </tr>
+                                            <else/>
+
+                                                <volist name="data" id="v">
+                                                <tr>
+                                                    <td id="uid">{$v.id}</td>
+                                                    <if condition="($iLevel eq 3)">
+                                                    <td>{$v.opname}</td>
+                                                    </if>
+                                                    <td>{$v.meid}</td>
+                                                    <td>{$v.orgacc}</td>
+                                                    <td>{$v.dstacc}</td>
+                                                    <td>{$v.orgage}</td>
+                                                    <td>{$v.dstage}</td>
+                                                    <td>{$v.reason}</td>
+                                                    <td>{$v.time}</td>
+                                                </tr>
+                                                </volist>
+                                           		</if>
+                                            
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header" >
+                                        <input type="hidden" id="fkopid" value="{$_GET['opid']}" /> <!-- 当从二级管理员登录进入此页面时需要获取opid -->
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <input type="hidden" id="psearchc" value="{$searchc}" />
+                                        <div class="dataTables_filter">
+                                            <form action="__URL__/owc_log" name="formsearch" method="get" id="formsearch">
+                                                <input type="text" placeholder="ID / MEID" name="searchc" id="searchc" value="">
+                                                <button class="btn btn-default" type="submit" id="searcha">搜索</button> 
+                                            </form>
+                                        </div>
+                                        <span class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif;  float: right;position: relative;top:50px;">{$page}</spa>  
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script>        
+
+            $(function () {
+                //跳转到指定第n页
+                $("#npage_qd").click(function() {
+                    var pagenum = $("#npage_num").val();
+                    var pagenum = Number(pagenum);
+                    var showpn = $("#showpn").val();
+                    var showpn = Number(showpn);
+                    var fkopid = $("#fkopid").val();
+                    var fkopid = Number(fkopid);
+
+                    var psearchc = $("#searchc").val();
+                    if (isNaN(pagenum)) {
+                        alert("请输入数字");
+                    }
+                    if (pagenum.length !==0) {
+                        if(pagenum >= showpn){
+                            pagenum = showpn;
+                        }
+                        if(pagenum < 1){
+                            pagenum = 1;
+                        }
+                        if (psearchc != '') {
+                            window.location = "__URL__/owc_log/searchc/"+psearchc+"/p/"+pagenum;
+                        }else if(fkopid != '' && psearchc != ''){
+                            window.location = "__URL__/owc_log/opid/"+fkopid+"/searchc/"+psearchc+"/p/"+pagenum;
+                        }
+                        else if(fkopid != ''){
+                            window.location = "__URL__/owc_log/opid/"+fkopid+"/p/"+pagenum;
+                        }
+                        else{
+                            window.location = "__URL__/owc_log/p/"+pagenum;
+                        }
+                    }
+                    
+                });
+
+                //显示用户功能
+                $("#tblist").find("tr").each(function(e){
+                    var tdArr = $(this).children();
+                    var a = tdArr.eq(10);
+                    var zb = a.offset();
+                    a.click(function(){
+                        var funccodestr = $(this).find("input").val();
+                        // 取点击点的纵/横坐标
+                        var y = zb.top;
+                        var x = ($(window).width()-zb.left)-12;
+                        // console.log(x); 
+                        // console.log($(window).width()); 
+                        if (funccodestr != "") {
+                            var text = $(".fstr").text();
+                            if(text !=''){
+                                $(".fstr").empty();
+                                $(".fstr").append(funccodestr);
+                            }else{
+                                $(".fstr").append(funccodestr);
+                            }
+                            $(".fDiv").css({"top":y,"right":x});
+                            $(".fDiv").css({"display":"block"});
+                            $(".close").click(function () {
+                                $(".fDiv").css({"display":"none"});
+                                return false;
+                            });
+                        }else{                            
+                            $(".fDiv").css({"display":"none"});
+                            return false;
+                        }
+
+                     });
+                });                         
+        
+
+                // 选择导出按钮
+                $(".export_excel").click(function () {
+                    $(".export_excel_uid").toggle();  //点击显示与隐藏
+                    return false;
+                });
+
+                $("#submit").click(function () {
+                    var uid_right = $("#uid_right").val();
+                    var uid_left = $("#uid_left").val();
+                    if (uid_right  == '' || uid_left =='') {
+                        alert("请输入导出的设备ID范围！");
+                        return false;
+                    }
+                    if (uid_right  < uid_left) {
+                        alert("请按正确顺序输入ID（选择导出范围的最大ID在前，最小ID在后）！");
+                        return false;
+                    }
+                });
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                });
+
+
+                //下拉列表的内容改变时
+                $(".select_ops").change(function(){
+                    var subopid = $(this).val();
+                    var tdArrs = $(this).parent().parent().parent().children().eq(0);
+                    //console.log(tdArrs);
+                    var a_uid = tdArrs.text();
+                    var opid = $("#logopid").val();   
+                    $.post("__URL__/subadUpdate", {uid: a_uid,opid:opid,subopid:subopid}, function (data) {
+                        var obj = data;
+                        if(obj !== 3){
+                            alert("操作有误!");
+                            return false;
+                        }
+                    });
+                    
+                }); 
+
+            })
+
+
+        </script>
+        <script>
+            function dodel(id) {
+                if (confirm("确定要删除吗？")) {
+                    window.location.href = "__URL__/device_delete/uid/" + id;
+                }
+            }
+        </script>
+    </body>
+</html>

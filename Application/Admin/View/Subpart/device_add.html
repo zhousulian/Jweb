@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>智能对讲系统管理平台</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css">
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/uniform.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/select2.css" />        
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.main.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.grey.css" class="skin-color" />    
+        <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+    <style>
+        @media (min-width: 1200px){
+            .row {
+                margin-left: -14px; 
+            }
+        }
+        .mtop{
+            margin-top: 7px;
+        }
+        .control-group .controls input{
+            height: 36px;
+        }
+        .col-md-5 {
+            width: 40%;
+        }
+        #gidsearch{
+            height: 36px;
+            width: 250px;
+            margin: 5px 5px 5px 0px;
+        }
+
+        user-nav #lgouts{
+            background: #2569a8 !important;
+        }
+        #content-header{
+            margin-top: -2px;
+        }
+        .nav1{
+            position: absolute;
+            top:-3px;
+        }
+        #num{
+            background-color: #3d8fd6;
+        }
+
+        #av a:hover{
+            background: #3d8fd6;
+        }
+        #av1 a:hover{
+            background: #3d8fd6;
+        } 
+        
+        #user-nav > ul > li > a{
+            background : #00497d ;
+        }
+
+        #user-nav > ul > li > a:hover{
+            background: #1c3752 ;
+        }
+        #multiselect_to_1{
+            position: relative;
+            height: 160px;
+            top:10px;
+        }
+
+          
+
+        </style> 
+    </head>
+<body >
+    <div id="header">
+        <div id="logoimg" > <img src="__PUBLIC__/img/logo3.png"></div><!-- <div id="zndjpt"><img src="__PUBLIC__/img/znglxt.png" /></div> -->   <!-- <em>智能对讲系统管理平台</em> -->
+    </div>
+    <div style="background: #2569a8;" id="user-nav" class="nav1 navbar navbar-inverse" >
+        <ul style="background: #2569a8;"  class="nav1 nav btn-group" id="lgouts" >
+            <li style="background : #00497d !important;" class="btn dropdown" id="menu-messages"><a style=" "  href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span  style="color : #adcce9 !important;" class="text">{$subLogUser}</span> <span id="num" class="label ">2</span> <b class="caret"></b></a>
+                <ul  class="dropdown-menu">
+                    <li id="av"><a class="sAdd" title="" href="__APP__/Admin/subAdLog/sublogout">切换账号</a></li> 
+                    <li id="av1" ><a class="sInbox" title="" href="__APP__/Admin/subAdLog/sublogout"> 退出</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav btn-group" id="lgout">
+            <li class="btn btn-inverse"><a title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+        </ul>
+    </div>
+    <div id="daohang">
+        <div style="background-color:#00497d !important; width: 218px; float: right;position: absolute;"  id="sidebar" >
+            <if condition="($iLevel eq 10)"> 
+                <ul>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>设备管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Subpart/device_list">设备列表</a></li>
+                            <li><a href="__APP__/Admin/Subpart/device_add">设备添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>群组管理</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/SubGroup/group_list">群组列表</a></li>
+                            <li><a href="__APP__/Admin/SubGroup/group_add">群组添加</a></li>
+                            <li><a href="__APP__/Admin/SubGroup/group_subedit">嵌套组定义</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i> --> <span>使用说明</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Subpart/Instructions_qz">设备添加说明</a></li>
+                            <li><a href="__APP__/Admin/Subpart/Instructions_dd">群组添加说明</a></li>
+                            <li><a href="__APP__/Admin/Subpart/Instructions_sb">订单添加说明</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </if>
+        </div>
+    </div>
+        <div id="content">
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>设备添加</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form id="form1" name="form1" enctype="multipart/form-data" class="form-horizontal" action="__URL__/device_add" method="POST" onsubmit="return SetSelVal()">    
+                                	<span>
+                                		<input type="hidden" name="selVal" id="inSel" value="" />
+                                        <input type="hidden" name="validuser" value="{$vuser}"/>
+                                	</span>                           
+                                    <div class="control-group">
+                                        <label class="control-label">用户名称</label>
+                                        <div class="controls">
+                                            <input type="text" name="username" class="nw" autocomplete="off"/> *允许输入中文，但最大长度不能超过8个中文字符
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">用户账号 </label>
+                                        <div class="controls">
+                                            <input type="text" name="account" class="nw" autocomplete="off"/> *必须是英文字母或数字，长度不能大于12，批量创建时请修改个数
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">账号个数</label>
+                                        <div class="controls">
+                                            <input type="text" name="num" value="1" class="nw"/> *批量添加账户最大个数不能超过200个
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">起始号码</label>
+                                        <div class="controls">
+                                            <input type="text" name="start" value="1" class="nw"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">用户密码</label>
+                                        <div class="controls">
+                                            <input type="text" name="password" value="111111" class="nw" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">GPS周期 </label>
+                                        <div class="controls">
+                                            <input type="text" name="gpscycle" value="30" class="nw"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">用户级别</label>
+                                        <div class="controls">
+                                            <input type="text" name="level" value="1" class="nw"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">有效时间</label>
+                                        <div class="controls">
+                                            <input type="text" name="validtime" value="{$vTime}" readonly="true" class="nw"/> *有效期默认为一年，另需加时可以提交订单
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label"> <br/>备注 </label>
+                                        <div class="controls">
+                                            <textarea  name="note" rows="4" value="" class="nw"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                     
+                                        <label class="control-label" id="yh_gn">
+                                        	<span id="yhgn_font">用户功能 </span><br/>
+                                        <span id="checkedall"><input type="checkbox" name="" value="" class="" id="id_selall"  onclick="SelectAll()" /> 全选   &nbsp; &nbsp;</span>
+                                        </label>
+                                       
+                                         <div class="controls">
+                                           	 <input type="checkbox" name="friend" value="1" class="sel"/> 好友   &nbsp; &nbsp;
+                                           	 <input type="checkbox" name="search" value="1" class="sel"/> 查位   &nbsp; &nbsp;
+                                           	 <input type="checkbox" name="record" value="1" class="sel"/> 记录  &nbsp; &nbsp;
+                                           	 <input type="checkbox" name="monitoring" value="1" class="sel"/> 监听  &nbsp; &nbsp;
+                                           	 <input type="checkbox" name="closed" value="1" class="sel"/> 遥毙   &nbsp; &nbsp;
+                                           	 <input type="checkbox" name="g_call" value="1" class="sel"/> 群呼    &nbsp; &nbsp;
+                                           	 <input type="checkbox" name="no_call" value="1" class="sel"/> 禁呼 <br/>  
+                                           	 <input type="checkbox" name="single_call" checked="checked" value="1" class="sel"/> 单呼   &nbsp; &nbsp;
+	                                       	 <input type="checkbox" name="change_g" value="1" class="sel"/> 换组   &nbsp; &nbsp;
+	                                         <input type="checkbox" name="location" value="1" class="sel"/> 定位  &nbsp; &nbsp;
+	                                       	 <input type="checkbox" name="s_recording" value="1" class="sel"/> 录音   &nbsp; &nbsp;
+	                                       	 <input type="checkbox" name="display_g" checked="checked"  value="1" class="sel"/> 显组   &nbsp; &nbsp;
+	                                       	 <input type="checkbox" name="final_g" checked="checked" value="1" class="sel"/> 最后组   &nbsp; &nbsp;
+	                                         <input type="checkbox" name="dnd" checked="checked" value="1" class="sel"/> 单呼勿扰  &nbsp; &nbsp;
+	                                         &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<span>*每个功能开通都需消耗对应的流量，尽量只勾选需要的功能</span>	                                          	              
+                                        </div> 
+
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">默认组 </label>
+                                        <div class="controls">
+                                            <input readonly="true" type="text" name="curgid" id="inCurGid" value="" class="nw"/> &gt;&gt;默认组ID (不填则默认下面的第一个群组,单击下面列表可选择指定默认群组)
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">群组信息 </label>
+                                        <div class="controls">
+                                            <div class="row">
+                                                <div class="col-xs-5 col-md-5">    
+                                                    <br/><br/>
+                                                    <select name="to" id="multiselect_to_1" class="form-control" size="8" multiple="multiple" onclick="return showMessage()">
+                                                    </select>       
+                                                </div>
+                                                <div class="col-xs-2 col-md-2 mtop">
+                                                <br/><br/><br/>
+                                                    <button type="button" id="right_All_1" class="btn btn-block"><i class="glyphicon glyphicon-forward">&lt;&lt;</i></button>
+                                                    <button type="button" id="right_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right">&lt;</i></button>
+                                                    <button type="button" id="left_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left">&gt;</i></button>
+                                                    <button type="button" id="left_All_1" class="btn btn-block"><i class="glyphicon glyphicon-backward">&gt;&gt;</i></button>
+                                                </div>
+                                                <div class="col-xs-5 col-md-5">
+                                                    <input type="hidden" id="gopid" value ="{$opid}">
+                                                    <input id="gidsearch" type="text" placeholder="输入群组ID或群组名称搜索" >
+                                                    <br/>
+                                                    <select name="listGup" id="listGup"  class="multiselect form-control" size="8" multiple="multiple" data-right="#multiselect_to_1" data-right-all="#right_All_1"
+                                                            data-right-selected="#right_Selected_1" data-left-all="#left_All_1" data-left-selected="#left_Selected_1" id="searchList">
+                                                        <volist name ="groupData" id="v">
+                                                        <option value="{$v.gid}">{$v.gname}&nbsp;({$v.gid}) </option>
+                                                        </volist>
+                                                    </select>     
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <span>*操作提示： a、按住Ctrl+单击多个条目+单击单箭头按钮：可同时移动选中信息 (放开Ctrl+转动鼠标滚轮或按住Ctrl+单击滚动条箭头可查找更多信息)；<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b、单击双箭头按钮：可移动列表全部信息；</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-actions">
+                                        
+                                        <button id="sub" type="submit" class="btn" type="button">保存</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn" name="backid" id="backid">返回列表</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>          
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script>
+            $(function () {
+
+                $('#backid').click(function () {
+                    window.location.href = "__URL__/device_list";
+                });
+
+            });
+            jQuery(document).ready(function ($) {
+                $('.multiselect').multiselect();
+            });
+        </script>
+        <!--jquery左右选择插件-->
+        <script type="text/javascript" src="__PUBLIC__/js/multiselect.js"></script>
+        <script type="text/javascript">
+            function showMessage()
+            {
+                var value = document.getElementById("multiselect_to_1").options[document.getElementById("multiselect_to_1").selectedIndex].value;
+                document.getElementById("inCurGid").value = value;
+            }
+            function SetSelVal()
+            {
+                var i = 0;
+
+                var ValUser = parseInt(document.form1.validuser.value);
+                var AddNum = parseInt(document.form1.num.value);
+
+                if (AddNum > ValUser || ValUser == 0)
+                {
+                    alert("您的授权数量已经使用完毕，请联系你的分控管理员！");
+                    return false;
+                }
+
+                if (document.form1.username.value.length == 0 ||
+                        document.form1.account.value.length == 0 ||
+                        document.form1.password.value.length == 0 
+                        )
+                {
+                    alert("请务必填写用户名称，用户帐号及用户密码!");
+                    return false;
+                }
+                /* 未选择时取第一个群组为默认群组 */
+                if (document.form1.curgid.value.length == 0) {
+                    var obj = document.getElementById("multiselect_to_1");
+                    var CurGid = obj.options[0].value;
+                    document.getElementById("inCurGid").value = CurGid;
+                }
+
+
+                if (document.form1.username.value.length > 8 ||
+                        document.form1.account.value.length > 12 ||
+                        document.form1.password.value.length > 12)
+                {
+                    alert("请按照提示的长度编辑用户名称 设备账号 密码!");
+                    return false;
+                }
+                var Numss = parseInt(document.form1.num.value);
+                if (Numss > 200)
+                {
+                    alert("批量添加账户最大个数不能超过200个!");
+                    return false;
+                }
+                if (Numss < 1)
+                {
+                    alert("账号个数不得小于1!");
+                    return false;
+                }
+
+
+                var strAcc = document.form1.account.value;
+                for (i = 0; i < strAcc.length; i++)
+                {
+                    var chr = strAcc.charCodeAt(i);
+                    if (chr < 0 || chr > 255)
+                    {
+                        alert("用户账号只允许字母和数字");
+                        return false;
+                    }
+                }
+
+                var obj = document.getElementById("multiselect_to_1");
+
+                var length = obj.options.length;
+                var selVal = "";
+
+                var vaild = false;
+                var dstVal = document.getElementById("inCurGid").value;
+
+                for (i = 0; i < length; i++)
+                {
+                    selVal += obj.options[i].value + '|';                   
+                    if (obj.options[i].value == dstVal)
+                        vaild = true;
+                }
+                if (vaild == true)
+                {
+                    document.getElementById("inSel").value = selVal;
+                    document.getElementById("sub").disabled = true;
+                    return true;
+                }
+                else
+                {
+                    alert("默认群组无效，请点击已选群组获取默认群组!");
+                    document.getElementById("inCurGid").value = "";
+                    return false;
+                }
+            }
+            
+            function SelectAll(){
+              	 var target = document.getElementById("id_selall");
+                   //var input = document.getElementsByTagName("input");
+                var checkbox = document.getElementsByClassName("sel");
+                //alert(input.length);
+                //var n = 0;
+                for (var i = 0; i < checkbox.length; i++)
+                {                     
+               	 checkbox[i].checked = target.checked;    //全不选 与全选   
+                 	 checkbox[i].onclick = function()    //当有一个或多个不选时显示全选框不选中
+                    {
+                   	 var n = 0;
+                   	 for (var i = 0; i < checkbox.length; i++)
+                        {
+                     	  if(!checkbox[i].checked){  //计算未选中的个数
+                     		  n++;
+                          } 	 
+                        }
+                        if ( !this.checked )
+                        {
+                       	 target.checked = false;                       	                        	 
+                        }
+                        if(n <=0){
+                       	 target.checked = true; 
+                        }                  
+                    }    
+                }    	
+             } 
+               
+             
+               $("#sub").click(function () {
+                   if ($(".sel:checked").length < 1) {
+                       alert("未选择用户功能");
+                       $("#inSel").val("");
+                       return false;
+                   }
+                   var chk_value = [];
+                   $(".sel:checked").each(function () {
+                       chk_value.push($(this).val());
+                   })
+                   $("#inSel").val(chk_value);
+                   /* $("#accountNums").val($(".sel:checked").length);
+                   $(".modal").css("display", "block"); */
+               }) 
+               
+               
+        </script>
+
+        <script type="text/javascript">
+        $(function () {         
+            $('#gidsearch').bind('input propertychange', function () {
+                var gopid = $('#gopid').val();
+                var sear = $('#gidsearch').val();
+                $.post("__URL__/gidSearch", { sear: sear, Opid: gopid }, function (data) {
+                    var str = '';
+                    //var obj = JSON.parse(data);   
+                    var obj = data; 
+                    //alert(obj);
+                    for (var i in obj) {
+                        //str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "(" + obj[i].account + ")" + "</option>";
+                        str += "<option value='" + obj[i].gid + "'>" + obj[i].gname + "&nbsp;(" + obj[i].gid + ")" + "</option>";
+                       
+                    }
+                    $("#listGup").empty().append(str);
+                    // 删除左边有的
+                    var leftO = $("#multiselect_to_1 option").map(function () {
+                        return $(this).val();
+                    }).get().join(",");
+                    //保存到数组arr
+                    arr = leftO.split(',');
+                    for (var i in arr) {
+                        $("#listGup option[value='" + arr[i] + "']").remove();
+                    }
+                });
+            });
+        });
+
+    </script>
+
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script> 
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script> 
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script> 
+        <script src="__PUBLIC__/js/matrix.js"></script> 
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+    </body>
+</html>

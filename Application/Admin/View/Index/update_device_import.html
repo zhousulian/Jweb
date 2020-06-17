@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>智能对讲系统管理平台</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css" /> <!-- 分页样式 -->
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/uniform.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/select2.css" />        
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.main.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.grey.css" class="skin-color" />    
+        <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+    <style type="text/css">
+            user-nav #lgouts{
+                background: #2569a8 !important;
+            }
+            .nav1{
+                position: absolute;
+                top:-3px;
+            }
+            #num{
+                background-color: #3d8fd6;
+            }
+
+            #av a:hover{
+                background: #3d8fd6;
+            }
+            #av1 a:hover{
+                background: #3d8fd6;
+            } 
+            
+            #user-nav > ul > li > a{
+                background : #00497d ;
+            }
+
+            #user-nav > ul > li > a:hover{
+                background: #1c3752 ;
+            }
+            #form_file{
+            	height: 130px;
+            }
+
+
+        </style> 
+    </head>
+<body >
+    <div id="header">
+        <div id="logoimg" ></div><!-- <div id="zndjpt"><img src="__PUBLIC__/img/znglxt.png" /></div> -->   <!-- <em>智能对讲系统管理平台</em> -->
+    </div>
+    <div style="background: #2569a8;" id="user-nav" class="nav1 navbar navbar-inverse" >
+        <ul style="background: #2569a8;"  class="nav1 nav btn-group" id="lgouts" >
+            <li style="background : #00497d !important;" class="btn dropdown" id="menu-messages"><a style=" "  href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span  style="color : #adcce9 !important;" class="text">{$LogUser}</span> <span id="num" class="label ">2</span> <b class="caret"></b></a>
+                <ul  class="dropdown-menu">
+                    <li id="av"><a class="sAdd" title="" href="__APP__/Admin/AdLog/logout">切换账号</a></li> 
+                    <li id="av1" ><a class="sInbox" title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav btn-group" id="lgout">
+            <li class="btn btn-inverse"><a title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+        </ul>
+    </div>
+    <div id="daohang">
+        <div style="background-color:#00497d !important; width: 218px; float: right;position: absolute;"  id="sidebar" >
+            <a href="#" class="visible-phone"><!-- <i class="icon icon-home"> --></i> 导航</a>
+            <if condition="($iLevel eq 1) ">  <!-- 级别为5时 -->
+                <ul>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>设备管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/device_list">设备列表</a></li>
+                            <li><a href="__APP__/Admin/Index/device_add">设备添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>群组管理</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Group/group_list">群组列表</a></li>
+                            <li><a href="__APP__/Admin/Group/group_add">群组添加</a></li>
+                            <li><a href="__APP__/Admin/Group/group_subedit">嵌套组定义</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i> --> <span>订单管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                            <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                        </ul>
+                    </li>
+                     <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>档案数据</span> <span class="label">1</span></a>
+                       <ul>
+                           <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                       </ul>
+                   </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i> --> <span>使用说明</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/Instructions_qz">设备添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_dd">群组添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_sb">订单添加说明</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <elseif condition="$iLevel gt 1"/> <!-- 级别>1时 -->
+                <ul>
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>管理员管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                            <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>用户分配详情</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                        </ul>
+                    </li>
+                    <if condition="$iLevel eq 3 ">
+                        <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>设备管理</span> <span class="label">1</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Index/d_list">设备列表</a></li>   
+                            </ul>
+                        </li>
+                    </if>
+                    <li class="submenu"> 
+                        <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>订单管理</span> 
+                        <span class="label">
+                        <if condition="$iLevel lt 3 ">2 <else /> 1</if>
+                        </span>
+                    </a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                            <if condition="$iLevel lt 3 ">
+                             <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                            </if>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i>  --><span>系统参数</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/sset">参数设置</a></li>
+                        </ul>
+                    </li>
+                     <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>档案数据</span> <span class="label">1</span></a>
+                       <ul>
+                           <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                       </ul>
+                   </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>使用说明</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/Instructions_qz">设备添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_dd">群组添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_sb">订单添加说明</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </if>
+        </div>
+    
+    </div>
+        <div id="content">
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>修改设备批量导入</h5>                                
+                                <a href="__URL__/device_list/p/{$dp}" class="btn nom"><i class="icon-arrow-left"></i>返回上层设备列表</a>
+
+                            </div>	
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table">
+                                        <thead>
+                                            <tr>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix " id="form_file">
+                                    <br/><br/>
+                                        <div class="dataTables_filter">
+											<form method="post" action="{:U('Index/update_device_import')}" enctype="multipart/form-data">  
+		                                    	<input type="file" name="file_stu" id="file" />  
+		                                    	<input type="submit" value="导入"  id="file_submit" /> 
+		                                    </form>  
+
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <!--<script src="js/unicorn.tables.js"></script>-->
+        <script>
+
+            $(function () {
+            	//拦截提交空文件
+            	$("#file_submit").click(function () {
+                    var file = $("#file").val();
+	            	if (file == '') {
+	            		alert('请选择导入文件！(仅支持.xlsx/.xls后缀名的类型文件)');
+	            		return false;
+	            	}
+	            	
+                });
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                });
+            })
+        </script>
+
+    </body>
+</html>

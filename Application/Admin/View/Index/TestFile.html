@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+</head>
+<body>
+
+	<div class="control-group">
+          <label class="control-label"> 用户功能 </label>
+         
+          <div class="controls">
+             	 <input type="checkbox" name="checkedall" value="" class="" id="id_selall"  onclick="SelectAll()" /> &nbsp;全选   &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;好友   &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;查位   &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;记录  &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;监听  &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;遥闭   &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;群呼  &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;禁呼   &nbsp; &nbsp;
+             	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;单呼   &nbsp; &nbsp;
+          	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;换组   &nbsp; &nbsp;
+            <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;定位  &nbsp; &nbsp;
+          	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;录音   &nbsp; &nbsp;
+          	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;显组   &nbsp; &nbsp;
+          	 <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;最后组   &nbsp; &nbsp;
+            <input type="checkbox" name="checkedall" value="" class="sel"/> &nbsp;单呼勿扰  &nbsp; &nbsp;
+             	              
+          </div>
+      </div>
+      
+      
+      <script type="text/javascript">
+      
+    //用户功能全选
+      function SelectAll(){
+      	 var target = document.getElementById("id_selall");
+           var input = document.getElementsByTagName("input");
+           //alert(input.length);
+           for (var i = 0; i < input.length; i++)
+           {
+               if (input[i].id != "id_selall")
+                   input[i].checked = target.checked;
+           }
+      	
+      }
+    
+      $("#sub").click(function () {
+          if ($(".sel:checked").length < 1) {
+              alert("未选择任何用户功能");
+              $("#inSel").val("");
+              return false;
+          }
+          var chk_value = [];
+          $(".sel:checked").each(function () {
+              chk_value.push($(this).val());
+          })
+          $("#inSel").val(chk_value);
+          /* $("#accountNums").val($(".sel:checked").length);
+          $(".modal").css("display", "block"); */
+      }) 
+       
+      
+      
+      
+      </script>
+</body>
+</html>

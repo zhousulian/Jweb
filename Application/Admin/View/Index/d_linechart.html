@@ -1,0 +1,281 @@
+<!doctype html>  
+<html lang="en">  
+<head>  
+    <title>智能对讲系统管理平台</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>  
+    <script type="text/javascript" src="https://img.hcharts.cn/highcharts/highcharts.js"></script>  
+    <script type="text/javascript" src="https://img.hcharts.cn/highcharts/modules/oldie.js"></script>
+    <script type="text/javascript" src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>   
+    <script type="text/javascript" src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+    <script src="__PUBLIC__/js/jquery.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+    <script src="__PUBLIC__/js/select2.min.js"></script>
+    <script src="__PUBLIC__/js/unicorn.js"></script>
+
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/uniform.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/select2.css" />     
+    <link rel="stylesheet" href="__PUBLIC__/css/unicorn.main.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/unicorn.grey.css" class="skin-color" /> 
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+
+    <style type="text/css">
+        .nav1{
+            position: absolute;
+            top:-3px;
+        }
+        #num{
+            background-color: #657b87;
+        }
+        #av a:hover{
+            background: #657b87;
+        }
+        #av1 a:hover{
+            background: #657b87;
+        }
+        #av,#av1{
+            width: 100%;
+        }
+        #nav_bar{
+            width: 100%;
+        }
+        ul ul li {
+            list-style-type: none;
+            width: 100%;
+        }
+        #sidebar > ul ul li a {
+            width: 100%;
+            height: 32px;
+        }
+
+        /*ul ul li  a{
+            height: 32px;
+        }*/
+
+
+
+    </style>
+</head>
+<body>
+<div id="header">
+    <div id="logoimg" >
+        <span id="logo_right"> <img src="__PUBLIC__/img/bdhl.png"> </span>
+        <p id="zndj">|深圳百顺达科技有限公司</p>
+    </div>
+</div>
+<div style="background: #13a0cc;" id="user-nav" class="nav1 navbar navbar-inverse" >
+    <ul  class="nav1 nav btn-group" id="lgouts" >
+        <li  class="btn dropdown" id="menu-messages">
+            <a style=" "  href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
+                <i class="icon icon-user"></i>
+                <span  style="color : #f5f5f5 !important;" class="text">{$LogUser}</span> <span id="num" class="label ">2</span> <b class="caret"></b></a>
+            <ul  class="dropdown-menu">
+                <li id="av"><a class="sAdd" title="" href="__APP__/Admin/AdLog/logout">切换账号</a></li>
+                <li id="av1" ><a class="sInbox" title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav btn-group" id="lgout">
+        <li class="btn btn-inverse"><a title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+    </ul>
+</div>
+<div id="content">
+    <div id="nav_bar" > <!--style="border: #0cd8d5 1px solid;"-->
+        <div style=""  id="sidebar" >
+            <a href="#" class="visible-phone"><i class="icon icon-home icon-dh"></i> <span class="font-dh" style="position: relative;left: 13px;font-size: 16px;">导航</span></a>
+            <if condition="($iLevel eq 5) ">  <!-- 级别为5时 -->
+                <ul >
+                    <li id="yh" class="submenu"> <a href="javascript:;"><i class="icon icon-th-list"></i> <span>用户分配详情</span> <span class="label label-important">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <elseif condition="$iLevel eq 4"/>  <!-- 级别为4时 -->
+                <ul>
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label label-important">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                            <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <elseif condition="$iLevel gt 1"/> <!-- 级别>1时 -->
+                <ul>
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>管理员管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                            <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label"><if condition="$iLevel eq 3 ">2 <else /> 1</if></span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/d_list">设备列表</a></li>
+                            <if condition="$iLevel eq 3 ">
+                                <li><a href="__APP__/Admin/Index/d_linechart">设备使用详情</a></li>
+                            </if>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>订单管理</span>
+                            <span class="label">
+                    <if condition="$iLevel lt 3 ">2 <else /> 1</if>
+                    </span>
+                        </a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                            <if condition="$iLevel lt 3 ">
+                                <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                            </if>
+                        </ul>
+                    </li>
+                    <!--<if condition="$iLevel eq 3 ">
+                        <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>日志管理</span> <span class="label">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Index/device_del_log">设备删除日志</a></li>
+                                <li><a href="__APP__/Admin/Index/device_edit_log">设备修改日志</a></li>
+                            </ul>
+                        </li>
+                    </if>-->
+
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>系统参数</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/sset">参数设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label"><if condition="$iLevel eq 3 ">2<else/>1</if></span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                            <!--<if condition="$iLevel eq 3 ">
+                                <li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>
+                            </if>-->
+                        </ul>
+                    </li>
+                </ul>
+                <elseif condition="($iLevel eq 1) OR ($iLevel eq 0)"/>
+                <ul>
+                    <li class="submenu">
+                        <a href="#"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/device_list">设备列表</a></li>
+                            <li><a href="__APP__/Admin/Index/device_add">设备添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"> <i class="icon icon-th-list"></i>  <span>群组管理</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Group/group_list">群组列表</a></li>
+                            <li><a href="__APP__/Admin/Group/group_add">群组添加</a></li>
+                            <li><a href="__APP__/Admin/Group/group_subedit">嵌套组定义</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="submenu">
+                        <a href="#"> <i class="icon icon-th-list"></i>  <span>订单管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                            <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                        </ul>
+                    </li>
+                    <!--<if condition="($upLevel neq 0)">
+                        <li class="submenu">
+                            <a href="#"> <i class="icon icon-th-list"></i>  <span>管理员管理</span> <span class="label">2</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                                <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                            </ul>
+                        </li>
+                    </if>-->
+                    <!--<li class="submenu">
+                        <a href="#"> <i class="icon icon-th-list"></i> <span>二级管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Subadmin/subad_list">二级管理列表</a></li>
+                            <li><a href="__APP__/Admin/Subadmin/subad_add">二级管理添加</a></li>
+                        </ul>
+                    </li>-->
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                            <!--<li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>-->
+                        </ul>
+                    </li>
+                </ul>
+
+
+            </if>
+        </div>
+    </div>
+    <div id="content-header">
+    </div>
+    <!-- 每日折线图 -->
+    <div id="container" style="position: relative;top: 80px;min-width:400px;height:750px"></div>
+
+</div>
+
+
+</body>
+<script type="text/javascript">
+    
+    var chart = Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '本月设备使用数量'
+        },
+        subtitle: {
+            text: '数据来源: 智能对讲系统管理平台'
+        },
+        xAxis: {
+            categories:[ <?php  foreach($daysData as $v){ echo " ' ".$v."日',"; } ?>],
+        },
+        yAxis: {
+            title: {
+                text: '设备数量 (台)',
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true          // 开启数据标签
+                },
+                enableMouseTracking: true // 关闭鼠标跟踪，对应的提示框、点击事件会    失效
+            }
+        },
+        series: [{
+            name: '系统管理员',
+            data : [<?php foreach($ctimeList as $v){ echo $v.','; } ?>]
+            //data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,21.5, 25.2, 26.5,21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,21.5, 25.2, 26.5,7.0, 6.9, 9.5, 14.5, 18.4, 21.5]
+         }]
+    });
+    /*{
+             //name: 'A',
+             //data : [<?php foreach($ctimeList as $v){ echo $v.','; } ?>]
+             // name: 'A',
+             // data: [3.9, 0, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8,21.5, 23.2, 7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3,27.5, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9]
+         }*/
+
+
+</script>
+</body>  
+</html>  

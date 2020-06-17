@@ -1,0 +1,149 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+
+        <!--皮肤切换功能-->
+        <!--        <div id="style-switcher">
+                    <i class="icon-arrow-left icon-white"></i>
+                    <span>Style:</span>
+                    <a href="#grey" style="background-color: #555555;border-color: #aaaaaa;"></a>
+                    <a href="#blue" style="background-color: #2D2F57;"></a>
+                    <a href="#red" style="background-color: #673232;"></a>
+                </div>-->
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>群组列表</h5>
+                                <a href="__URL__/group_add" class="btn nom" style="margin-top: 3px"><i class="icon-plus-sign"></i>群组添加</a>
+                                
+                                <if condition="$searchc neq '' ">
+                                <a href="__URL__/group_list/p/{$_GET['p']}" class="btn noa btn-default"><i class="icon-arrow-left"></i> 返回群组列表</a>
+                                </if>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th>群组ID</th>
+                                                <th>群组名称</th>
+                                                <th>创建时间</th>
+                                                <th>调度员账号</th>
+                                                <th>备注</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <if condition="$total gt 0 ">
+                                            <volist name="groupData" id="v">
+                                            <tr class="gradeA">
+                                                <td>{$v.gid}</td>
+                                                <td><a href="__URL__/uMembers/gid/{$v.gid}/urlp/<?php if (!empty($_GET['p'])) {echo $_GET['p'];}else{echo 1;}?>">{$v.gname}</a> </td>
+                                                <td><php> echo substr($v['createtime'],0,10)</php></td>
+                                                <td>
+                                                	<if condition="($v['dispatcher']) neq 0 ">
+                                                	<a href="__URL__/ddy_edit/gid/{$v.gid}/p/{$_GET['p']}"><php>echo getDispatcherData($v['dispatcher'])</php></a>
+                                                	<else /> 
+                                               			<a href="__URL__/ddy_edit/gid/{$v.gid}/p/{$_GET['p']}">未设置</a>
+                                               		</if>
+                                               	</td>
+                                                <td>{$v.gnote}</td>
+                                                <td>
+                                                    <a href="__URL__/group_edit/gid/{$v.gid}/p/{$_GET['p']}">修改</a>
+                                                    <a href="javascript:dodel('{$v.gid}');" class="del">删除</a>
+                                                </td>
+                                            </tr>
+                                            </volist>
+                                            <else/>
+                                            <tr>
+                                                <td colspan="11">无记录</td>
+                                            </tr>
+                                            </if>
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header" >
+                                        <div class="dataTables_filter">
+                                            <form action="__URL__/group_list" name="formsearch" method="get" id="formsearch">
+                                                <!-- <a href="javascript:;" id="searcha" onclick="ser();"> 搜索： </a>  -->
+                                                <!-- <input type="text" placeholder="群组ID" name="searchc" id="searchc">
+                                                <input type="text" placeholder="群组名称" name="gname" id="gnamesearc"> -->
+                                                <input type="text" placeholder="群组ID或群组名称" name="searchc" id="searchc">
+                                                <button class="btn btn-default" type="submit" id="searcha">搜索</button> 
+                                            </form>
+                                        </div><br/><br/>
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <input type="hidden" id="psearchc" value="{$searchc}" />
+                                        <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif; float: right;">{$page}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script>
+            function dodel(id) {
+                if (confirm("确定要删除吗？")) {
+                    window.location.href = "__URL__/group_delete/gid/" + id;
+                }
+            }
+        </script>
+        <script>
+            //跳转到指定第n页
+            $("#npage_qd").click(function() {
+                var pagenum = $("#npage_num").val();
+                var pagenum = Number(pagenum);
+                var showpn = $("#showpn").val();
+                var showpn = Number(showpn);
+                var psearchc = $("#psearchc").val();
+
+                if (isNaN(pagenum)) {
+                    alert("请输入数字");
+                }
+                if (pagenum.length !==0) {
+                    if(pagenum > showpn){
+                        pagenum = showpn;
+                    }
+                    if(pagenum < 1){
+                        pagenum = 1;
+                    }
+                    if (psearchc != '') {
+                        window.location = "__URL__/group_list/searchc/"+psearchc+"/p/"+pagenum;
+                    }
+                    else{
+                        window.location = "__URL__/group_list/p/"+pagenum;
+                    }
+                    
+                }
+                
+            });
+
+            function ser() {
+                var Searchc = document.formsearch.searchc;
+                if (Searchc.value != "") {
+                    document.formsearch.submit();
+                }
+            }
+            ;
+</script>
+    </body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TYT智能对讲系统管理平台</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css" /> <!-- 分页样式 -->
+
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/uniform.css" /> 
+        <link rel="stylesheet" href="__PUBLIC__/css/select2.css" />        
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.main.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.grey.css" class="skin-color" />    
+        <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+    <body>
+           <style type="text/css">
+                   user-nav #lgouts{
+                       background: #2569a8 !important;
+                   }
+                   
+                   .nav1{
+                       position: absolute;
+                       top:-3px;
+                   }
+                   #num{
+                       background-color: #3d8fd6;
+                   }
+
+                   #av a:hover{
+                       background: #3d8fd6;
+                   }
+                   #av1 a:hover{
+                       background: #3d8fd6;
+                   } 
+                   
+                   #user-nav > ul > li > a{
+                       background : #00497d ;
+                   }
+
+                   #user-nav > ul > li > a:hover{
+                       background: #1c3752 ;
+                   }
+                 
+
+               </style> 
+           </head>
+       <body >
+           <div id="header">
+               <div id="logoimg" > <img src="__PUBLIC__/img/logo3.png"></div><!-- <div id="zndjpt"><img src="__PUBLIC__/img/znglxt.png" /></div> -->   <!-- <em>智能对讲系统管理平台</em> -->
+           </div>
+           <div style="background: #2569a8;" id="user-nav" class="nav1 navbar navbar-inverse" >
+                <ul style="background: #2569a8;"  class="nav1 nav btn-group" id="lgouts" >
+                    <li style="background : #00497d !important;" class="btn dropdown" id="menu-messages"><a style=" "  href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span  style="color : #adcce9 !important;" class="text">{$LogUser}</span> <span id="num" class="label ">2</span> <b class="caret"></b></a>
+                        <ul  class="dropdown-menu">
+                            <li id="av"><a class="sAdd" title="" href="__APP__/Admin/AdLog/logout">切换账号</a></li> 
+                            <li id="av1" ><a class="sInbox" title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav btn-group" id="lgout">
+                    <li class="btn btn-inverse"><a title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+                </ul>
+            </div>
+           <div id="daohang">
+        <div style="background-color:#00497d !important; width: 218px; float: right;position: absolute;"  id="sidebar" >
+            <a href="#" class="visible-phone"><!-- <i class="icon icon-home"> --></i> 导航</a>
+            <if condition="($iLevel eq 1) OR ($iLevel eq 0)">  
+                <ul>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>设备管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/device_list">设备列表</a></li>
+                            <li><a href="__APP__/Admin/Index/device_add">设备添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>群组管理</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Group/group_list">群组列表</a></li>
+                            <li><a href="__APP__/Admin/Group/group_add">群组添加</a></li>
+                            <li><a href="__APP__/Admin/Group/group_subedit">嵌套组定义</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i> --> <span>订单管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                            <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                        </ul>
+                    </li>
+                    <if condition="($upLevel neq 0)">                 
+                    <li class="submenu">  
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>管理员管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                            <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                        </ul>
+                    </li>
+                    </if>
+                    <!-- <li class="submenu">
+                        <a href="#"><i class="icon icon-th-list"></i><span>二级管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Subadmin/subad_list">二级管理列表</a></li>
+                            <li><a href="__APP__/Admin/Subadmin/subad_add">二级管理添加</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>档案数据</span> <span class="label">2</span></a>
+                       <ul>
+                           <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                           <li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>
+                       </ul>
+                   </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i> --> <span>使用说明</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/Instructions_qz">设备添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_dd">群组添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_sb">订单添加说明</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <elseif condition="$iLevel gt 1"/> <!-- 级别>1时 -->
+                <ul>
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>管理员管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                            <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>用户分配详情</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                        </ul>
+                    </li>
+                    <if condition="$iLevel eq 3 ">
+                        <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>设备管理</span> <span class="label">1</span></a>
+                            <ul>
+                                <li><a href="__APP__/Admin/Index/d_list">设备列表</a></li>   
+                            </ul>
+                        </li>
+                    </if>
+                    <li class="submenu"> 
+                        <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>订单管理</span> 
+                        <span class="label">
+                        <if condition="$iLevel lt 3 ">2 <else /> 1</if>
+                        </span>
+                    </a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                            <if condition="$iLevel lt 3 ">
+                             <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                            </if>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i>  --><span>系统参数</span> <span class="label">1</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/sset">参数设置</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>档案数据</span> <span class="label">2</span></a>
+                       <ul>
+                           <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                           <li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>
+                       </ul>
+                   </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>使用说明</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/Instructions_qz">设备添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_dd">群组添加说明</a></li>
+                            <li><a href="__APP__/Admin/Index/Instructions_sb">订单添加说明</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </if>
+        </div>
+    
+    </div>
+        <div class='expir_tips' style="padding-left:4px;display:none;top:188px;background-color: #a6d3ee;position:absolute;z-index: 301;left: 36%;float:left; height: auto;width: 410px;">
+            <span class="cenclose" style="position:relative;float:right;top:3px; right: 6px;font-size: 16px;cursor: pointer;" >X</span> 
+            <input type="hidden" class="expir_num" value="{$exipircnt}">
+            <div style="position: relative;top: 22px;left:3%;">
+            <b>请填写提醒消息:</b>&nbsp;   <span style="color: #f3141d;">(*不得超过50个汉字)</span>
+            <span class="pages result  page pagev"  style="font:10px '\5B8B\4F53', san-serif;  float: right;position: relative;top:5px;">{$pagev}</span>
+            <br/>
+            <span>
+            <textarea style="position: relative;top:10px;width:90%;height: 83px;background-color: #eff1f1;" id="message">您的设备账号即将到期，为不影响使用，请及时续费。</textarea>
+            
+            </span>
+            <br/><br/><br/>
+            <input type="hidden" name="vtipsSta"  id="vtipsSta" value="{$vtipsSta}" /> 
+            </div>
+            <span  id="conbtn" style="position: relative;left:77%;top: 1px;bottom: 5px;">
+            <button class="btn btn-success" type="submit" id="tipConfire">广播提醒</button>
+            <!-- <button class="btn btn-default" type="button" id="cancel">取消</button> -->
+            </span>
+            <br/>&nbsp;
+        </div>
+
+        <div id="content">
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>群组成员详情</h5>
+                                <span style="position: relative;top:2px;">
+                                <a href="__URL__/group_add" class="btn nom"><i class="icon-plus-sign"></i>群组添加</a>
+                                <if condition="$iLevel gt 1 "> 
+                                <a href="__URL__/adminer_list/p/{$_GET['p']}" class="btn nom"><i class="icon-arrow-left"></i>返回上层管理员列表</a>
+                                </if>
+                                <span class="space"></span>
+                                <!-- <span class="noa">授权终端数: {$maxuser} </span>&nbsp;&nbsp;
+                                <span class="noa">已分配终端数: {$usednum} </span>&nbsp;&nbsp;
+                                <span class="noa">可分配终端数: {$validuser} </span>&nbsp;&nbsp;
+                                -->
+                                <button type="button" class="btn btn-default" id="v_xf" style="position: relative;left: 5px;"><i class="glyphicon glyphicon-info-sign"></i>续费提醒</button>    
+                                <if condition="($searchc neq '' ) OR ($glist neq '' )"> 
+                                <a href="__URL__/group_list/p/{$_GET['urlp']}" class="btn noa btn-default" style="position: relative;top:-1px;left: 16%;"><i class="icon-arrow-left"></i> 返回上层群组列表</a>
+                                </if>
+                                </span>
+                                
+                            </div>
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table" id="table" >
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox" name="sel_add" id="id_selall" value="" onclick="SelectAll()" /></th>
+                                                <th>群组ID</th>
+                                                <th>群组名称</th>
+                                                <th>用户ID</th>
+                                                <th>状态</th>
+                                                <th>用户名称</th>
+                                                <th>账号</th>
+                                                <th>GPS</th>
+                                                <th>级别</th> 
+                                                <th>群组创建时间</th>   
+                                                <th>用户创建时间</th>
+                                                <th>用户有效时间</th>
+                                                <th>备注</th>
+                                                <th>操作</th>
+                                                <!-- <th>操作</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <if condition="$total gt 0 ">
+                                                <volist name="data" id="v">
+                                                <if condition="$v.account neq '' ">                                              
+                                                <tr>
+                                                    <td><input type="checkbox" class="sel" name="sel" value="{$v.uid}"></td>
+                                                    <td id="ugid">{$gid}</td>
+                                                    <td>{$glist.gname}</td>
+                                                    <td>{$v.uid}</td>
+                                                    <if condition="$v.online gt 0 ">
+                                                    <td style="color: green">在线</td>
+                                                    <else />
+                                                    <td>离线</td>
+                                                    </if>
+                                                    <td>{$v.username}</td>
+                                                    <td>{$v.account}</td>
+                                                    <td>{$v.gpscycle}</td>
+                                                    <td>{$v.level}</td>
+                                                    <td><php> echo substr($glist['createtime'],0,10)</php></td>
+                                                    <td><php> echo substr($v['createtime'],0,10)</php></td>
+                                                    <td><php> echo substr($v['validtime'],0,10)</php></td>
+                                                    <td>{$v.note}</td>
+                                                    <!-- <td><a href="__APP__/Admin/Index/device_edit/uid/{$v.uid}/gid/{$gid}&p={$_GET['p']}&urlp={$_GET['urlp']}">修改</a></td> -->
+                                                    <td>
+                                                        <input type="hidden" id="paramuid"  name="urlp" value="{$_GET['p']}" />
+                                                        <a href="javascript:void(0);" onclick="updateloc({$v['uid']},{$gid},'gp')">修改</a>
+                                                        <!-- <a href="{:U('Index/device_edit',array('uid'=>$v['uid'],'p'=>$_GET['p']))}" >修改</a> -->
+                                                    </td>
+                                                </tr>
+                                                </if>
+                                                </volist>
+                                            <else />
+                                                <tr>
+                                                    <td colspan="11">无记录</td>
+                                                </tr>
+                                            </if>
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
+                                        <!-- <div class="dataTables_filter">
+                                            <form action="__URL__/device_list" name="formsearch" method="get" id="formsearch">
+                                                <input type="text" placeholder="名称或账号" name="searchc" id="searchc" value="{$searchc}">
+                                                <button class="btn btn-default" type="submit" id="searcha">搜索</button> 
+                                            </form>
+                                        </div> -->
+                                        
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif; float: right;">{$page}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <!--<script src="js/unicorn.tables.js"></script>-->
+        <script>
+            function SelectAll(){
+                 var target = document.getElementById("id_selall");
+                   //var input = document.getElementsByTagName("input");
+                var checkbox = document.getElementsByClassName("sel");
+                //alert(input.length);
+                //var n = 0;
+                for (var i = 0; i < checkbox.length; i++)
+                {                     
+                 checkbox[i].checked = target.checked;    //全不选 与全选   
+                     checkbox[i].onclick = function()    //当有一个或多个不选时显示全选框不选中
+                    {
+                     var n = 0;
+                     for (var i = 0; i < checkbox.length; i++)
+                        {
+                          if(!checkbox[i].checked){  //计算未选中的个数
+                              n++;
+                          }      
+                        }
+                        if ( !this.checked )
+                        {
+                         target.checked = false;                                                     
+                        }
+                        if(n <=0){
+                         target.checked = true; 
+                        }                  
+                    }    
+                }       
+            } 
+            function updateloc(uid,gid,gu){
+                var p = $("#paramuid").val();
+                window.location.href='__APP__/Admin/Index/device_edit/uid/'+uid +"/gu/"+gu+'/p/'+p;  //+'/gid/'+gid
+            }
+            $(function () { 
+                //提醒续费
+                $("#v_xf").click(function () {
+                    var xfNum = $(".sel:checked").length;
+                    if (xfNum < 1) {
+                        alert("未选择任何用户");
+                        return false;
+                    }else{
+                        //alert(delNum);
+                        /*if (confirm("您已选中"+xfNum+"个用户，确定要全部提醒吗？")) {
+                            var chk_value = [];
+                            $(".sel:checked").each(function () {
+                                chk_value.push($(this).val());
+                            })
+
+                            alert(chk_value);
+                            console.log(chk_value);
+                            //window.location.href = "__URL__/device_delete/uid/" + chk_value+"/type/batch";
+                        }*/
+
+                         
+                            $(".expir_tips").css({"display":"block"});
+                            $("#tipConfire").click(function () {
+                                var uid_arr = [];
+                                $(".sel:checked").each(function () {
+                                    uid_arr.push($(this).val());
+                                });
+                                var uidNum = uid_arr.length;
+                                if (confirm("您已选中"+uidNum+"个设备用户,确定全部提醒吗？")) { 
+                                var message = $("#message").val(); 
+                                var msglenth = message.length;
+                                if (msglenth < 1 || msglenth > 150) {
+                                    alert("未填写广播消息或消息超过50个汉字！");
+                                    return false;
+                                }
+                                var uidstr = uid_arr.join(',');  //将uid数组拼接成字符串
+                                //alert(uidstr);
+                                $.post("__APP__/Admin/Index/device_vtips", {uid: uidstr,message:message}, function (data) {
+                                    var obj = data; //alert(obj);
+                                    if(obj == "3"){
+                                        alert("消息提醒已广播!");
+                                        return false;
+                                    }else{
+                                        alert("未填写广播消息或消息超过50个汉字！");
+                                        return false;
+                                    }
+                                },"json");
+
+                                }
+
+                            });
+                    }
+
+                    
+                });
+
+                $(".cenclose").click(function () {
+                    //$.session.set('cenvtips', 'sesVal');
+                    //$("#vtipsSta").val("2");
+                    //$(".rvtips").empty().append("到期提醒");
+                    $(".expir_tips").css("display", "none");
+                    //关闭提示框状态 
+                    /*$.post("__URL__/vtips_sessSta", {type: "1"}, function (data) {
+                        var obj = data;
+                        //alert(obj);
+                    });*/
+                });
+
+
+
+                $("#uedit").click(function() {
+                    
+                    var gid = $("#ugid").val();
+                    window.location = "__URL__/uMembers/uid/"+uid+"/gid"+gid;
+                    
+                });
+
+                //跳转到指定第n页
+                $("#npage_qd").click(function() {
+                    var pagenum = $("#npage_num").val();
+                    var showpn = $("#showpn").val();
+                    if (isNaN(pagenum)) {
+                        alert("请输入数字");
+                    }
+                    if (pagenum != '') {
+                        if(pagenum > showpn){
+                            pagenum = showpn;
+                        }
+                        if(pagenum < 1){
+                            pagenum = 1;
+                        }
+                        window.location = "__URL__/uMembers/p/"+pagenum;
+
+                    }
+                    
+                });
+
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                })
+            })
+        </script>
+    </body>
+</html>

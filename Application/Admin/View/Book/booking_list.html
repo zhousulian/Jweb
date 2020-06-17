@@ -1,0 +1,306 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>订单列表</h5>
+                                <if condition="$iLevel lt 3 ">
+                                <a href="__URL__/booking_add" class="btn nom" style="margin-top: 3px"><i class="icon-plus-sign"></i>订单添加</a>
+                                </if>
+                                <if condition="$serType neq '' ">
+                                <a href="__APP__/Admin/Book/booking_list/atype/{$senatype}" class="btn noa btn-default"><i class="icon-arrow-left"></i> 返回订单列表</a>
+                                </if>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered definewidth b-t b-light" >
+                                        <thead>
+                                        <tr>
+                                            <td colspan="14">
+                                                <if condition="($iLevel eq 1)">
+                                                    <div class="btn-group" data-toggle="buttons" style="">
+                                                        <a href="__URL__/booking_list?atype=b" class="btn btn-default" id="">发出的订单</a>
+                                                        <a href="__URL__/booking_list?atype=c" class="btn btn-default" id="">额度操作记录</a>
+                                                    </div>
+
+                                                    <elseif condition="($iLevel eq 2)"/>
+                                                    <div class="btn-group" data-toggle="buttons" style="">
+                                                        <a href="__URL__/booking_list?atype=a" class="btn btn-default" id="">收到的订单</a>
+                                                        <a href="__URL__/booking_list?atype=b" class="btn btn-default" id="">发出的订单</a>
+                                                        <a href="__URL__/booking_list?atype=c" class="btn btn-default" id="">额度操作记录</a>
+                                                    </div>
+                                                    <elseif condition="($iLevel eq 3)"/>
+
+                                                    <div class="btn-group" data-toggle="buttons">
+                                                        <a href="__URL__/booking_list?atype=a" class="btn btn-default" id="">收到的订单</a>
+                                                        <a href="__URL__/booking_list?atype=c" class="btn btn-default" id="">额度操作记录</a>
+                                                    </div>
+                                                </if>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <if condition="($senatype eq 'c')">
+                                                <th>订单号</th>
+                                                <th>类型</th>
+                                                <th>操作员(账号)</th>
+                                                <th>对象(账号)</th>
+                                                <th>额度值</th>
+                                                <if condition="($iLevel eq 1)">
+                                                    <th>续费时长</th>
+                                                </if>
+                                                <th>操作日期</th>
+                                                <else />
+                                                <th>订单号</th>
+                                                <th>订单类型</th>
+                                                <th>申请人</th>
+                                                <th>额度</th>
+                                                <th>订单状态</th>
+                                                <th>创建日期</th>
+                                                <th>操作</th>
+                                            </if>
+
+                                        </tr>
+
+
+                                        </thead>
+                                        <volist name ="orderList" id="v">
+                                            <tr>
+                                                <td>
+                                                    <if condition="$senatype eq 'c' ">
+                                                        {$v['blid']}
+                                                        <else />
+                                                        <a href="__URL__/booking_edit/blid/{$v['blid']}/at/{$_GET['atype']}">{$v['blid']}</a>
+                                                    </if>
+                                                </td>
+                                                <td> <!-- 订单类型 -->
+
+                                                    <if condition="($v['bltype'] eq 0)">
+                                                        申请额度
+                                                        <elseif condition="($v['bltype'] eq 1)"/>
+                                                        下发额度
+                                                        <elseif condition="($v['bltype'] eq 2)"/>
+                                                        回收额度
+                                                        <elseif condition="($v['bltype'] eq 3)"/>
+                                                        批量续费
+                                                        <elseif condition="($v['bltype'] eq 4)"/>
+                                                        续费
+                                                    </if>
+
+                                                </td>
+
+                                                <if condition="$senatype eq 'c' ">
+                                                    <td><php>echo getAdName($v['bladid'])</php></td>    <!-- 操作员 -->
+                                                    <if condition="($v['bltype'] eq 1) OR ($v['bltype'] eq 2)">  <!-- 回收额度 -->
+                                                        <td>{$v['opname']}</td>
+                                                        <elseif condition="($v['bltype'] eq 4)"/>  <!-- 续费账号 -->
+                                                        <td>
+                                                            <if condition="($v['account'] neq '')">
+                                                                {$v['account']}
+                                                                <else/>
+                                                                账号已被删除
+                                                            </if>
+                                                        </td>
+                                                        <elseif condition="($v['bltype'] eq 3)"/>  <!-- 批量续费账号 -->
+                                                        <php>$arr = getUserAccount($v['blid']); </php>
+                                                        <td class="wrap">
+                                                            <if condition="($arr['user'] neq '')">
+                                                                <php>echo $arr['user']; </php>
+                                                                <else/>
+                                                                账号已被删除
+                                                            </if>
+                                                        </td>
+                                                    </if>
+
+                                                    <else/>
+                                                    <td><php>echo getAdName($v['blfkid'])</php></td>
+                                                    <!-- <a href="booking-edit.php?blid=' . $blid . '"> {$blid}</a> -->
+                                                </if>
+                                                <td>{$v['blnum']}</td>
+                                                <if condition="($senatype eq 'c') AND ($iLevel eq 1)">
+                                                    <if condition="$v['bltype'] eq 4 ">
+
+                                                        <td>{$v['blnum']}年</td>
+                                                        <elseif condition="($v['bltype'] eq 3)"/>
+                                                        <td><php>echo $arr['ModifyDate']; </php>年</td>
+                                                        <else />
+                                                        <td></td>
+                                                    </if>
+                                                </if>
+
+                                                <if condition="($senatype neq 'c')">
+                                                    <if  condition="($v['blst'] eq 0)">
+                                                        <td>等待上级管理员审核</td>
+                                                        <elseif  condition="($v['blst'] eq 1)"/>
+                                                        <td>已审核</td>
+                                                        <elseif  condition="($v['blst'] eq 2)"/>
+                                                        <td>审核已通过</td>
+                                                        <elseif  condition="($v['blst'] eq 110)"/>
+                                                        <td>审核未通过</td>
+                                                        <else />
+                                                        <td>其他状态</td>
+                                                    </if>
+
+                                                </if>
+                                                <td>{$v['bldate']}</td>
+                                                <if condition="($senatype neq 'c')">
+                                                    <td>
+                                                        <a href="__URL__/booking_edit/blid/{$v['blid']}/at/{$_GET['atype']}">订单详情</a>
+                                                    </td>
+                                                </if>
+
+
+                                            </tr>
+                                        </volist>
+                                    </table>
+
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header" >
+                                        <form class="form-inline definewidth" action="__URL__/booking_list/atype/{$senatype}" method="get">
+                                        <if condition="($senatype eq 'a') OR ($senatype eq 'b')">
+                                            <input type="text" name="blid" id="blid" class="abc input-default" placeholder="订单号" value="" style="height: 30px;">&nbsp;&nbsp;
+                                        <elseif condition="($senatype eq 'c')"/>
+                                            <input type="text" name="opname" id="opname" class="abc input-default" placeholder="对象(账号)" value="" style="height: 30px;">&nbsp;&nbsp;
+                                        </if>
+                                            <button type="submit" class="btn btn-default" id="searcha" style="color:#333">搜索</button>
+                                        </form>
+                                        <!--<div class="dataTables_filter">
+                                            <form action="__URL__/booking_list" name="formsearch" method="get" id="formsearch">
+                                                <input type="text" placeholder="订单号" name="searchc" value="{$searchc}" id="searchc" class="vs">
+                                            	<input type="text" placeholder="订单类型" name="searcht" value="{$searcht}" id="searcht" class="vs">
+                                                <div class="input-append date vdate" id="" data-date="" data-date-format="yyyy-mm-dd">
+                                                    <input size="8" type="text" name="beginDate" id="beginDate" value="{$beginDate}" placeholder="开始时间" readonly>
+                                                    <span class = "add-on"><i class="icon-calendar"></i></span>
+                                                </div>
+                                                <div class="input-append date vdate" id="" data-date="" data-date-format="yyyy-mm-dd" >
+                                                    <input size="8" type="text" name="endDate" id="endDate" value="{$endDate}" placeholder="结束时间" readonly>
+                                                    <span class = "add-on"><i class="icon-calendar"></i></span>
+                                                </div>
+
+                                                <button type="button" class="btn btn-default" id="clear">清空</button> 
+                                            </form>
+                                        </div>-->
+                                        <br/><br/>
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <input type="hidden" id="psearchc" value="{$searchc}" />
+                                        <input type="hidden" id="psearcht" value="{$searcht}" />
+                                        <input type="hidden" id="pbeginDate" value="{$beginDate}" />
+                                        <input type="hidden" id="pendDate" value="{$endDate}" />
+                                        <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif; float: right;">{$page}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <!--<script src="js/unicorn.tables.js"></script>-->
+        <script src="__PUBLIC__/js/bootstrap-datetimepicker.js"></script>
+		<script>
+			$(function () {
+                /*分控管理员点击续费订单的订单详情提示*/
+                $(".ddxq").click(function() {
+                    var hbltype = $(this).children(".hbltype").val();
+                    var iLevel = $(this).children(".iLevel").val();
+                    if (hbltype == 1 && iLevel == 2) {
+                        alert("现在代理能够审核通过自己客户的续费订单，每月将整理续费多少结算，请合理使用!");
+                        //return false;
+                    }                    
+                });
+
+                //跳转到指定第n页
+                $("#npage_qd").click(function() {
+                    var pagenum = $("#npage_num").val();
+                    var pagenum = Number(pagenum);
+                    var showpn = $("#showpn").val();
+                    var showpn = Number(showpn);
+                    var psearchc = $("#psearchc").val();
+                    var pbeginDate = $("#pbeginDate").val();
+                    var pendDate = $("#pendDate").val();
+                    var psearcht = $("#psearcht").val();
+
+                    if (isNaN(pagenum)) {
+                        alert("请输入数字");
+                    }
+                    if (pagenum.length !==0) {
+                        if(pagenum > showpn){
+                            pagenum = showpn;
+                        }
+                        if(pagenum < 1){
+                            pagenum = 1;
+                        }
+                        if (psearchc != '') {
+                            window.location = "__URL__/booking_list/searchc/"+psearchc+"/p/"+pagenum;
+                        }
+                        else if (pbeginDate != '' && pendDate != '') {
+                            window.location = "__URL__/booking_list/beginDate/"+pbeginDate+"/endDate/"+pendDate+"/p/"+pagenum;
+                        }
+                        else{
+                            window.location = "__URL__/booking_list/p/"+pagenum;
+                        }
+                        
+                    }
+                    
+                });
+
+
+
+	            $('.date').datetimepicker({
+	                format: 'yyyy-mm-dd',
+	                todayBtn: true,
+	                minView: 'month',
+	                autoclose: true,
+	                todayHighlight: true,
+	                pickerPosition: 'top-left'
+	            });
+	            $("#clear").click(function () {
+	            
+	                $("#beginDate").val("");
+	                $("#endDate").val("");
+	                $("#searchc").val("");
+	                $("#searcht").val("");
+	            });
+	           /* $("#searcha").click(function () {
+	                var beginDate = $("#beginDate").val();
+	                var endDate = $("#endDate").val();
+	                var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+	                var d2 = new Date(endDate.replace(/\-/g, "\/"));
+	                if (beginDate != "" && endDate != "" && d1 >= d2)
+	                {
+	                    alert("开始时间不能大于结束时间！");
+	                    return false;
+	                }
+	                var Searchc = $.trim($("#searchc").val());
+	                if (beginDate != "" && endDate == "") {
+	                    alert("结束时间不能为空！");
+	                    return false;
+	                }
+	                if (endDate != "" && beginDate == "") {
+	                    alert("开始时间不能为空！");
+	                    return false;
+	                }
+	                if (Searchc == "" &&Searcht == "" && beginDate == "" && endDate == "") {
+	                    return false;
+	                }
+	            })*/
+	        });
+		
+		</script>
+    </body>
+</html>

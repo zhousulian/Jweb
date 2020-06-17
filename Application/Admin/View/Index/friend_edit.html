@@ -1,0 +1,279 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>好友编辑</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form name="form1" onsubmit="return SetSelVal()" class="form-horizontal" method="post" action="fedit.php" id="basic_validate" novalidate="novalidate">
+                                    <div class="control-group">
+                                        <label class="control-label">用户ID</label>
+                                        <div class="controls">
+                                            <input type="text" name="uid" readonly="true" value="{$upList.uid}" class="nw" id="uid" /> 
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">用户名称</label>
+                                        <div class="controls">
+                                            <input type="text" name="username" readonly="true"  value="{$upList.username}" class="nw"/> 
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">用户账号</label>
+                                        <div class="controls">
+                                            <input type="text" name="account" readonly="true" value="{$upList.account}" class="nw" id="account" />
+                                        </div>
+                                    </div>
+                                                                                                   
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label">好友信息</label>
+                                        <div class="controls">
+                                            <div class="row">
+                                                <div class="col-xs-5 col-md-5">
+                                                <input type="hidden" name="selVal" id="inSel" value="" />
+                                                <br/><br/>
+                                                    <select name="to" id="multiselect_to_1" class="form-control " size="8" multiple="multiple" onclick="return showMessage()">
+                                                        <volist name="friendList" id="v">                                                      
+                                                        <option value="{$v.fuid}"> {$v.username} &nbsp;({$v.fuid}) &nbsp;({$v.account})</option>
+                                                        </volist>
+                                                    </select>       
+                                                </div>
+                                                <div class="col-xs-2 col-md-2 mtop">
+                                                    <button type="button" id="right_All_1" class="btn btn-block"><i class="glyphicon glyphicon-forward">&lt;&lt;</i></button>
+                                                    <button type="button" id="right_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right">&lt;</i></button>
+                                                    <button type="button" id="left_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left">&gt;</i></button>
+                                                    <button type="button" id="left_All_1" class="btn btn-block"><i class="glyphicon glyphicon-backward">&gt;&gt;</i></button>
+                                                </div>
+                                                <div class="col-xs-5 col-md-5">
+                                                    <input type="hidden" value="{$opid}" id="gopid">
+                                                    <input id="friends" type="text" placeholder="好友名称,账号,ID搜索" >
+                                                    <input id="gidsearch" type="text" placeholder="群组ID搜索成员" >
+                                                    
+                                                    <select name="listGup" id="listGup" class="multiselect form-control " size="8" multiple="multiple" data-right="#multiselect_to_1" data-right-all="#right_All_1"
+                                                            data-right-selected="#right_Selected_1" data-left-all="#left_All_1" data-left-selected="#left_Selected_1" id="searchList">
+                                                        <!--插件自带功能如果value相同就不显示-->
+               
+                                                    </select>     
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            
+                                            <button id="sub" type="submit" class="btn" type="button">保存</button>&nbsp;&nbsp;  
+                                            <!-- <a href="#" onClick="javascript :history.back(-1);" class="btn btn-default">返回列表</a>  -->
+                                            <if condition="$subdev neq '' ">
+                                            <a href="__URL__/device_list/opid/{$_GET['opid']}/p/{$_GET['p']}/subdev/{$subdev}" class="btn btn-default">返回列表</a>
+                                            <else />
+                                            <a href="__URL__/device_list/p/{$_GET['p']}" class="btn btn-default">返回列表</a>
+                                            </if>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>          
+                    </div>
+                </div>
+
+            </div>
+                                    
+                                    
+        </div>  
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script>
+            jQuery(document).ready(function ($) {
+                $('.multiselect').multiselect();
+            });
+               
+            
+        </script>
+        
+        
+      	<!--jquery左右选择插件-->
+        <script type="text/javascript" src="__PUBLIC__/js/multiselect.js"></script>
+       	<script type="text/javascript" >
+       		//当所有用能选中时全选打钩
+       		var target = document.getElementById("id_selall");
+       		var checkbox = document.getElementsByClassName("sel");
+       		var n = 0;
+	       	for (var i = 0; i < checkbox.length; i++)
+	        {
+	       	  	if( !checkbox[i].checked ){ //计算未选中的个数
+	       			n++;
+	            }
+		       	if(n <= 0){
+			       		target.checked = true; 
+			    }else{
+			    	target.checked = false;
+			    }
+	       	    checkbox[i].onclick = function()    //当有一个或多个不选时控制全选框不选中
+	            {
+	           	 var n = 0;
+	           	 for (var i = 0; i < checkbox.length; i++)
+	                {
+	               	  if(!checkbox[i].checked){ //计算未选中的个数
+	               		  n++;
+	                    } 	 
+	                }
+	                if ( !this.checked )
+	                {
+	               	 target.checked = false;                       	                        	 
+	                }
+	                if(n <=0){
+	               	 target.checked = true; 
+	                }                  
+	            }
+	        }	        
+	        
+            function showMessage()
+            {
+                var value = document.getElementById("multiselect_to_1").options[document.getElementById("multiselect_to_1").selectedIndex].value;
+            }
+            function SetSelVal()
+            {
+                var obj = document.getElementById("multiselect_to_1");
+                var length = obj.options.length;
+                var selVal = "";
+                var vaild = false;
+                for (var i = 0; i < length; i++)
+                {
+                    selVal += obj.options[i].value + '|';
+                    document.getElementById("inSel").value = selVal;  //将好友id传值到隐藏域
+                }
+            }
+            
+            //用户功能是否全选控制
+            function SelectAll(){
+            	 var target = document.getElementById("id_selall");
+                 var checkbox = document.getElementsByClassName("sel");
+                 //alert(input.length);
+                 for (var i = 0; i < checkbox.length; i++)
+                 {                     
+                	 checkbox[i].checked = target.checked;    //全不选 与全选   
+                     checkbox[i].onclick = function()    //当有一个或多个不选时控制全选框不选中
+                     {
+                    	 var n = 0;
+                    	 for (var i = 0; i < checkbox.length; i++)
+                         {
+	                    	  if(!checkbox[i].checked){ //计算未选中的个数
+	                    		  n++;
+	                         } 	 
+                         }
+                         if ( !this.checked )
+                         {
+                        	 target.checked = false;                       	                        	 
+                         }
+                         if(n <=0){
+                        	 target.checked = true; 
+                         }                  
+                     }    
+                 }    	
+            } 
+            
+          
+            $("#sub").click(function () {
+                /* if ($(".sel:checked").length < 1) {
+                    alert("未选择用户功能");
+                    $("#inSel").val("");
+                    return false;
+                } */
+                var chk_value = [];
+                $(".sel:checked").each(function () {
+                    chk_value.push($(this).val());
+                })
+                $("#inSel").val(chk_value);
+                /* $("#accountNums").val($(".sel:checked").length);
+                $(".modal").css("display", "block"); */
+            }) 
+             
+       
+        </script>
+        
+
+        <script type="text/javascript">
+      
+        $(function () {         
+            $('#gidsearch').bind('input propertychange', function () {
+                var gopid = $('#gopid').val();
+                var sear = $('#gidsearch').val();
+                var uid = $('#uid').val();
+                $.post("__URL__/group_Members", { gid: sear, Opid: gopid ,Uid:uid}, function (data) {
+                    var str = '';
+                    //var obj = JSON.parse(data);   
+                    var obj = data; 
+                    //alert(obj);
+                    for (var i in obj) {
+                        //str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "(" + obj[i].account + ")" + "</option>";
+                    	str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "&nbsp;(" + obj[i].uid + ")"+ "&nbsp;(" + obj[i].account + ")" + "</option>";
+                       
+                    }
+                    $("#listGup").empty().append(str);
+                    // 删除左边有的
+                    var leftO = $("#multiselect_to_1 option").map(function () {
+                        return $(this).val();
+                    }).get().join(",");
+                    //保存到数组arr
+                    arr = leftO.split(',');
+                    for (var i in arr) {
+                        $("#listGup option[value='" + arr[i] + "']").remove();
+                    }
+                });
+            });
+        });
+
+    </script>
+    
+    <script type="text/javascript">
+      	//搜索好友
+      	
+        $(function () {         
+            $('#friends').bind('input propertychange', function () {
+                var opid = $('#gopid').val();
+                var account = $('#account').val();
+                var search = $('#friends').val();
+                $.post("__URL__/friendSearch", { search: search, Opid: opid, Account:account }, function (data) {
+                    var str = '';
+                    //var obj = JSON.parse(data);   
+                    var obj = data; 
+                    //alert(obj);
+                    for (var i in obj) {
+                        //str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "(" + obj[i].account + ")" + "</option>";
+                        str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "&nbsp;(" + obj[i].uid + ")"+ "&nbsp;(" + obj[i].account + ")" + "</option>";
+                       
+                    }
+                    $("#listGup").empty().append(str);
+                    // 删除左边有的
+                    var leftO = $("#multiselect_to_1 option").map(function () {
+                        return $(this).val();
+                    }).get().join(",");
+                    //保存到数组arr
+                    arr = leftO.split(',');
+                    for (var i in arr) {
+                        $("#listGup option[value='" + arr[i] + "']").remove();
+                    }
+                });
+            });
+        });
+
+    </script>
+
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script> 
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script> 
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script> 
+        <script src="__PUBLIC__/js/matrix.js"></script> 
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+     
+
+
+    </body>
+</html>

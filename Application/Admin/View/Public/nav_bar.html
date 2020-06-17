@@ -1,0 +1,292 @@
+<!--<div id="sidebar" >
+    <a href="#" class="visible-phone"><i class="icon icon-home"></i> 导航</a>
+    <if condition="($iLevel eq 5) ">  &lt;!&ndash; 级别为5时 &ndash;&gt;
+        <ul >
+            <li id="yh" class="submenu"> <a href="javascript:;"><i class="icon icon-th-list"></i> <span>用户分配详情</span> <span class="label label-important">1</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                </ul>
+            </li>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                </ul>
+            </li>
+        </ul>
+        <elseif condition="$iLevel eq 4"/>  &lt;!&ndash; 级别为4时 &ndash;&gt;
+        <ul>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label label-important">2</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                    <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                </ul>
+            </li>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                </ul>
+            </li>
+        </ul>
+        <elseif condition="$iLevel gt 1"/> &lt;!&ndash; 级别>1时 &ndash;&gt;
+        <ul>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>管理员管理</span> <span class="label">2</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                    <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                </ul>
+            </li>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label">1</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                </ul>
+            </li>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label"><if condition="$iLevel eq 3 ">2 <else /> 1</if></span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Index/d_list">设备列表</a></li>
+                    <if condition="$iLevel eq 3 ">
+                        <li><a href="__APP__/Admin/Index/d_linechart">设备使用详情</a></li>
+                    </if>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>订单管理</span>
+                    <span class="label">
+                    <if condition="$iLevel lt 3 ">2 <else /> 1</if>
+                    </span>
+                </a>
+                <ul>
+                    <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                    <if condition="$iLevel lt 3 ">
+                        <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                    </if>
+                </ul>
+            </li>
+            <if condition="$iLevel eq 3 ">
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>日志管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Index/device_del_log">设备删除日志</a></li>
+                        <li><a href="__APP__/Admin/Index/device_edit_log">设备修改日志</a></li>
+                    </ul>
+                </li>
+            </if>
+
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>系统参数</span> <span class="label">1</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/sset">参数设置</a></li>
+                </ul>
+            </li>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label"><if condition="$iLevel eq 3 ">2<else/>1</if></span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                    <if condition="$iLevel eq 3 ">
+                        <li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>
+                    </if>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"> <i class="icon icon-th-list"></i>  <span>使用说明</span> <span class="label">3</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Index/Instructions_qz">设备添加说明</a></li>
+                    <li><a href="__APP__/Admin/Index/Instructions_dd">群组添加说明</a></li>
+                    <li><a href="__APP__/Admin/Index/Instructions_sb">订单添加说明</a></li>
+                </ul>
+            </li>
+        </ul>
+        <elseif condition="($iLevel eq 1) OR ($iLevel eq 0)"/>
+        <ul>
+            <li class="submenu">
+                <a href="#"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label">2</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Index/device_list">设备列表</a></li>
+                    <li><a href="__APP__/Admin/Index/device_add">设备添加</a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"> <i class="icon icon-th-list"></i>  <span>群组管理</span> <span class="label">3</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Group/group_list">群组列表</a></li>
+                    <li><a href="__APP__/Admin/Group/group_add">群组添加</a></li>
+                    <li><a href="__APP__/Admin/Group/group_subedit">嵌套组定义</a></li>
+                </ul>
+            </li>
+
+            <li class="submenu">
+                <a href="#"> <i class="icon icon-th-list"></i>  <span>订单管理</span> <span class="label">2</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                    <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                </ul>
+            </li>
+            <if condition="($upLevel neq 0)">
+                <li class="submenu">
+                    <a href="#"> <i class="icon icon-th-list"></i>  <span>管理员管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                        <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                    </ul>
+                </li>
+            </if>
+            <li class="submenu">
+                <a href="#"> <i class="icon icon-th-list"></i> <span>二级管理</span> <span class="label">2</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Subadmin/subad_list">二级管理列表</a></li>
+                    <li><a href="__APP__/Admin/Subadmin/subad_add">二级管理添加</a></li>
+                </ul>
+            </li>
+            <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">2</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                    <li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"> <i class="icon icon-th-list"></i>  <span>使用说明</span> <span class="label">3</span></a>
+                <ul>
+                    <li><a href="__APP__/Admin/Index/Instructions_qz">设备添加说明</a></li>
+                    <li><a href="__APP__/Admin/Index/Instructions_dd">群组添加说明</a></li>
+                    <li><a href="__APP__/Admin/Index/Instructions_sb">订单添加说明</a></li>
+                </ul>
+            </li>
+        </ul>
+    </if>
+</div>-->
+<div id="nav_bar" > <!--style="border: #0cd8d5 1px solid;"-->
+    <div style=""  id="sidebar" >
+        <a href="#" class="visible-phone"><i class="icon icon-home icon-dh"></i> <span class="font-dh" style="position: relative;left: 13px;font-size: 16px;">导航</span></a>
+        <if condition="($iLevel eq 5) ">  <!-- 级别为5时 -->
+            <ul >
+                <li id="yh" class="submenu"> <a href="javascript:;"><i class="icon icon-th-list"></i> <span>用户分配详情</span> <span class="label label-important">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                    </ul>
+                </li>
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <elseif condition="$iLevel eq 4"/>  <!-- 级别为4时 -->
+            <ul>
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label label-important">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                        <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                    </ul>
+                </li>
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <elseif condition="$iLevel gt 1"/> <!-- 级别>1时 -->
+            <ul>
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>管理员管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                        <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                    </ul>
+                </li>
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>用户分配详情</span> <span class="label">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                    </ul>
+                </li>
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label"><if condition="$iLevel eq 3 ">2 <else /> 1</if></span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Index/d_list">设备列表</a></li>
+                        <if condition="$iLevel eq 3 ">
+                            <li><a href="__APP__/Admin/Index/d_linechart">设备使用详情</a></li>
+                        </if>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>订单管理</span>
+                        <span class="label">
+                    <if condition="$iLevel lt 3 ">2 <else /> 1</if>
+                    </span>
+                    </a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                        <if condition="$iLevel lt 3 ">
+                            <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                        </if>
+                    </ul>
+                </li>
+                <!--<if condition="$iLevel eq 3 ">
+                    <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>日志管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/device_del_log">设备删除日志</a></li>
+                            <li><a href="__APP__/Admin/Index/device_edit_log">设备修改日志</a></li>
+                        </ul>
+                    </li>
+                </if>-->
+
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"></i>  <span>系统参数</span> <span class="label">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/sset">参数设置</a></li>
+                    </ul>
+                </li>
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label"><if condition="$iLevel eq 3 ">2<else/>1</if></span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                        <!--<if condition="$iLevel eq 3 ">
+                            <li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>
+                        </if>-->
+                    </ul>
+                </li>
+            </ul>
+            <elseif condition="($iLevel eq 1) OR ($iLevel eq 0)"/>
+            <ul>
+                <li class="submenu">
+                    <a href="#"> <i class="icon icon-th-list"></i>  <span>设备管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Index/device_list">设备列表</a></li>
+                        <li><a href="__APP__/Admin/Index/device_add">设备添加</a></li>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="#"> <i class="icon icon-th-list"></i>  <span>群组管理</span> <span class="label">3</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Group/group_list">群组列表</a></li>
+                        <li><a href="__APP__/Admin/Group/group_add">群组添加</a></li>
+                        <li><a href="__APP__/Admin/Group/group_subedit">嵌套组定义</a></li>
+                    </ul>
+                </li>
+
+                <li class="submenu">
+                    <a href="#"> <i class="icon icon-th-list"></i>  <span>订单管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                        <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                    </ul>
+                </li>
+                <!--<if condition="($upLevel neq 0)">
+                    <li class="submenu">
+                        <a href="#"> <i class="icon icon-th-list"></i>  <span>管理员管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                            <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                        </ul>
+                    </li>
+                </if>-->
+                <!--<li class="submenu">
+                    <a href="#"> <i class="icon icon-th-list"></i> <span>二级管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Subadmin/subad_list">二级管理列表</a></li>
+                        <li><a href="__APP__/Admin/Subadmin/subad_add">二级管理添加</a></li>
+                    </ul>
+                </li>-->
+                <li class="submenu"> <a href="javascript:;"> <i class="icon icon-th-list"> </i> <span>档案数据</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                        <!--<li><a href="__APP__/Admin/Admin/owc_log">设备信息操作日志</a></li>-->
+                    </ul>
+                </li>
+            </ul>
+
+
+        </if>
+    </div>
+</div>

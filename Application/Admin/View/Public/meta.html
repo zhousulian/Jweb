@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>智能对讲管理系统</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css" /> <!-- 分页样式 -->
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/uniform.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/select2.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/unicorn.main.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/unicorn.grey.css" class="skin-color" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-datetimepicker.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        /*#content-header{
+            margin-top: -2px;
+        }*/
+        .nav1{
+            position: absolute;
+            top:-3px;
+        }
+        #num{
+            background-color: #657b87;
+        }
+
+        #av a:hover{
+            background: #657b87;
+        }
+        #av1 a:hover{
+            background: #657b87;
+        }
+
+        #user-nav > ul > li > a{
+            background : #404844;
+        }
+
+        #user-nav > ul > li > a:hover{
+            background: #404844;
+        }
+        .table thead th {
+            vertical-align: middle;
+        }
+        #searchc,#searcht,#crbeginDatesel,#crendDatesel,#dlcrdate{
+            height: 30px    ;
+        }
+        #friends{
+            height:36px;
+            width: 45%;
+        }
+        .table > thead > tr > th{
+            vertical-align: middle;
+        }
+        .table > tbody > tr >  td{
+            vertical-align: middle;
+        }
+
+        #yh_gn {
+            padding-top: 0px;
+        }
+        #yh_gn {
+            position: relative;
+            top: 25px;
+        }
+        #search_dispatcher{
+            width: 98px;
+            height: 36px;
+        }
+        #select_dis{
+            height: 36px;
+            width: 230px;
+
+        }
+        .form-horizontal .controls .nw{
+            /*width: 25%;*/
+            height: 36px;
+        }
+        #note{
+            width: 25%;
+            height: 66px;
+        }
+        #form-actions{
+            height:108px;
+        }
+        .control-group .controls input{
+            height: 29px;
+        }
+
+        #form_file{
+            height: 130px;
+        }
+        .dataTables_filter{
+            width: 800px;
+        }
+        .download{
+            position: relative;
+            top: 8px;
+            margin-left:390px;
+            font-size: 15px;
+        }
+        .download a{
+            text-decoration:underline;
+        }
+        #accsearch,#gidsearch{
+            height: 36px;
+            width: 45%;
+            margin: 5px 5px 5px 0px;
+        }
+        @media (max-width: 768px){
+            #accsearch,#gidsearch{
+                width: 100%;
+            }
+        }
+        @media (min-width: 1200px){
+            .row {
+                margin-left: -14px;
+            }
+        }
+        .m10{
+            margin-bottom: 0;
+        }
+        .m10 .tableleft{
+            text-align:right;
+            padding-right:20px;
+            background-color:#f5f5f5;
+        }
+
+        .m10 thead tr th,.m10 tbody tr td{
+            vertical-align:middle;
+        }
+        .m10 thead tr th,.m10 tbody tr td > input{
+            height: 36px;
+        }
+        #searchuid{
+            height: 30px;
+        }
+        .dsearch{
+            height: 48px;
+            padding: 10px 0 0 3px;
+            font-size: 16px;
+        }
+        .col-xs-5{
+            padding-left: 30px;
+        }
+
+        .mtop{
+            margin-top: 48px;
+        }
+
+        .tishi{
+            margin-left: 6px;
+            font-size: 0.9em;
+        }
+        #beginDate,#endDate,#crbeginDate,#crendDate,#bdate,#edate,#vedate,#vbdate{
+            height: 30px;
+        }
+        .input-append .add-on{
+            height: 30px;
+        }
+        #npage_num{
+            height: 25px;
+        }
+        #form_file{
+            height: 130px;
+        }
+        .dataTables_filter{
+            width: 800px;
+        }
+        .download{
+            position: relative;
+            top: 8px;
+            left:350px;
+            font-size: 15px;
+        }
+        .download a{
+            text-decoration:underline;
+        }
+        #btn_fhlb{
+            position: absolute;
+            top:2px;
+        }
+        #file_submit{
+            position: relative;
+            float: left;
+            top: -26px;
+            left: 390px;
+        }
+        #tiptab th{
+            text-align: center;
+        }
+
+        #select_dis{
+            height: 39px;
+            width: 230px;
+        }
+        #search_dispatcher{
+            width: 90px;
+        }
+        /*.date{
+            margin-left: 20px !important;
+            width:24%;
+        }*/
+        /*.form-horizontal .controls .nw{
+            width: 320px;
+        }*/
+    </style>
+    <!--<script>
+        $("#nav_sidebar a").hover(function() {
+            alert("11");
+            /*var child = $(this).children();// 获取鼠标滑过的li里面有没有子元素
+            if (child.length == 0) {// 当获取的子元素的长度为0时，再给该li添加样式
+                var t = $(this).text();
+                $("ul li").removeClass("color");
+                $(this).addClass("color");
+            }*/
+            $("#nav_sidebar ul li").css("baackgroud-color","#f7fcff");
+        })
+    </script>-->
+</head>
+<body >

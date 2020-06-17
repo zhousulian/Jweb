@@ -1,0 +1,79 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>设备批量导入设备</h5>                                
+                                <a href="__URL__/device_list/p/{$dp}" id="btn_fhlb" class="btn nom"><i class="icon-arrow-left"></i>返回上层设备列表</a>
+
+                            </div>	
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table">
+                                        <thead>
+                                            <tr>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix " id="form_file">
+                                    <br/><br/>
+                                        <div class="dataTables_filter">
+											<form method="post" action="{:U('Index/import_excel')}" enctype="multipart/form-data">  
+		                                    	<input type="file" name="file_stu" id="file" />  
+		                                    	<input type="submit" value="导入"  id="file_submit" /> 
+		                                    </form>  
+                                        </div>
+                                        <b class="download"><a href="__URL__/dloadUserTpl" >下载Excel模板</a> </b> 
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <!--<script src="js/unicorn.tables.js"></script>-->
+        <script>
+
+            $(function () {
+            	//拦截提交空文件
+            	$("#file_submit").click(function () {
+                    var file = $("#file").val();
+	            	if (file == '') {
+	            		alert('请选择导入文件！(仅支持.xlsx/.xls后缀名的类型文件)');
+	            		return false;
+	            	}
+	            	
+                });
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                });
+            })
+        </script>
+
+    </body>
+</html>

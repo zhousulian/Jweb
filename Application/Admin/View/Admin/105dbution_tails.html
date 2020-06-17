@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TYT智能对讲系统管理平台</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/page.css" /> <!-- 分页样式 -->
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/uniform.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/select2.css" />		
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.main.css" />
+        <link rel="stylesheet" href="__PUBLIC__/css/unicorn.grey.css" class="skin-color" />	
+        <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <style type="text/css">
+            user-nav #lgouts{
+                background: #2569a8 !important;
+            }
+            #content-header{
+                margin-top: -2px;
+            }
+            .nav1{
+                position: absolute;
+                top:-3px;
+            }
+            #num{
+                background-color: #3d8fd6;
+            }
+
+            #av a:hover{
+                background: #3d8fd6;
+            }
+            #av1 a:hover{
+                background: #3d8fd6;
+            } 
+            
+            #user-nav > ul > li > a{
+                background : #00497d ;
+            }
+
+            #user-nav > ul > li > a:hover{
+                background: #1c3752 ;
+            }
+          
+
+        </style> 
+    </head>
+<body >
+    <div id="header">
+        <div id="logoimg" > <img src="__PUBLIC__/img/logo3.png"></div><!-- <div id="zndjpt"><img src="__PUBLIC__/img/znglxt.png" /></div> --> 	<!-- <em>智能对讲系统管理平台</em> -->
+    </div>
+    <div style="background: #2569a8;" id="user-nav" class="nav1 navbar navbar-inverse" >
+        <ul style="background: #2569a8;"  class="nav1 nav btn-group" id="lgouts" >
+            <li style="background : #00497d !important;" class="btn dropdown" id="menu-messages"><a style=" "  href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span  style="color : #adcce9 !important;" class="text">{$LogUser}</span> <span id="num" class="label ">2</span> <b class="caret"></b></a>
+                <ul  class="dropdown-menu">
+                    <li id="av"><a class="sAdd" title="" href="__APP__/Admin/AdLog/logout">切换账号</a></li> 
+                    <li id="av1" ><a class="sInbox" title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav btn-group" id="lgout">
+            <li class="btn btn-inverse"><a title="" href="__APP__/Admin/AdLog/logout"> 退出</a></li>
+        </ul>
+    </div>
+    <div id="daohang">
+        <div style="background-color:#00497d !important; width: 218px; float: right;position: absolute;"  id="sidebar" >
+        <a href="#" class="visible-phone"><i class="icon icon-home"></i> 导航</a>
+        <if condition="($iLevel eq 5) ">  <!-- 级别为5时 -->
+            <ul >
+                <li id="yh" class="submenu"> <a href="javascript:;"><i class="icon icon-th-list"></i> <span>用户分配详情</span> <span class="label label-important">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                    </ul>
+                </li>
+                 <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>档案数据</span> <span class="label">1</span></a>
+                   <ul>
+                       <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                   </ul>
+               </li>
+            </ul>
+        <elseif condition="$iLevel eq 4"/>  <!-- 级别为4时 -->
+            <ul>
+                <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i>  --><span>用户分配详情</span> <span class="label label-important">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                        <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                    </ul>
+                </li>
+                 <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>档案数据</span> <span class="label">1</span></a>
+                   <ul>
+                       <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                   </ul>
+               </li>
+            </ul>
+        <elseif condition="$iLevel gt 1"/> <!-- 级别>1时 -->
+            <ul>
+                <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>管理员管理</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/adminer_list">管理员列表</a></li>
+                        <li><a href="__APP__/Admin/Admin/adminer_add">管理员添加</a></li>
+                    </ul>
+                </li>
+                <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>用户分配详情</span> <span class="label">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/dbution_tails">子账户分配详情</a></li>
+                    </ul>
+                </li>
+                
+                    <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>设备管理</span> <span class="label"><if condition="$iLevel eq 3 ">2<else/> 1 </if></span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Index/d_list">设备列表</a></li> 
+                            <if condition="$iLevel eq 3 ">
+                                <li><a href="__APP__/Admin/Index/d_linechart">设备使用详情</a></li>   
+                            </if>
+                        </ul>
+                    </li>
+                
+                <li class="submenu"> 
+                    <a href="javascript:;"><!-- <i class="icon icon-th-list"></i> --> <span>订单管理</span> 
+                    <span class="label">
+                    <if condition="$iLevel lt 3 ">2 <else /> 1</if>
+                    </span>
+                </a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Book/booking_list">订单列表</a></li>
+                        <if condition="$iLevel lt 3 ">
+                         <li><a href="__APP__/Admin/Book/booking_add">订单添加</a></li>
+                        </if>
+                    </ul>
+                </li>
+                <if condition="$iLevel eq 3 ">
+                <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>日志管理</span> <span class="label">2</span></a>
+                   <ul>
+                        <li><a href="__APP__/Admin/Index/device_del_log">设备删除日志</a></li>
+                        <li><a href="__APP__/Admin/Index/device_edit_log">设备修改日志</a></li>
+                   </ul>
+                </li>
+                </if>
+                
+                <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"></i>  --><span>系统参数</span> <span class="label">1</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Admin/sset">参数设置</a></li>
+                    </ul>
+                </li>
+                 <li class="submenu"> <a href="javascript:;"><!-- <i class="icon icon-th-list"> --></i> <span>档案数据</span> <span class="label">1</span></a>
+                   <ul>
+                       <li><a href="__APP__/Admin/Admin/adpass_edit">修改密码</a></li>
+                   </ul>
+               </li>
+                
+                <li class="submenu">
+                    <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>使用说明</span> <span class="label">3</span></a>
+                    <ul>
+                        <li><a href="__APP__/Admin/Index/Instructions_qz">设备添加说明</a></li>
+                        <li><a href="__APP__/Admin/Index/Instructions_dd">群组使用说明</a></li>
+                        <li><a href="__APP__/Admin/Index/Instructions_sb">订单使用说明</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </if>
+    </div>
+    
+    </div>
+    
+
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"></div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box list_Modular">
+                        <div class="widget-title">
+                            <span class="icon">
+                                <i class="icon-align-justify"></i>									
+                            </span>
+                            <h5>子账户分配详情</h5>
+                            <php>
+                                $numData1 = heaerNums($opid);  
+                            </php>
+                            <if condition="$NowLevel gt 4 ">
+                                <span class="space"></span>
+                            <elseif condition="$NowLevel eq 4 " />
+                                <span class="space"></span>
+                                <span class="noa">授权终端数:{$maxuser}</span>&nbsp;&nbsp;
+                                <span class="noa">已分配终端数:{$dbution}</span>&nbsp;&nbsp;
+                                <span class="noa">可分配终端数:{$undbution}</span>&nbsp;&nbsp;
+                            <elseif condition="$NowLevel lt 2 " />
+                                <span class="space"></span>
+                                <span class="noa">授权终端数: {$maxuser}</span>&nbsp;&nbsp;
+                                <span class="noa">已注册终端数:<php>echo $usednum1 = $numData1['usednum'];</php> </span>&nbsp;&nbsp;
+                            <else />
+                                <span class="noa">授权终端数:{$maxuser}</span>&nbsp;&nbsp;
+                                <span class="noa">已分配终端数:{$dbution}</span>&nbsp;&nbsp;
+                                <span class="noa">可分配终端数:{$undbution}</span>&nbsp;&nbsp;
+                                <span class="noa">已注册终端数: <php>echo $usednum1 = $numData1['usednum'];</php> </span>&nbsp;&nbsp;
+                            </if> &nbsp;&nbsp;&nbsp;&nbsp;
+                            
+                            <if condition="($NowLevel eq 1) OR ($NowLevel eq 0)">
+                                <a href="__URL__/dbution_tails/opid/{$opid}<?php if(!empty($_GET['manid'])) {echo '/manid/'.$_GET['manid'];} if(!empty($_GET['sp'])) {echo '/sp/'.$_GET['sp'];}else{echo '/sp/1';} if(!empty($_GET['p'])) {echo '/zyp/'.$_GET['p'];}else{echo '/zyp/1';} ?>" >查看管理员</a>
+                            </if>  <!-- if(!empty($_GET['manid'])) {echo '/manid/'.$_GET['manid'];} -->
+                            <span class="return">
+                                <if condition="$searchc neq '' ">
+                                    <a href="__URL__/dbution_tails/opid/{$opid}/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i>返回上层1</a>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel gt 1 ) AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层2</a>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel lt 2 ) AND ($_GET['yp'] eq '') AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails<?php if(!empty($_GET['manid'])){echo '/opid/'.$_GET['manid'];}else{echo '/opid/'.$_GET['opid'];} if(!empty($_GET['sp'])) {echo '/p/'.$_GET['sp'];}else{echo '/p/1';}?>" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层33</a>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel lt 1 ) AND ($_GET['yp'] neq '') AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/member/ad<?php if(!empty($_GET['manid'])){echo '/opid/'.$_GET['manid'];}else{echo '/opid/'.$_GET['opid'];} if(!empty($_GET['yp'])) {echo '/p/'.$_GET['yp'];}else{echo '/p/1';}?>" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层334</a>
+                                </if>
+
+                                <!-- <if condition="($iLevel gt $NowLevel) AND ($_GET['member'] neq '' ) AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/sp/{$_GET['sp']}<?php if(!empty($_GET['manid'])){echo '/opid/'.$_GET['manid'];}else{echo '/opid/'.$_GET['opid'];} if(!empty($_GET['sp'])) {echo '/p/'.$_GET['sp'];}else{echo '/p/1';}?>" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层3</a>
+                                </if> -->
+                                <!-- <if condition="($iLevel gt $NowLevel) AND ($_GET['member'] neq '' ) AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/member/ad/sp/{$_GET['sp']}<?php if(!empty($_GET['manid'])){echo '/opid/'.$_GET['manid'];}else{echo '/opid/'.$_GET['opid'];} if(!empty($_GET['sp'])) {echo '/p/'.$_GET['sp'];}else{echo '/p/1';}?>" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层3</a>
+                                </if> -->
+                                <!-- <if condition="($iLevel gt $NowLevel) AND ($_GET['member'] neq '' ) AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/member/ad/sp/{$_GET['sp']}<?php if(!empty($_GET['manid'])){echo '/opid/'.$_GET['manid'];}else{echo '/opid/'.$_GET['opid'];} if(!empty($_GET['sp'])) {echo '/p/'.$_GET['sp'];}else{echo '/p/1';}?>" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层5</a>
+                                </if> -->
+                                <!-- <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 ) AND ($searchc eq '') AND ($_GET['member'] eq '' )">
+                                    <a href="__URL__/dbution_tails/opid/{$manid}/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层4</a>
+                                </if> -->
+                                <!-- <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 )AND ($NowLevel gt 1 ) AND ($searchc eq '') AND ($_GET['member'] eq '' )">
+                                    <a href="__URL__/dbution_tails<?php if(!empty($_GET['manid'])){echo '/opid/'.$_GET['manid'];}else{echo '/opid/'.$_GET['opid'];} if(!empty($_GET['sp'])) {echo '/p/'.$_GET['sp'];}else{echo '/p/1';}?>" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层4</a>  /member/ad
+                                </if> -->
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 )AND ($NowLevel gt 1 ) AND ($searchc eq '') AND ($_GET['member'] eq '' )">
+                                    <a href="__URL__/dbution_tails<?php if(!empty($_GET['manid'])){echo '/opid/'.$_GET['manid'];}else{echo '/opid/'.$opid;} if(!empty($_GET['sp'])) {echo '/p/'.$_GET['sp'];}else{echo '/p/1';}?>" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层{$NowLevel}4</a>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 ) AND ($manid eq '') AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层5</a>
+                                </if>
+                                <!-- <if condition="($iLevel gt $NowLevel ) AND ($NowLevel eq 3 ) AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层2</a>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel) AND ($_GET['member'] neq '' ) AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/opid/{$opid}/sp/{$_GET['sp']}/p/{$_GET['yp']}" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层3</a>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 ) AND ($searchc eq '') AND ($_GET['member'] eq '' )">
+                                    <a href="__URL__/dbution_tails/opid/{$manid}/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层4</a>
+                                </if>
+                                <if condition="($iLevel gt $NowLevel ) AND ($NowLevel neq 3 ) AND ($manid eq '') AND ($searchc eq '')">
+                                    <a href="__URL__/dbution_tails/p/{$_GET['sp']}" class="btn btn-default"><i class="icon-arrow-left"></i> 返回上层5</a>
+                                </if> -->
+                            </span>                                                                                                                                                   
+                        </div>
+                        <div class="widget-content nopadding">
+                            <div class="dataTables_wrapper">
+                                <table class ="table table-bordered table-striped data-table">
+                                    <thead>
+                                        <tr>
+                                            <if condition="$NowLevel eq 5 ">
+                                                <th>管理员ID</th>
+                                                <th>管理员名称</th>
+                                                <th>管理员级别</th>
+                                                <th>创建时间</th>
+                                                <!-- <th>创建时间</th> -->
+                                                <th>使用详情</th>
+                                            <elseif condition="($NowLevel elt 1) AND ($member neq '')"/> <!-- ($NowLevel gt 1) -->
+                                                <th>设备ID11</th>
+                                                <th>设备名称</th>
+                                                <th>创建时间</th>
+                                                <th>主账户</th>
+                                                <th>有效时间</th>
+                                            <else />
+                                                
+                                                <th>管理员ID</th>
+                                                <th>管理员名称</th>
+                                                <th>管理员级别</th>
+                                                <th>主账户</th>
+                                                <th>创建时间</th>
+                                                <th>使用详情</th>
+                                            </if>                                        
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <if condition="$total gt 0 ">
+                                            <if condition="$NowLevel eq 5 ">
+                                                <volist name="list" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo['opid']}</td>
+                                                    <td><a href="__URL__/dbution_tails/opid/{$vo.opid}}<?php if(!empty($_GET['p'])) {echo '/sp/'.$_GET['p'];}else{echo '/sp/1';} ?>">{$vo.opname}</a></td>
+                                                    <td>{$vo.level}</td>
+                                                    <td>{$vo.password}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <!--<input type="text" value="0%">-->
+                                                    <td width="35%">
+                                                        <ul class="unstyled">
+                                                            <li> <span class="icon24 icomoon-icon-arrow-up-2 green"></span>
+                                                                <div class="progress progress-striped ">
+                                                                    <div style="width: <?php dbtailsNums($vo['opid']); ?>%;" class="bar"></div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>  
+
+                                                        <div class="uncontent">
+                                                            <php>
+                                                            $numData = heaerNums($vo['opid']); 
+                                                            $maxuser = $numData['maxuser'];  
+                                                            $usednum = $numData['usednum'];  
+                                                            $validuser = $numData['validuser'];
+                                                            </php>
+                                                            <span class="num1">已注册终端数{$usednum}</span> <!-- {$vo.opid|heaerNums} -->
+                                                            <span class="num2">未注册终端数{$validuser}</span>
+                                                            <span class="mfr">授权终端数 {$maxuser}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </volist > 
+
+                                            <elseif condition="($NowLevel elt 1) AND ($member neq '')"/> 
+                                                <volist name="list" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo.uid}11</td>
+                                                    <td>{$vo.username}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <td>{$manName}</td>
+                                                    <td>{$vo.validtime}</td>
+                                                </tr>
+                                                </volist>
+                                                
+
+                                            <else />
+                                                
+                                                
+                                                <volist name="list" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo.opid}</td>
+                                                    <!-- <if condition="($NowLevel eq 2)"> OR($NowLevel eq 1)
+                                                        <td><a href="__URL__/dbution_tails/opid/{$vo.opid}/manid/{$_GET['opid']}<?php if(!empty($_GET['p'])) {echo '/sp/'.$_GET['p'];}else{echo '/sp/1';} ?>">{$vo.opname}1</a></td>
+                                                    
+                                                    <elseif condition=" ($NowLevel eq 1) OR ($NowLevel eq 0)"/> 
+                                                        <td><a href="__URL__/dbution_tails/opid/{$vo.opid}/member/ad/manid/{$_GET['opid']}<?php if(!empty($_GET['p'])) {echo '/sp/'.$_GET['p'];}else{echo '/sp/1';} ?>">{$vo.opname}2</a></td>
+                                                    <else/>
+                                                        <td><a href="__URL__/dbution_tails/opid/{$vo.opid}<?php if(!empty($_GET['p'])) {echo '/sp/'.$_GET['p'];}else{echo '/sp/1';}  ?>">{$vo.opname}3</a></td>
+                                                    </if> -->
+                                                    <!-- <td><a href="__URL__/dbution_tails/opid/{$vo.opid}/member/ad<?php if(!empty($_GET['p'])) {echo '/sp/'.$_GET['p'];}else{echo '/sp/1';} ?>">{$vo.opname}</a></td> -->
+                                                    <td><a href="__URL__/dbution_tails/opid/{$vo.opid}<?php if(!empty($_GET['p'])) {echo '/sp/'.$_GET['p'];}else{echo '/sp/1';}  ?>">{$vo.opname}3</a></td>
+                                                    <td>{$vo.level}</td>
+                                                    <td>{$manName}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <td width="35%">
+                                                        <ul class="unstyled">
+                                                            <li> <span class="icon24 icomoon-icon-arrow-up-2 green"></span>
+                                                                <div class="progress progress-striped ">
+                                                                    
+                                                                    <div style="width: <?php dbtailsNums($vo['opid']); ?>%;" class="bar"></div>
+                                                                </div>
+                                                            </li>
+                                                        </ul> 
+                                                        <div class="uncontent">
+                                                            <php>
+                                                            $numData = heaerNums($vo['opid']); 
+                                                            $maxuser = $numData['maxuser'];  
+                                                            $usednum = $numData['usednum'];  
+                                                            $validuser = $numData['validuser'];
+                                                            </php>
+                                                            <span class="num1">已注册终端数{$usednum}</span>
+                                                            <span class="num2">未注册终端数{$validuser}</span>
+                                                            <span class="mfr">授权终端数{$maxuser}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </volist>
+
+                                            </if>
+
+                                        <else />
+                                            <td colspan="11">无记录</td>
+                                        </if>
+
+                                                                                                                        
+                                    </tbody>                                                                                               
+                               </table>
+                                <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
+                                    <div class="dataTables_filter">
+                                        <form action="__URL__/dbution_tails" name="formsearch" method="get" id="formsearch">
+                                            <input type="hidden" value="" name="opid">
+                                            <a href="javascript:;" id="searcha" onclick="ser();"> 搜索:</a> 
+                                            <input type="text" placeholder="名称或ID" name="searchc" id="searchc">
+                                        </form>
+                                    </div>
+                                <input type="hidden" id="showpn" value="{$showpn}" />
+                                <input type="hidden" id="psearchc" value="{$searchc}" />
+                                <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif; float: right;">{$page}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="" value="cn" id="s_lang">
+    <script src="__PUBLIC__/js/jquery.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+    <script src="__PUBLIC__/js/select2.min.js"></script>
+    <!--<script src="js/jquery.dataTables.min.js"></script>-->
+    <script src="__PUBLIC__/js/unicorn.js"></script>
+    <!--<script src="js/unicorn.tables.js"></script>-->
+    <script>
+        //跳转到指定第n页
+        $("#npage_qd").click(function() {
+            var pagenum = $("#npage_num").val();
+            var pagenum = Number(pagenum);
+            var showpn = $("#showpn").val();
+            var showpn = Number(showpn);
+
+            var psearchc = $("#searchc").val();
+            if (isNaN(pagenum)) {
+                alert("请输入数字");
+            }
+            if (pagenum.length !==0) {
+                if(pagenum >= showpn){
+                    pagenum = showpn;
+                }
+                if(pagenum < 1){
+                    pagenum = 1;
+                }
+                if (psearchc != '') {
+                    window.location = "__URL__/dbution_tails/searchc/"+psearchc+"/p/"+pagenum;
+                }else{
+                    window.location = "__URL__/dbution_tails/p/"+pagenum;
+                }
+            }
+            
+        });
+        function ser() {
+            var Searchc = document.formsearch.searchc;
+            if (Searchc.value != "") {
+                document.formsearch.submit();
+            }
+        }
+        
+    </script>
+</body>
+</html>

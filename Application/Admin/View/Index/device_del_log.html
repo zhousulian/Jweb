@@ -1,0 +1,231 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+    <input type="hidden" value="{$opid}" id="opid">
+    <div class="fDiv" style="display:none;width: auto; position:absolute;z-index: 100;">
+        <div class="funcDiv" id="funcDiv" style="float:left; border: #2569a8 solid 1px;width: auto;height: auto; text-align:center;line-height:50px;background-color: #f9f9f9;box-shadow:-1px -1px 1px #79abce ; color: #0088cc;">
+            <span class="close" style="position:relative;float:right;top:0px; right: 6px;font-size: 10px;" >X</span> 
+            <span class="fstr" style="position:relative;left: 3px;right: 5px;" ></span>
+        </div>
+        <span class="triangle-right" style="
+            position:relative;
+            float:right;
+            top:1px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #50a8e6;
+            border-bottom: 6px solid transparent;  ">
+        </span>
+    </div>
+
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>设备删除日志</h5>
+                               
+                                <if condition="$searchc neq '' "> 
+                                <a href="__APP__/Admin/Index/device_del_log/p/{$_GET['P']}" id="btn_fhlb" class="btn noa btn-default"><i class="icon-arrow-left"></i> 返回列表</a>
+                                </if>
+                            </div>
+                            
+
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+
+                                    <table class="table table-bordered data-table" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>用户ID</th>
+                                                <th>名称</th>
+                                                <th>账号</th>
+                                                <th>用户密码</th>
+                                                <!-- <th>GPS</th> -->
+                                                <th>级别</th>
+                                                <th>默认组</th>
+                                                <th>创建时间</th>
+                                                <th>有效时间</th>
+                                                <th>上级管理员</th>
+                                                <th>用户功能</th>
+                                                <th>操作时间</th>
+                                                <th>操作IP</th>
+                                                
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="tblist">
+
+                                            <if condition="$total gt 0 ">
+                                                <volist name="data" id="v">
+                                                <tr>
+                                                    <td>{$v.id}</td>
+                                                    <td>{$v.uid}</td>
+                                                    
+                                                    <!-- <if condition="$v.online gt 0 ">
+                                                    <td style="color: green">在线</td>
+                                                    <else />
+                                                    <td>离线</td>
+                                                    </if> -->
+                                                    <td>{$v.uname}</td>
+                                                    <td>{$v.account}</td>
+                                                    <td>{$v.pw}</td>
+                                                    <!-- <td>{$v.gpscycle}</td> -->
+                                                    <td>{$v.level}</td>
+                                                    <if condition="$v.gname eq '' ">
+                                                    <td>已被移出</td>
+                                                    <else />
+                                                    <td>{$v.gname}</td>
+                                                    </if>
+                                                    <td><php> echo substr($v['createtime'],0,10)</php></td>
+                                                    <td><php> echo substr($v['validtime'],0,10)</php></td>
+                                                    <td><php> echo getAdName($v['manid'])</php></td>
+                                                    <td>
+                                                        <!-- <php> diliptChecked($v['funccode']);</php> -->
+                                                        <input type="hidden" value="<?php echo diliptChecked($v['funccode']); ?>">
+                                                        <span style="cursor:pointer;">
+                                                            <if condition="$v.funccode neq 0 ">
+                                                                <a >展开</a>
+                                                            <else />
+                                                                未勾选
+                                                            </if>
+                                                        </span>
+                                                    </td>                                     
+                                                    
+													<td>{$v['operation_time']}</td>
+                                                    <td>
+                                                        {$v['operation_ip']}
+                                                        <!-- <a href="__URL__/device_edit/uid/{$v.uid}/p/{$_GET['p']}">修改</a> -->
+                                                        <!-- <a href="javascript:dodel('{$v.uid}');" class="del">删除</a> -->
+                                                    </td>
+                                                </tr>
+                                                </volist>
+                                               
+                                            <else />
+                                                <tr>
+                                                    <td colspan="15">无记录</td>
+                                                </tr>
+                                            </if>
+                                            
+                                        </tbody>
+                                    </table>  
+                                    <!-- <input type="hidden" value="{$opid}" id="opid">
+                                    <div class="fDiv" style="display: none;">
+                                        <div class="funcDiv" id="funcDiv" style="float:right;border: red solid 1px;width: auto;height: 50px; background-color: white;position:relative;right:23%;display: block;"> top:-330px;  
+                                            <span class="close" style="position:relative;top:3px;float:right;right: 5px;" >X</span> 
+                                                <span class="fstr" style="position:relative;top:30px;" ></span>
+                                            </div>
+                                    </div> -->
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header" >
+                                        <div class="dataTables_filter">
+                                            <form action="__URL__/device_del_log" name="formsearch" method="get" id="formsearch">
+                                                <input type="text" placeholder="ID / 名称 / 账号" name="searchc" id="searchc" value="{$searchc}">
+                                                <button class="btn btn-default" type="submit" id="searcha">搜索</button> 
+                                            </form>
+                                        </div><br/><br/>
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <input type="hidden" id="psearchc" value="{$searchc}" />
+                                        <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif;  float: right;">{$page}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <!--<script src="js/unicorn.tables.js"></script>-->
+        <script>                         
+            $(function () {
+                //跳转到指定第n页
+                $("#npage_qd").click(function() {
+                    var pagenum = $("#npage_num").val();
+                    var pagenum = Number(pagenum);
+                    var showpn = $("#showpn").val();
+                    var showpn = Number(showpn);
+
+                    var psearchc = $("#searchc").val();
+                    if (isNaN(pagenum)) {
+                        alert("请输入数字");
+                    }
+                    if (pagenum.length !==0) {
+                        if(pagenum >= showpn){
+                            pagenum = showpn;
+                        }
+                        if(pagenum < 1){
+                            pagenum = 1;
+                        }
+                        if (psearchc != '') {
+                            window.location = "__APP__/Admin/Index/device_del_log/searchc/"+psearchc+"/p/"+pagenum;
+                        }
+                        else{
+                            window.location = "__APP__/Admin/Index/device_del_log/p/"+pagenum;
+                        }
+                    }
+                    
+                });
+
+                //显示用户功能
+                $("#tblist").find("tr").each(function(e){
+                    var tdArr = $(this).children();
+                    var a = tdArr.eq(10);
+                    var zb = a.offset();
+                    a.click(function(){
+                        var funccodestr = $(this).find("input").val();
+                        // 取点击点的纵/横坐标
+                        var y = zb.top;
+                        var x = ($(window).width()-zb.left)-12;
+                        // console.log(x); 
+                        // console.log($(window).width()); 
+                        if (funccodestr != "") {
+                            var text = $(".fstr").text();
+                            if(text !=''){
+                                $(".fstr").empty();
+                                $(".fstr").append(funccodestr);
+                            }else{
+                                $(".fstr").append(funccodestr);
+                            }
+                            $(".fDiv").css({"top":y,"right":x});
+                            $(".fDiv").css({"display":"block"});
+                            $(".close").click(function () {
+                                $(".fDiv").css({"display":"none"});
+                                return false;
+                            });
+                        }else{                            
+                            $(".fDiv").css({"display":"none"});
+                            return false;
+                        }
+
+                     });
+                }); 
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                })
+
+            })
+        </script>
+        <script>
+            function dodel(id) {
+                if (confirm("确定要删除吗？")) {
+                    window.location.href = "__URL__/device_delete/uid/" + id;
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,290 @@
+<include file="Public:meta" />
+<include file="Public:subheader" />
+    <input type="hidden" value="{$opid}" id="opid">
+    <div class="fDiv" style="display:none;width: auto; position:absolute;z-index: 100;">
+        <div class="funcDiv" id="funcDiv" style="float:left; border: #2569a8 solid 1px;width: auto;height: auto; text-align:center;line-height:50px;background-color: #f9f9f9;box-shadow:-1px -1px 1px #79abce ; color: #0088cc;">
+            <span class="close" style="position:relative;float:right;top:0px; right: 6px;font-size: 10px;" >X</span> 
+            <span class="fstr" style="position:relative;left: 3px;right: 5px;" ></span>
+        </div>
+        <span class="triangle-right" style="
+            position:relative;
+            float:right;
+            top:1px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #50a8e6;
+            border-bottom: 6px solid transparent;  ">
+        </span>
+    </div>
+
+        <div id="content">
+            <include file="Public:subnav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>设备列表</h5>
+                                <span style="position: relative;top:3px;">
+                                <!-- <if condition="$iLevel eq 10 "> 
+                                <a href="__APP__/Admin/Subpart/device_add" class="btn nom"><i class="icon-plus-sign"></i>添加设备</a>
+                                <a href="__APP__/Admin/Subpart/import_excel" class="btn nom"><i class="icon-plus-sign"></i>批量添加设备</a>
+                                </if> -->
+                                </span>
+                                <!-- <span class="space"></span>
+                                <span class="noa">授权终端数: {$maxuser} </span>&nbsp;&nbsp;
+                                <span class="noa">已注册终端数: {$usednum} </span>&nbsp;&nbsp;
+                                <span class="noa">可注册终端数: {$validuser} </span>&nbsp;&nbsp; -->
+                               
+                                <if condition="$searchc neq '' ">
+                                    <if condition="$getup neq '' "> 
+                                        <a href="__APP__/Admin/Subpart/device_list/p/{$getup}" class="btn noa btn-default"><i class="icon-arrow-left"></i> 返回上层设备列表</a>
+                                    <else />
+                                        <a href="__APP__/Admin/Subpart/device_list/p/1" class="btn noa btn-default"><i class="icon-arrow-left"></i> 返回上层设备列表</a>
+                                    </if>
+                                </if>
+                            </div>
+                            
+
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+
+                                    <table class="table table-bordered data-table" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>状态</th>
+                                                <th>名称</th>
+                                                <th>账号</th>
+                                                <th>GPS</th>
+                                                <th>级别</th>
+                                                <th>默认组</th>
+                                                <th>创建时间</th>
+                                                <th>有效时间</th>
+                                                <th>备注 </th>
+                                                <th>用户功能</th>
+                                                <th>编辑好友</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="tblist">
+
+                                            <if condition="$total gt 0 ">
+                                                <volist name="data" id="v">
+                                                <tr>
+                                                    <td id="uid">{$v.uid}</td>
+                                                    
+                                                    <if condition="$v.online gt 0 ">
+                                                    <td style="color: green">在线</td>
+                                                    <else />
+                                                    <td>离线</td>
+                                                    </if>
+                                                    <td>{$v.username}</td>
+                                                    <td>{$v.account}</td>
+                                                    <td>{$v.gpscycle}</td>
+                                                    <td>{$v.level}</td>
+                                                    <if condition="$v.gname eq '' ">
+                                                    <td>已被移出</td>
+                                                    <else />
+                                                    <td>{$v.gname}</td>
+                                                    </if>
+                                                    <td><php> echo substr($v['createtime'],0,10)</php></td>
+                                                    <td><php> echo substr($v['validtime'],0,10)</php></td>
+                                                    <td>{$v.note}</td>
+                                                    <td>
+                                                        
+                                                        <!-- <php> diliptChecked($v['funccode']);</php> -->
+                                                        <input type="hidden" value="<?php echo diliptChecked($v['funccode']); ?>">
+                                                        <span style="cursor:pointer;">
+                                                            <if condition="$v.funccode neq 0 ">
+                                                                <a >展开</a>
+                                                            <else />
+                                                                未勾选
+                                                            </if>
+                                                        </span>
+                                                                                         
+                                                    </td>
+                                                    <input type="hidden" id="logopid" value="{$opid}">
+
+                                                    <td><a href="__URL__/friend_edit/uid/{$v.uid}/p/<?php if (!empty($_GET['p'])) {echo $_GET['p'];}else{echo 1;}?>">编辑</a></td>
+                                                    <td>
+                                                        <a href="__URL__/device_edit/uid/{$v.uid}/p/<?php if (!empty($_GET['p'])) {echo $_GET['p'];}else{echo 1;}?>">修改</a>
+                                                        <!-- <a href="javascript:dodel('{$v.uid}');" class="del">删除</a> -->
+                                                    </td>
+                                                </tr>
+                                                </volist>
+                                               
+                                            <else />
+                                                <tr>
+                                                    <td colspan="15">无记录</td>
+                                                </tr>
+                                            </if>
+                                            
+                                        </tbody>
+                                    </table>  
+                                    <!-- <input type="hidden" value="{$opid}" id="opid">
+                                    <div class="fDiv" style="display: none;">
+                                        <div class="funcDiv" id="funcDiv" style="float:right;border: red solid 1px;width: auto;height: 50px; background-color: white;position:relative;right:23%;display: block;"> top:-330px;
+                                            <span class="close" style="position:relative;top:3px;float:right;right: 5px;" >X</span> 
+                                                <span class="fstr" style="position:relative;top:30px;" ></span>
+                                            </div>
+                                    </div> -->
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header" >
+                                        <div class="dataTables_filter">
+                                            <form action="__URL__/device_list" name="formsearch" method="get" id="formsearch">
+                                                <input type="text" placeholder="ID / 名称 / 账号" name="searchc" id="searchc" value="">
+                                                <button class="btn btn-default" type="submit" id="searcha">搜索</button> 
+                                            </form>
+                                        </div><br/><br/>
+                                        <input type="hidden" id="fkopid" value="{$_GET['opid']}" /> <!-- 当从二级管理员登录进入此页面时需要获取opid -->
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <input type="hidden" id="psearchc" value="{$searchc}" />
+                                        <div class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif;  float: right;">{$page}</div>  
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script>        
+
+            $(function () {
+                //跳转到指定第n页
+                $("#npage_qd").click(function() {
+                    var pagenum = $("#npage_num").val();
+                    var pagenum = Number(pagenum);
+                    var showpn = $("#showpn").val();
+                    var showpn = Number(showpn);
+                    var fkopid = $("#fkopid").val();
+                    var fkopid = Number(fkopid);
+
+                    var psearchc = $("#psearchc").val();
+                    if (isNaN(pagenum)) {
+                        alert("请输入数字");
+                    }
+                    if (pagenum.length !==0) {
+                        if(pagenum >= showpn){
+                            pagenum = showpn;
+                        }
+                        if(pagenum < 1){
+                            pagenum = 1;
+                        }
+                        if (psearchc != '') {
+                            window.location = "__URL__/device_list/searchc/"+psearchc+"/p/"+pagenum;
+                        }else if(fkopid != '' && psearchc != ''){
+                            window.location = "__URL__/device_list/opid/"+fkopid+"/searchc/"+psearchc+"/p/"+pagenum;
+                        }
+                        else if(fkopid != ''){
+                            window.location = "__URL__/device_list/opid/"+fkopid+"/p/"+pagenum;
+                        }
+                        else{
+                            window.location = "__URL__/device_list/p/"+pagenum;
+                        }
+                    }
+                    
+                });
+
+                //显示用户功能
+                $("#tblist").find("tr").each(function(e){
+                    var tdArr = $(this).children();
+                    var a = tdArr.eq(10);
+                    var zb = a.offset();
+                    a.click(function(){
+                        var funccodestr = $(this).find("input").val();
+                        // 取点击点的纵/横坐标
+                        var y = zb.top;
+                        var x = ($(window).width()-zb.left)-12;
+                        // console.log(x); 
+                        // console.log($(window).width()); 
+                        if (funccodestr != "") {
+                            var text = $(".fstr").text();
+                            if(text !=''){
+                                $(".fstr").empty();
+                                $(".fstr").append(funccodestr);
+                            }else{
+                                $(".fstr").append(funccodestr);
+                            }
+                            $(".fDiv").css({"top":y,"right":x});
+                            $(".fDiv").css({"display":"block"});
+                            $(".close").click(function () {
+                                $(".fDiv").css({"display":"none"});
+                                return false;
+                            });
+                        }else{                            
+                            $(".fDiv").css({"display":"none"});
+                            return false;
+                        }
+
+                     });
+                });                         
+        
+
+                // 选择导出按钮
+                $(".export_excel").click(function () {
+                    $(".export_excel_uid").toggle();  //点击显示与隐藏
+                    return false;
+                });
+
+                $("#submit").click(function () {
+                    var uid_right = $("#uid_right").val();
+                    var uid_left = $("#uid_left").val();
+                    if (uid_right  == '' || uid_left =='') {
+                        alert("请输入导出的设备ID范围！");
+                        return false;
+                    }
+                    if (uid_right  < uid_left) {
+                        alert("请按正确顺序输入ID（选择导出范围的最大ID在前，最小ID在后）！");
+                        return false;
+                    }
+                });
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                });
+
+
+                //下拉列表的内容改变时
+                $(".select_ops").change(function(){
+                    var subopid = $(this).val();
+                    var tdArrs = $(this).parent().parent().children().eq(0);
+                    //console.log(tdArrs);
+                    var a_uid = tdArrs.text();
+                    var opid = $("#logopid").val();   
+                    $.post("__URL__/subadUpdate", {uid: a_uid,opid:opid,subopid:subopid}, function (data) {
+                        var obj = data;
+                        if(obj !== 3){
+                            alert("操作有误!");
+                            return false;
+                        }
+                    });
+                    
+                }); 
+            })
+
+        </script>
+        <script>
+            function dodel(id) {
+                if (confirm("确定要删除吗？")) {
+                    window.location.href = "__URL__/device_delete/uid/" + id;
+                }
+            }
+        </script>
+    </body>
+</html>

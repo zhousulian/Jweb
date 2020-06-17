@@ -1,0 +1,701 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+    <input type="hidden" name="submitsta"  id="submitsta" value="2" /> 
+    <input type="hidden" name="diststa"  id="diststa" value="12" /> 
+    <input type="hidden" name="vtipsSta"  id="vtipsSta" value="{$vtipsSta}" />
+
+
+<!--批量续费-->
+<div class="modal rorder">
+    <form id="form1" action="__URL__/device_v_num" method="post">
+        <div class="modal-body">
+            续费时间：
+            <select class="order">
+                <option />1
+                <option />2
+                <option />3
+                <option />4
+                <option />5
+            </select>
+            <input type="hidden" name="validtime" id="idvalid" value=""/> 年
+            <!--剩余额度-->
+            <input type="hidden" id="vquota" name="vquota" value="188"/>
+            <!--账号个数-->
+            <input type="hidden" id="accountNums" name="accountNums" value=""/>
+        </div>
+        <input type="hidden" name="selVal" id="inSel"/>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="submit" id="confire">确认续费</button>
+            <button class="btn btn-default" type="button" id="cancel">取消</button>
+        </div>
+    </form>
+</div>
+
+    <!-- 广播账号续费到期窗口 -->
+    <div class='expir_tips' style="padding-left:4px;display:none;top:176px;background-color: #a6d3ee;position:absolute;z-index: 301;left: 35%;float:left; height: auto;width: 510px;">
+        <!-- 批量提醒 -->
+        <div id="multips" style="display: none;">
+            <span class="cenclose" style="position:relative;float:right;top:3px; right: 6px;font-size: 16px;cursor: pointer;" >X</span> 
+            <div style="position: relative;top: 22px;left:3%;">
+            <b>请填写提醒消息:</b>&nbsp;   <span style="color: #f3141d;">(*不得超过50个汉字)</span>
+            <br/>
+            <span>
+            <textarea style="position: relative;top:10px;width:90%;height: 83px;background-color: #eff1f1;" id="mulmessage">您的设备账号即将到期，为不影响使用，请及时续费。</textarea>
+            
+            </span>
+            <br/><br/><br/>
+
+            </div>
+            <span  id="conbtn" style="position: relative;left:77%;top: 1px;bottom: 5px;">
+        </div>
+        
+        <!-- 到期提醒 -->
+        <div id="dqtips" style="display: none;">
+        <span class="cenclose" style="position:relative;float:right;top:3px; right: 6px;font-size: 16px;cursor: pointer;" >X</span> 
+        <input type="hidden" class="expir_num" value="{$exipircnt}">
+        <div style="position: relative;top:30px;">
+        <p style="font-size: 18px;position: relative;"><b>以下<span style="color: #f3141d;">{$exipircnt}</span>个设备账号即将到期，是否立即提醒续费？</b></p>
+        <table id="tiptab" border= "1"  style="vertical-align: middle;position:relative;float:left;text-align: center;width: 99%;">
+                <tr >
+                    <th><input type="checkbox" name="" value="" class="" id="id_selall"  onclick="SelectAll()" /></th>
+                    <th >设备ID</th>
+                    <th>设备名称</th>
+                    <th>账号</th>
+                    <th>创建时间</th>
+                    <th>有效时间</th>
+                </tr>
+            <tbody class="list">
+            <volist name="expirdata" id="vo">
+                <tr class="gradeA" id="tuid">
+                    <td ><input type="checkbox" name="friend" value="{$vo.uid}" class="tipsel"/></td>
+                    <td >{$vo.uid}</td>
+                    <td>{$vo.username}</td>
+                    <td>{$vo.account}</td>
+                    <td>{$vo.createtime}</td>
+                    <td>{$vo.validtime}</td>
+                </tr>
+            </volist>
+            </tbody>
+            
+        </table><br/>
+        <span class="pages result  page pagev"  style="font:10px '\5B8B\4F53', san-serif;  float: right;position: relative;top:5px;">{$pagev}</span>
+        <br/>
+        <span>
+        <textarea style="position: relative;top:10px;width:96%;background-color: #eff1f1;" id="dqmessage">您的设备账号即将到期，为不影响使用，请及时续费。</textarea>
+        <span style="color: #f3141d;">*提醒信息不得超过50个汉字</span>
+        </span>
+        <br/><br/><br/>
+        
+        </div>
+        <span  id="conbtn" style="position: relative;left:78%;top: 1px;bottom: 5px;">
+        <input type="hidden" name="vsubsta"  id="vsubsta" value="1" /> 
+        </div>
+        <button class="btn btn-success" type="submit" id="confire" style="position: relative;float:right;right: 20px;">广播提醒</button>
+        </span>
+        <br/>&nbsp;
+    </div> 
+
+    <!-- 显示每行的用户功能 -->
+<input type="hidden" value="{$opid}" id="opid">
+<div class="fDiv" style="display:none;width: auto; position:absolute;z-index: 100;">
+    <div class="funcDiv" id="funcDiv" style="float:left; border: #2569a8 solid 1px;width: auto;height: auto; text-align:center;line-height:50px;background-color: #f9f9f9;box-shadow:-1px -1px 1px #79abce ; color: #0088cc;">
+        <span class="close" style="position:relative;float:right;top:0px; right: 6px;font-size: 10px;" >X</span>
+        <span class="fstr" style="position:relative;left: 3px;right: 5px;" ></span>
+    </div>
+    <span class="triangle-right" style="
+            position:relative;
+            float:right;
+            top:1px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #50a8e6;
+            border-bottom: 6px solid transparent;  ">
+    </span>
+</div>
+
+
+        <div id="content">
+            <include file="Public:nav_bar" />
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span> 
+                                <h5>设备列表</h5>
+                                <div style="position: relative;top:2px;">
+                                    <!--<a href="__APP__/Admin/Index/device_add" class="btn nom"><i class="icon-plus-sign"></i>添加设备</a>-->
+                                    <a href="__APP__/Admin/Index/import_excel" class="btn nom"><i class="icon-plus-sign"></i>批量添加</a>
+                                    <button type="button" class="btn btn-default" id="v_num">批量续费</button>
+                                    <a href="__URL__/device_list/order/vT" class="btn btn-sm btn-default">按到期时间排序</a>
+                                    <a href="__URL__/device_list/selType/expire" class="btn btn-sm btn-default">查询到期设备</a>
+                                    <span class="space"></span>
+                                    <span class='bs quota_num'>已注册终端数：{$usednum}；  总额度：{$qData['quota']}；  已使用额度:{$qData['quotaed']}；  未使用额度:{$qData['quota'] - $qData['quotaed']} </span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <if condition="($NowLevel eq 1) OR ($NowLevel eq 0) AND ($_GET['link'] neq '') OR ($_GET['member'] neq '')"> 
+                                    <a href="__APP__/Admin/admin/adminer_list/opid/{$opid}/member/ad" >查看管理员</a>
+                                    <!-- <a href="__APP__/Admin/admin/adminer_list/opid/{$opid}/member/ad<?php if(!empty($_GET['sp'])) {echo '/sp/'.$_GET['sp'];}else{echo '/sp/1';} if(!empty($_GET['p'])) {echo '/yp/'.$_GET['p'];}else{echo '/yp/1';} ?>" >查看管理员</a> -->
+                                </if> 
+
+                                <if condition="($_GET['link'] neq '') OR ($_GET['member'] neq '') OR ($subdev neq '') OR ($searchc neq '') OR (($iLevel elt 1) AND ($_GET['member'] neq ''))"> 
+                                    <span style="position: absolute;float:left;left: 68%;top:-1px;z-index: 100;display: inline;">
+                                    <a href="javascript:history.back(-1);" class="btn noa btn-default" ><i class="icon-arrow-left"></i>返回上层</a>   
+                                    </span>
+                                </if>
+                                <if condition="($selType neq '') OR ($order neq '')">
+                                    <!--<a href="__APP__/Admin/Index/device_list"> <<返回</a>-->
+                                    <a href="__APP__/Admin/Index/device_list" class="btn noa btn-default"  style="position: absolute;top:-1px;"><i class="icon-arrow-left"></i>返回</a>
+                                </if>
+                                </div>
+
+                            </div>
+                            
+
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table" id="table">
+                                        <thead>
+                                            <if condition="$iLevel elt 1 ">
+                                            <tr>
+                                                <th><input type="checkbox" name="sel_add" id="id_selalltip" value="" onclick="SelectAlltip()" /></th>
+                                                <th>ID</th>
+                                                <th>状态</th>
+                                                <th>名称</th>
+                                                <th>账号</th>
+                                                <th>GPS</th>
+                                                <th>级别</th>
+                                                <th>默认组</th>
+                                                <!--<th>二级管理</th>-->
+                                                <th>创建时间</th>
+                                                <th>有效时间</th>
+                                                <th>备注 </th>
+                                                <th>用户功能</th>
+                                                <th>编辑好友</th>
+                                                <th>操作</th>
+                                            </tr>
+
+                                            <else/> 
+                                            <tr>
+                                                <th>设备ID</th>
+                                                <th>设备名称</th>
+                                                <th>创建时间</th>
+                                                <th>主账户</th>
+                                                <th>有效时间</th>
+                                            </tr>
+                                            </if>
+                                        </thead>
+
+                                        <tbody id="tblist">
+                                            <if condition="$total eq 0 ">
+                                                <tr>
+                                                    <td colspan="15">无记录</td>
+                                                </tr>
+                                            </if>
+                                            <if condition="$iLevel elt 1 ">
+                                                <volist name="data" id="v">
+                                                <tr>
+                                                    <td><input type="checkbox" class="seltip" name="sel" value="{$v.uid}"></td>
+                                                    <td id="uid">{$v.uid}</td>
+                                                    
+                                                    <if condition="$v.online gt 0 ">
+                                                    <td style="color: green">在线</td>
+                                                    <else />
+                                                    <td>离线</td>
+                                                    </if>
+                                                    <td>{$v.username}</td>
+                                                    <td>{$v.account}</td>
+                                                    <td>{$v.gpscycle}</td>
+                                                    <td>{$v.level}</td>
+                                                    <if condition="$v.gname eq '' ">
+                                                    <td><a href="__URL__/device_edit/uid/{$v.uid}<?php if (!empty($_GET['p'])) {echo '/p/'.$_GET['p'];}else{echo '/p/1';} if(!empty($_GET['subdev'])){echo'/subdev/link';} ?>">未选择</a></td>
+                                                    <else />    
+                                                    <td>{$v.gname}</td>
+                                                    </if>
+                                                    <!--<td >
+                                                    <span style="position: relative;top:5px;">
+                                                        <select class="select_ops" name="ejgl" style="width: 90px;height:28px;padding: 0px;">
+                                                          <option value="volvo">二级管理</option>
+                                                          <volist name="subadData" id="vo">
+                                                          <option  <?php if($v['submanid'] == $vo['opid']){ echo "selected = 'selected' "; }  ?> value="{$vo.opid}"> {$vo.opname}</option>
+                                                          </volist>
+                                                        </select>
+                                                    </span>
+                                                        <input type="hidden" id="logopid" value="{$opid}">
+                                                    </td>-->
+
+                                                    <td><php> echo substr($v['createtime'],0,10)</php></td>
+
+                                                        <php>
+                                                            $s = strtotime($v['validtime']);
+                                                            $vtime = substr($v['validtime'], 0, 10);
+                                                            $date = $s - strtotime(date("Y-m-d H:i:s"));
+                                                            $state = getState($v['uid']);
+                                                            $sqtime = 7*86400; //7天换算成秒
+                                                        </php>
+                                                        <if condition="($s neq '')">
+
+                                                            <if condition="($state eq 1)">
+                                                                <td style="color:red" ><php> echo substr($v['validtime'],0,10);</php> (已被暂停)</td>
+                                                                <elseif condition="($date gt 0) AND ($date elt $sqtime) " />
+                                                                <td style="color:red" > <php> echo substr($v['validtime'],0,10)</php></td>
+                                                                <elseif condition="($date lt 0)"/>
+                                                                <td style="color:red" ><php> echo substr($v['validtime'],0,10);</php> (已过期)</td>
+                                                                <else />
+                                                                <td><php> echo substr($v['validtime'],0,10)</php></td>
+                                                            </if>
+
+                                                            <else />
+
+                                                            <td><php> echo substr($v['validtime'],0,10)</php></td>
+                                                        </if>
+
+                                                    <td>{$v.note}</td>
+                                                    <td>
+
+                                                        <input type="hidden" value="<?php echo diliptChecked($v['funccode']); ?>">
+                                                        <span style="cursor:pointer;">
+                                                            <if condition="$v.funccode neq 0 ">
+                                                                <a >展开</a>
+                                                            <else />
+                                                                未勾选
+                                                            </if>
+                                                        </span>
+                                                    </td>
+
+                                                    <td>
+                                                        <a href="__URL__/friend_edit/uid/{$v.uid}<?php if (!empty($_GET['p'])) {echo '/p/'.$_GET['p'];}else{echo '/p/1';} if(!empty($_GET['subdev'])){echo'/subdev/link';} if(!empty($_GET['opid'])){echo'/opid/'.$_GET['opid'];} ?>">编辑</a>
+                                                    </td>
+                                                        <!--<a href="__URL__/device_edit/uid/{$v.uid}<?php if (!empty($_GET['p'])) {echo '/p/'.$_GET['p'];}else{echo '/p/1';} if(!empty($_GET['subdev'])){echo'/subdev/link';} ?>">修改</a>-->
+                                                        <!-- <a href="javascript:dodel('{$v.uid}');" class="del">删除</a> -->
+
+                                                        <if condition="($iLevel eq 1) AND ($state eq 1)">
+
+                                                        <td>
+                                                            <!-- <a href="__URL__/device_edit/uid/{$v.uid}">修改</a> -->
+                                                            <if condition="($_SESSION['SubOpid'] neq '')">
+                                                                <a href="__URL__/device_edit/uid/{$v.uid}/subOpid/{$_SESSION['SubOpid']}/p/{$_GET['p']}">修改</a>
+                                                                <else />
+                                                                <a href="__URL__/device_edit/uid/{$v.uid}/p/{$_GET['p']}">修改</a>
+                                                            </if>
+                                                            <a href="javascript:void(0);" onclick="alert('该设备已被暂停,请勿重复暂停!')">暂停</a>
+                                                            <a href="javascript:void(0);" onclick="up({$v['uid']})">启用</a>
+                                                            <a href="javascript:void(0);" onclick="alert('该设备已被暂停,请启用后再续费!')">续费</a>
+                                                            <!-- <a href="javascript:del('{$v.uid}');" class="del">删除</a> -->
+                                                        </td>
+                                                    <elseif condition="($iLevel eq 1) AND ($date elt 1)" />
+                                                    <td>
+                                                        <if condition="($_SESSION['SubOpid'] neq '')">
+                                                            <a href="__URL__/device_edit/uid/{$v.uid}/subOpid/{$_SESSION['SubOpid']}/p/{$_GET['p']}">修改</a>
+                                                            <else />
+                                                            <a href="__URL__/device_edit/uid/{$v.uid}/p/{$_GET['p']}">修改</a>
+                                                        </if>
+                                                        <a href="javascript:void(0);" onclick="alert('该设备已过期,无法暂停!')">暂停</a>
+                                                        <a href="javascript:void(0);" onclick="alert('该设备已过期,无法启用!')">启用</a>
+                                                        <a href="__URL__/device_vtime/uid/{$v.uid}">续费</a>
+                                                        <!-- <a href="javascript:del('{$v.uid}');" class="del">删除</a> -->
+                                                    </td>
+                                                    <elseif condition="($iLevel eq 1)"/>
+                                                    <td>
+                                                        <if condition="($_SESSION['SubOpid'] neq '')">
+                                                            <a href="__URL__/device_edit/uid/{$v.uid}/subOpid/{$_SESSION['SubOpid']}/p/{$_GET['p']}">修改</a>
+                                                            <else />
+                                                            <a href="__URL__/device_edit/uid/{$v.uid}/p/{$_GET['p']}">修改</a>
+                                                        </if>
+                                                        <a href="javascript:void(0);" onclick="stop({$v['uid']},{$date})">暂停</a>
+                                                        <a href="javascript:void(0);" onclick="alert('该设备已被启用,请勿重复启用!')">启用</a>
+                                                        <a href="__URL__/device_vtime/uid/{$v.uid}">续费</a>
+                                                        <!-- <a href="javascript:del('{$v.uid}');" class="del">删除</a> -->
+                                                    </td>
+                                                    <elseif condition="($iLevel eq 2)"/>
+                                                    <td>
+                                                        <if condition="($_SESSION['SubOpid'] neq '')">
+                                                            <a href="__URL__/device_edit/uid/{$v.uid}/subOpid/{$_SESSION['SubOpid']}/p/{$_GET['p']}">修改</a>
+                                                            <else />
+                                                            <a href="__URL__/device_edit/uid/{$v.uid}/p/{$_GET['p']}">修改</a>
+                                                        </if>
+                                                        <!-- <a href="javascript:del('{$v.uid}');" class="del">删除</a> -->
+                                                    </td>
+                                                </if>
+                                                </tr>
+                                                </volist>
+                                            <else/>
+
+                                                <volist name="data" id="vo">
+                                                <tr class="gradeA">
+                                                    <td>{$vo.uid}</td>
+                                                    <td>{$vo.username}</td>
+                                                    <td>{$vo.createtime}</td>
+                                                    <td><php>echo getAdName($opid)</php></td>
+                                                    <td>{$vo.validtime}</td>
+                                                </tr>
+                                                </volist>
+                                            </if>
+                                            
+                                        </tbody>
+                                    </table>  
+                                    <!-- <input type="hidden" value="{$opid}" id="opid">
+                                    <div class="fDiv" style="display: none;">
+                                        <div class="funcDiv" id="funcDiv" style="float:right;border: red solid 1px;width: auto;height: 50px; background-color: white;position:relative;right:23%;display: block;"> top:-330px;
+                                            <span class="close" style="position:relative;top:3px;float:right;right: 5px;" >X</span> 
+                                                <span class="fstr" style="position:relative;top:30px;" ></span>
+                                            </div>
+                                    </div> -->
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" id="ui-widget-header" >
+                                        <input type="hidden" id="fkopid" value="{$_GET['opid']}" /> <!-- 当从二级管理员登录进入此页面时需要获取opid -->
+                                        <input type="hidden" id="showpn" value="{$showpn}" />
+                                        <input type="hidden" id="psearchc" value="{$searchc}" />
+                                        <div class="dataTables_filter">
+                                            <form action="__URL__/device_list" name="formsearch" method="get" id="formsearch">
+                                                <input type="text" placeholder="ID / 名称 / 账号" name="searchc" id="searchc" value="">
+                                                <button class="btn btn-default" type="submit" id="searcha">搜索</button> 
+                                            </form>
+                                        </div>
+                                        <span class="pages result  page"  style="font:18px '\5B8B\4F53', san-serif;  float: right;position: relative;top:50px;">{$page}</span>  
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.session.js"></script>
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script>
+            function SelectAlltip(){
+                var target = document.getElementById("id_selalltip");
+                   //var input = document.getElementsByTagName("input");
+                var checkbox = document.getElementsByClassName("seltip");
+                //alert(input.length);
+                //var n = 0;
+                for (var i = 0; i < checkbox.length; i++)
+                {                     
+                 checkbox[i].checked = target.checked;    //全不选 与全选   
+                     checkbox[i].onclick = function()    //当有一个或多个不选时显示全选框不选中
+                    {
+                     var n = 0;
+                     for (var i = 0; i < checkbox.length; i++)
+                        {
+                          if(!checkbox[i].checked){  //计算未选中的个数
+                              n++;
+                          }      
+                        }
+                        if ( !this.checked )
+                        {
+                         target.checked = false;                                                     
+                        }
+                        if(n <=0){
+                         target.checked = true; 
+                        }                  
+                    }    
+                }       
+             } 
+
+            function SelectAll(){
+                var target = document.getElementById("id_selall");
+                   //var input = document.getElementsByTagName("input");
+                var checkbox = document.getElementsByClassName("tipsel");
+                //alert(checkbox.length);
+                //var n = 0;
+                for (var i = 0; i < checkbox.length; i++)
+                {                     
+                 checkbox[i].checked = target.checked;    //全不选 与全选   
+                     checkbox[i].onclick = function()    //当有一个或多个不选时显示全选框不选中
+                     {
+                     var n = 0;
+                     for (var i = 0; i < checkbox.length; i++)
+                        {
+                          if(!checkbox[i].checked){  //计算未选中的个数
+                              n++;
+                          }      
+                        }
+                        if ( !this.checked )
+                        {
+                         target.checked = false;                                                     
+                        }
+                        if(n <=0){
+                         target.checked = true; 
+                        }                  
+                    }    
+                }       
+             }
+            function stop(id, vtime)
+            {
+                if (confirm("确定要暂停该用户吗？"))
+                {
+                    //alert(id);
+                    window.location.href = "__URL__/device_stop/uid/" + id + "/vtime/" + vtime;
+                }
+            }
+            function up(id)
+            {
+                if (confirm("确定要启动该用户吗？"))
+                {
+                    window.location.href = "__URL__/device_up/uid/" + id;
+                }
+            }
+            $(function ($){
+                $(".pagev a").on('click',function (){
+                    $("#diststa").val("12");
+                    $(".expir_tips").css("display", "block");
+                    $("#dqtips").css("display", "block");
+                    $("#multips").css("display", "none"); 
+                    vtipsSta = $("#vtipsSta").val("1");  
+                    var pageObj = this;
+                    var url = pageObj.href;
+                    $.ajax({
+                        type:'get',
+                        url:url,
+                        success:function(res){
+                            $(".list").html(res);
+                            //console.log(res);
+                        }
+                    })
+                })
+                return false;
+            });
+
+            $(function () {
+                var Vquota = parseInt($("#vquota").val());
+                $('#addnew').click(function () {
+                    window.location.href = "__URL__/device_add";
+                });
+                $("#v_num").click(function () {
+                    if ($(".seltip:checked").length < 1) {
+                        alert("未选择任何用户");
+                        $("#inSel,#accountNums").val("");
+                        return false;
+                    }
+                    var chk_value = [];
+                    $(".seltip:checked").each(function () {
+                        chk_value.push($(this).val());
+                    })
+                    $("#inSel").val(chk_value);
+                    $("#accountNums").val($(".seltip:checked").length);
+                    $(".rorder").css("display", "block");
+                })
+                $("#cancel").click(function () {
+                    $(".rorder").css("display", "none");
+                })
+                $("#form1 :submit").click(function () {
+                    $("#idvalid").val($(".order").val());
+                    var Rquota = parseInt($("#idvalid").val());
+                    var Nums = parseInt($("#accountNums").val());
+                    var Quotas = 0;
+                    Quotas = Nums * Rquota;
+                    if (Quotas > Vquota) {
+                        alert("当前额度不够续费!");
+                        return false;
+                    }
+                    $(".rorder").css("display", "none");
+                })
+            });
+
+
+        </script>
+
+        <script>        
+
+
+            $(function () {
+                //自定义函数
+                $.extend({'subtips':function(tipcnt,message,uidstr){ 
+                    if (confirm("您已选中"+tipcnt+"个设备用户,确定全部提醒吗？")) { 
+                    $.post("__URL__/device_vtips", {uid: uidstr,message:message}, function (data) {
+                        var obj = data; //alert(obj);
+                        if(obj == "3"){
+                            alert("消息提醒已广播!");
+                            return false;
+                        }else{
+                            alert("未填写广播消息或消息超过50个汉字！");
+                            return false;
+                        }
+                    },"json");
+
+                    }
+
+                }}); 
+                
+                $(".rcenclose").click(function () {
+                    $(".expir_tips_all").css("display", "none");
+                    //关闭提示框状态 
+                });
+
+
+
+                //显示设备账号到期提醒框
+                $(".rvtips").click(function () {
+                    $("#diststa").val("12");
+                    $(".expir_tips").css("display", "block");
+                    $("#dqtips").css("display", "block");
+                    $("#multips").css("display", "none");
+                    $(".rvtips").empty();
+                });
+
+                $(".cenclose").click(function () {
+                    $("#vtipsSta").val("2");
+                    $(".rvtips").empty().append("到期提醒");
+                    $(".expir_tips").css("display", "none");
+                    //关闭提示框状态 
+                    $.post("__URL__/vtips_sessSta", {type: "1"}, function (data) {
+                        var obj = data;
+                    });
+                });
+
+                
+                
+
+                //跳转到指定第n页
+                $("#npage_qd").click(function() {
+                    var pagenum = $("#npage_num").val();
+                    var pagenum = Number(pagenum);
+                    var showpn = $("#showpn").val();
+                    var showpn = Number(showpn);
+                    var fkopid = $("#fkopid").val();
+                    var fkopid = Number(fkopid);
+
+                    var psearchc = $("#searchc").val();
+                    if (isNaN(pagenum)) {
+                        alert("请输入数字");
+                    }
+                    if (pagenum.length !==0) {
+                        if(pagenum >= showpn){
+                            pagenum = showpn;
+                        }
+                        if(pagenum < 1){
+                            pagenum = 1;
+                        }
+                        if (psearchc != '') {
+                            window.location = "__URL__/device_list/searchc/"+psearchc+"/p/"+pagenum;
+                        }else if(fkopid != '' && psearchc != ''){
+                            window.location = "__URL__/device_list/opid/"+fkopid+"/searchc/"+psearchc+"/p/"+pagenum;
+                        }
+                        else if(fkopid != ''){
+                            window.location = "__URL__/device_list/opid/"+fkopid+"/p/"+pagenum;
+                        }
+                        else{
+                            window.location = "__URL__/device_list/p/"+pagenum;
+                        }
+                    }
+                    
+                });
+
+
+                //显示用户功能
+                $("#tblist").find("tr").each(function(e){
+                    var tdArr = $(this).children();
+                    var a = tdArr.eq(11);
+                    var zb = a.offset();
+                    //获取设备屏幕的宽高
+                    var h =$(window).height();
+                    var w = $(window).width();
+
+                    a.click(function(){
+                        //alert(w);
+                        var funccodestr = $(this).find("input").val();
+                        // 取点击点的纵/横坐标
+                        var y = zb.top;
+                        var x = ($(window).width()-zb.left)-12;
+                        // console.log(x); 
+                        // console.log($(window).width()); 
+                        if (funccodestr != "") {
+                            var text = $(".fstr").text();
+                            if(text !=''){
+                                $(".fstr").empty();
+                                $(".fstr").append(funccodestr);
+                            }else{
+                                $(".fstr").append(funccodestr);
+                            }
+
+                            if(w>=736 && w<=823){
+                                //$(".fDiv").css({"top":y,"right":"24.2%"});
+                                $(".fDiv").css({"top":y,"right":"12em"});
+                            }else if (w>=731 && w<736){
+                                $(".fDiv").css({"top":y,"right":"28%"});
+                            }else if (w>=568 && w<=667){
+                                $(".fDiv").css({"top":y,"right":"8.2%"});
+                            }else if (w>=360 && w<=414){
+                                $(".fDiv").css({"top":y,"right":"38.2%"});
+                            }
+                            else{
+                                $(".fDiv").css({"top":y,"right":x});
+                            }
+
+                           /* $(".fDiv").css({"top":y,"right":x});*/
+                            $(".fDiv").css({"display":"block"});
+                            $(".close").click(function () {
+                                $(".fDiv").css({"display":"none"});
+                                return false;
+                            });
+                        }else{                            
+                            $(".fDiv").css({"display":"none"});
+                            return false;
+                        }
+
+                     });
+                });      
+
+                // 选择导出按钮
+                $(".export_excel").click(function () {
+                    $(".export_excel_uid").toggle();  //点击显示与隐藏
+                    return false;
+                });
+
+                $("#submit").click(function () {
+                    var uid_right = $("#uid_right").val();
+                    var uid_left = $("#uid_left").val();
+                    if (uid_right  == '' || uid_left =='') {
+                        alert("请输入导出的设备ID范围！");
+                        return false;
+                    }
+                    if (uid_right  < uid_left) {
+                        alert("请按正确顺序输入ID（选择导出范围的最大ID在前，最小ID在后）！");
+                        return false;
+                    }
+                });
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                });
+
+
+                //下拉列表的内容改变时
+                $(".select_ops").change(function(){
+                    var subopid = $(this).val();
+                    var tdArrs = $(this).parent().parent().parent().children().eq(1);
+                    //console.log(tdArrs);
+                    var a_uid = tdArrs.text();
+                    var opid = $("#logopid").val();   
+                    $.post("__URL__/subadUpdate", {uid: a_uid,opid:opid,subopid:subopid}, function (data) {
+                        var obj = data;
+                        if(obj !== 3){
+                            alert("操作有误!");
+                            return false;
+                        }
+                    });
+                    
+                }); 
+            });
+
+        </script>
+
+        <script>
+            function dodel(id) {
+                if (confirm("确定要删除吗？")) {
+                    window.location.href = "__URL__/device_delete/uid/" + id;
+                }
+            }
+        </script>
+    </body>
+</html>

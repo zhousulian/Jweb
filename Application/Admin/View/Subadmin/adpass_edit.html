@@ -1,0 +1,84 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+        <div id="content">
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title" id="wid_title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>									
+                                </span>
+                                <h5>密码修改</h5>
+                            </div>
+                            <div class="widget-content nopadding">
+                                <form name="form1" class="form-horizontal" method="post" action="__URL__/adpass_edit" onsubmit="return CheckAdmin()"  >
+                                    <div class="control-group">
+                                        <label class="control-label">旧密码</label>
+                                        <div class="controls">
+                                            <input type="password" name="oldpass" value="" class="nw" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">新密码</label>
+                                        <div class="controls">
+                                            <input type="password" name="newpass" value="" class="nw" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">确认新密码</label>
+                                        <div class="controls">
+                                            <input type="password" name="confirm_pass" value="" class="nw" autocomplete="off"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-default" type="button" id="submit">保存</button>&nbsp;&nbsp;
+                                        <if condition="($iLevel gt 1) "> 
+                                        	<a href="__APP__/Admin/Admin/adminer_list" class="btn btn-default" id="btn_fh">返回列表</a>
+                                        <else />
+                                        	<a href="__APP__/Admin/Index/device_list" class="btn btn-default"  id="btn_fh" >返回列表</a>
+                                        
+                                        </if>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+                        </div>			
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.validate.js"></script>
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <script src="__PUBLIC__/js/unicorn.form_validation.js"></script>
+        <script type="text/javascript">
+            function CheckAdmin()
+            {
+                if (document.form1.oldpass.value.length == 0 ||
+                        document.form1.newpass.value.length == 0 ||
+                        document.form1.confirm_pass.value.length == 0 )
+                {
+                    alert("请填写完整对应信息!");
+                    return false;
+                }
+
+                return true;
+            }
+            $(function () {
+                $('#backid').click(function () {
+                    window.location.href = "__APP__/Admin/Admin/adminer_list?p={dp}";
+                });
+
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,295 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+    <div id="content" style="">
+        <include file="Public:nav_bar" />
+        <div id="content-header">
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon">
+                                <i class="icon-align-justify"></i>                                  
+                            </span>
+                            <h5>订单添加</h5>
+                        </div>
+                        <form id="form1" name="form1" enctype="multipart/form-data" action="__URL__/booking_add" method="POST" onsubmit="return SetSelVal()">
+                            <table class="table table-bordered definewidth m10">
+                                <tr>
+                                    <td class="tableleft" width="13%">
+                                        申请额度
+                                    </td>
+                                    <td>
+                                        额度值:
+                                        <input type="text" id="blnum" name="blnum"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft"></td>
+                                    <td>
+                                        <button id="sub" type="submit" class="btn btn-default" type="button">添加订单</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-default" name="backid" id="backid">返回列表</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--<table class="table table-bordered m10">
+                                <tr>
+                                    <td class="tableleft" width="15%">添加账号
+                                        <input type="radio" id="radioAdd" name="status" value="0" checked/> 
+                                    </td>
+                                    <td>
+                                        添加账号数量:
+                                        <input type="text" id="blnum" name="blnum"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tableleft">上交空闲账号 
+                                        <input type="radio" id="radioDel" name="status" value="3" /> 
+                                    </td>
+                                    <td>
+                                        上交账号个数:
+                                        <input type="text" id="bdnum" name="bdnum" disabled="true" value="" />
+                                        <span style="color:red">
+                                            <if condition="$upLevel neq 0 ">
+                                            未分配账号数: {$opid|getNums}
+                                            <else />
+                                            未注册终端数: {$opid|Nums}
+                                            </if>
+                                        </span>
+                                        <if condition="$iLevel gt 1 ">
+                                        <input type='hidden' name='validuser' value="{$opid|getNums}" disabled='true'/>
+                                        <else />
+                                        <input type='hidden' name='validuser' value="{$opid|Nums}" disabled='true'/>
+                                        </if>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableleft">账号续期
+                                        <input type="radio" id="radioModify" name="status" value="1" <if condition="$iLevel gt 1 "> disabled </if>/> 
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <div class="dsearch">选择续期账号：</div>
+                                                <select name="to" id="multiselect_to_1" class="form-control" size="8" multiple="multiple" onclick="return showMessage()" disabled="true">
+                                                </select>       
+                                            </div>
+
+                                            <div class="col-xs-2 mtop">
+                                                <button disabled="true" type="button" id="right_All_1" class="btn btn-block"><i class="glyphicon glyphicon-forward">&lt;&lt;</i></button>
+                                                <button disabled="true" type="button" id="right_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right">&lt;</i></button>
+                                                <button disabled="true" type="button" id="left_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left">&gt;</i></button>
+                                                <button disabled="true" type="button" id="left_All_1" class="btn btn-block"><i class="glyphicon glyphicon-backward">&gt;&gt;</i></button>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                <input type="hidden" value="{$opid}" id="accopid" >
+                                                <input id="accsearch" type="text" placeholder="输入账号或名称搜索" disabled='true'>
+                                                <input id="gidsearch" type="text" placeholder="输入群组ID搜索" disabled='true'>
+                                                <select name="listGup" id="listGup" class="multiselect form-control" size="8" multiple="multiple" data-right="#multiselect_to_1" data-right-all="#right_All_1" data-right-selected="#right_Selected_1" data-left-all="#left_All_1" data-left-selected="#left_Selected_1"
+                                                        disabled="true">
+                                                       &lt;!&ndash;  //var vtstr = obj[i].validtime;
+                                                    //var vtstr = vtstr.substr(0,10);  //格式化时间格式 &ndash;&gt;
+                                                    <volist name="deviceList" id="v">
+                                                    <option value ={$v.uid}>{$v.username} ({$v.account}) ({$v.createtime})  ({$v.validtime})</option>
+                                                    </volist>
+                                                </select>     
+                                                <input type="hidden" name="selVal" id="inSel"/>
+                                            </div>
+                                        </div>
+                                        选择续约期限:<br/>
+                                        <input type="text" id="date1" name="date" disabled="true"/><span class='tish'>个月 (请填写正整数)</span>
+                                        <span class="tishi">*温馨提示：无论是否提前续期，都按订单审核当日的时间续时，续约期限最多为12个月</span><br/>
+                                        <span>*操作提示： a、按住Ctrl+单击多个条目+单击单箭头按钮：可同时移动选中信息 (放开Ctrl+转动鼠标滚轮或按住Ctrl+单击滚动条箭头可查找更多信息)；<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b、单击双箭头按钮：可移动列表全部信息；</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tableleft"></td>
+                                    <td>
+                                        <button id="sub" type="submit" class="btn btn-default" type="button">保存</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-default" name="backid" id="backid">返回列表</button>
+                                    </td>
+                                </tr>
+                            </table>-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <input type="hidden" name="" value="{$smarty.session.lang}" id="s_lang">
+    <!--Footer-part-->
+    <!--end-Footer-part-->
+    <script src="__PUBLIC__/js/jquery.min.js"></script>
+    <!--jquery左右选择插件-->
+    <script type="text/javascript" src="__PUBLIC__/js/multiselect.js"></script>
+    <script>
+
+        $(function () {
+            
+            $('#backid').click(function () {
+                window.location.href = "__URL__/booking_list";
+            });
+        });
+
+        $(function () {
+            //添加账号
+            $('#radioAdd').click(function () {
+                $('#multiselect_to_1,#date1,#listGup,#right_All_1,#right_Selected_1,#left_Selected_1,#left_All_1,#bdnum,#accsearch,#gidsearch').attr('disabled', true);
+                $('#bdnum').val('');
+                $('#blnum').attr('disabled', false);
+            });
+            //回收账号
+            $('#radioDel').click(function () {
+                $('#multiselect_to_1,#date1,#listGup,#right_All_1,#right_Selected_1,#left_Selected_1,#left_All_1,#blnum,#accsearch,#gidsearch').attr('disabled', true);
+                $('#blnum').val('');
+                $('#bdnum').attr('disabled', false);
+            });
+            //帐号续期
+            $('#radioModify').click(function () {
+                $('#multiselect_to_1,#date1,#listGup,#right_All_1,#right_Selected_1,#left_Selected_1,#left_All_1,#accsearch,#gidsearch').attr('disabled', false);
+                $('#blnum,#bdnum').attr('disabled', true);
+                $('#blnum,#bdnum').val('');
+            });
+            //  16-12-2 陈小姐要求增加账号搜搜功能
+
+            $('#accsearch').bind('input propertychange', function () {
+                var accopid = $('#accopid').val();
+                var accName = $('#accsearch').val();
+                $.post("__URL__/accSearch", { Account: accName, Opid: accopid }, function (data) {
+                    var str = '';
+                    //var obj = JSON.parse(data);
+                    var obj = data;
+                    //alert(obj);
+                    for (var i in obj) {
+                        //var vtstr = obj[i].validtime;
+                        //var vtstr = vtstr.substr(0,10);  //格式化时间格式
+                        str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "&nbsp;(" + obj[i].account + ")"+ "&nbsp;(" + obj[i].validtime + ")" + "</option>";
+                    }
+                    $("#listGup").empty().append(str);
+                    // 删除左边有的
+                    var leftO = $("#multiselect_to_1 option").map(function () {
+                        return $(this).val();
+                    }).get().join(",");
+                    //保存到数组arr
+                    arr = leftO.split(',');
+                    for (var i in arr) {
+                        $("#listGup option[value='" + arr[i] + "']").remove();
+                    }
+                });
+            });
+
+            
+
+        });
+
+        $(function () {
+
+            $('#gidsearch').bind('input propertychange', function () {
+                var opid = $('#accopid').val();
+                var gid = $('#gidsearch').val();
+                 $.post("__URL__/gidmemberSearch", { gid: gid, opid: opid }, function (data) {
+                    var str = '';
+                    //var obj = JSON.parse(data);
+                    var obj = data;
+                    //console.log(obj);
+                    for (var i in obj) {
+                    //for(var i=0;i<obj.length;i++){
+                        str += "<option value='" + obj[i].uid + "'>" + obj[i].username + "&nbsp;(" + obj[i].account + ")"+ "&nbsp;(" + obj[i].validtime + ")" + "</option>";
+                    }
+                    $("#listGup").empty().append(str);
+                    // 删除左边有的
+                    var leftO = $("#multiselect_to_1 option").map(function () {
+                        return $(this).val();
+                    }).get().join(",");
+                    //保存到数组arr
+                    arr = leftO.split(',');
+                    for (var i in arr) {
+                        $("#listGup option[value='" + arr[i] + "']").remove();
+                    }
+                });
+            });
+        });
+
+        jQuery(document).ready(function ($) {
+            $('.multiselect').multiselect();
+        });
+        function showMessage()
+        {
+            var value = document.getElementById("multiselect_to_1").options[document.getElementById("multiselect_to_1").selectedIndex].value;
+            //document.getElementById("inCurGid").value = value;        
+        }
+
+        var Validuser = document.form1.validuser.value;
+        function SetSelVal()
+        {
+            var i = 0;
+            var Blnum = Math.ceil(document.form1.blnum.value);
+            var Bdnum = Math.ceil(document.form1.bdnum.value);
+            var RadioAdd = document.getElementById("radioAdd");
+            var RadioDel = document.getElementById("radioDel");
+            var RadioModify = document.getElementById("radioModify");
+            if (RadioAdd.checked)
+            {
+                if (Blnum.length == 0 || Blnum < 1)
+                {
+                    alert("请填写添加用户数量!");
+                    return false;
+                }
+            }
+            else if (RadioDel.checked)
+            {
+                if (Bdnum.length == 0 || Bdnum < 1)
+                {
+                    alert("请填写上交用户数量!");
+                    return false;
+                }
+                else if (Bdnum > Validuser)
+                {
+                    alert("不得超过空闲账号数量!");
+                    return false;
+                }
+            }
+            else if (RadioModify.checked)
+            {
+                var reg = /^[0-9]*[1-9][0-9]*$/;
+                var date1 = document.getElementById("date1").value;
+                if (!reg.test(date1)) {
+                    alert("续约期限为正整数!");
+                    return false;
+                }
+                var DATE1 = parseInt(date1);
+                if (DATE1 > 12) {
+                    alert("续约期限最多为12个月!");
+                    return false;
+                }
+                var obj = document.getElementById("multiselect_to_1");
+                var length = obj.options.length;
+                var selVal = "";
+
+                if (length == 0)
+                {
+                    alert("未选择任何用户!");
+                    return false;
+                }
+
+                for (i = 0; i < length; i++)
+                {
+                    selVal += obj.options[i].value + '|';
+                }
+
+                document.getElementById("inSel").value = selVal;
+
+            }
+        }
+    </script>
+
+    <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+    <script src="__PUBLIC__/js/unicorn.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<include file="Public:meta" />
+<include file="Public:header" />
+<div id="content">
+    <include file="Public:nav_bar" />
+    <div id="content-header">
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title">
+                            <span class="icon">
+                                <i class="icon-align-justify"></i>
+                            </span>
+                        <h5>设备续费</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <form name="form1" class="form-horizontal" method="post" action="__URL__/device_vtime"  id="basic_validate" novalidate="novalidate">
+                            <div class="control-group">
+                                <label class="control-label">用户ID</label>
+                                <div class="controls">
+                                    <input type="text" name="uid" readonly="true" id="uid" value="{$row.uid}" class="nw"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">用户名称</label>
+                                <div class="controls">
+                                    <input name="username" id="username" type="text" value="{$row['username']}" disabled="true" class="nw"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">用户账号</label>
+                                <div class="controls">
+                                    <input name="account" id="account" type="text" value="{$row['account']}" disabled="true" class="nw"/>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">创建时间</label>
+                                <div class="controls">
+                                    <input name="createtime" id="createtime" type="text" value="{$row['createtime']}" disabled="true" class="nw"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">到期时间</label>
+                                <div class="controls">
+                                    <input name="validtime" id="validtime" type="text" value="{$row['validtime']}" disabled="true" class="nw"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">续费时间</label>
+                                <div class="controls">
+                                    <select class="order" style="width: 19.4%;">
+                                        <option />1
+                                        <option />2
+                                        <option />3
+                                        <option />4
+                                        <option />5
+                                    </select> 年
+                                    <input type="hidden" name="rquota" id="rquota" value="1"/>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+
+                                <div class="form-actions">
+                                    <button id="sub" type="submit" class="btn btn-default" type="button">续费</button>&nbsp;&nbsp;
+                                    <a href="__URL__/device_list" class="btn btn-default" name="backid">返回列表</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var Vquota = parseInt($("#vquota").val());
+        $(".order").change(function () {
+            var y_num = $(".order option:selected").val();
+            $("#rquota").val(y_num);
+        })
+        $("#form1 :submit").click(function () {
+            $("#rquota").val($(".order").val());
+            var Rquota = parseInt($("#rquota").val());
+            if (Rquota > Vquota) {
+                alert("当前额度不够续费!");
+                return false;
+            }
+        })
+    });
+</script>
+<!--jquery左右选择插件-->
+<script type="text/javascript" src="__PUBLIC__/js/multiselect.js"></script>
+
+<script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+<script src="__PUBLIC__/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/js/jquery.uniform.js"></script>
+<!-- <script src="__PUBLIC__/js/matrix.js"></script>  -->
+<script src="__PUBLIC__/js/unicorn.js"></script>
+
+
+
+</body>
+</html>

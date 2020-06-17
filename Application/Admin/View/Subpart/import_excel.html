@@ -1,0 +1,110 @@
+<include file="Public:meta" />
+<include file="Public:subheader" />
+    <div id="daohang">
+        <include file="Public:subnav_bar" />
+        <div style="background-color:#00497d !important; width: 218px; float: right;position: absolute;"  id="sidebar" >
+            <if condition="($iLevel eq 10)"> 
+                <ul>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>设备管理</span> <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Subpart/device_list">设备列表</a></li>
+                            <li><a href="__APP__/Admin/Subpart/device_add">设备添加</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i>  --><span>群组管理</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/SubGroup/group_list">群组列表</a></li>
+                            <li><a href="__APP__/Admin/SubGroup/group_add">群组添加</a></li>
+                            <li><a href="__APP__/Admin/SubGroup/group_subedit">嵌套组定义</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><!-- <i class="icon icon-th-list"></i> --> <span>使用说明</span> <span class="label">3</span></a>
+                        <ul>
+                            <li><a href="__APP__/Admin/Subpart/Instructions_qz">设备添加说明</a></li>
+                            <li><a href="__APP__/Admin/Subpart/Instructions_dd">群组添加说明</a></li>
+                            <li><a href="__APP__/Admin/Subpart/Instructions_sb">订单添加说明</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </if>
+        </div>
+    </div>
+        <div id="content">
+            <div id="content-header">
+            </div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget-box">
+                            <div class="widget-title">
+                                <span class="icon">
+                                    <i class="icon-align-justify"></i>                                  
+                                </span>
+                                <h5>设备批量导入设备</h5>                                
+                                <a href="__URL__/device_list" id="btn_fhlb" class="btn nom"><i class="icon-arrow-left"></i>返回上层设备列表</a>
+
+                            </div>	
+                            <div class="widget-content nopadding">
+                                <div class="dataTables_wrapper">
+                                    <table class="table table-bordered data-table">
+                                        <thead>
+                                            <tr>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>  
+                                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix " id="form_file">
+                                    <br/><br/>
+                                        <div class="dataTables_filter">
+											<form method="post" action="{:U('Subpart/import_excel')}" enctype="multipart/form-data">  
+		                                    	<input type="file" name="file_stu" id="file" />  
+		                                    	<input type="submit" value="导入"  id="file_submit" /> 
+		                                    </form>  
+                                        </div>
+                                        <b class="download"><a href="__URL__/dloadUserTpl" >下载Excel模板</a> </b> 
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.ui.custom.js"></script>
+        <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+        <script src="__PUBLIC__/js/jquery.uniform.js"></script>
+        <script src="__PUBLIC__/js/select2.min.js"></script>
+        <!--<script src="js/jquery.dataTables.min.js"></script>-->
+        <script src="__PUBLIC__/js/unicorn.js"></script>
+        <!--<script src="js/unicorn.tables.js"></script>-->
+        <script>
+
+            $(function () {
+            	//拦截提交空文件
+            	$("#file_submit").click(function () {
+                    var file = $("#file").val();
+	            	if (file == '') {
+	            		alert('请选择导入文件！(仅支持.xlsx/.xls后缀名的类型文件)');
+	            		return false;
+	            	}
+	            	
+                });
+
+                $("#formsearch :submit").click(function () {
+                    $("#searchc").val($("#searchc").val().replace(/\s|\'|\"|\(|\)/g, ""));
+                });
+            })
+        </script>
+
+    </body>
+</html>
